@@ -10,7 +10,7 @@
 		</encoder>
 	</appender>
 
-	<logger name="it.chebcanca.arc.selenium" level="DEBUG"
+	<logger name="org.bitmarte.architecture.utils.testingframework.selenium" level="DEBUG"
 		additivity="false">
 		<appender-ref ref="STDOUT" />
 	</logger>
