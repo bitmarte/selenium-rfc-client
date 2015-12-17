@@ -2,9 +2,9 @@
 	<run windowWidthPx="1440" windowHeightPx="900">
 		<runName>001_gotoSeleniumHQ</runName>
 		<url>http://www.seleniumhq.org/</url>
-		<successCondition>
+		<successCondition contentEvaluator="CONTAINS">
 			<element>//h2</element>
-			<elementContent>What is Selenium?</elementContent>
+			<elementContent>What is Selenium</elementContent>
 		</successCondition>
 	</run>
 	<run>
