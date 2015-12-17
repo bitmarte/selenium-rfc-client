@@ -1,0 +1,6 @@
+<config>
+	<browserName>FIREFOX_REMOTE</browserName>
+	<seleniumRcURL>http://10.217.xx.xx:4444/wd/hub</seleniumRcURL>
+	<maxTimeOutPerPageInSec>30</maxTimeOutPerPageInSec>
+	<screenshotBaseDir>/var/tmp/selenium/check-evidences/</screenshotBaseDir>
+</config>
