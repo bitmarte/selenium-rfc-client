@@ -46,16 +46,16 @@ You can see the allowed values for &lt;browserName&gt; attribute:
 | Attribute value        		| Description										|
 | ----------------------------- | ------------------------------------------------- |
 | FIREFOX_LOCAL					| Running local firefox browser instance			|
-| FIREFOX_REMOTE				| Running remote firefox browser instance (*)		|
-| CHROME_LOCAL					| Running local chrome browser instance (**)		|
-| CHROME_REMOTE					| Running remote chrome browser instance (***)		|
-| IEXPLORER_REMOTE				| Running remote iexplorer browser instance (****)	|
+| FIREFOX_REMOTE				| Running remote firefox browser instance (a)		|
+| CHROME_LOCAL					| Running local chrome browser instance (b)		|
+| CHROME_REMOTE					| Running remote chrome browser instance (c)		|
+| IEXPLORER_REMOTE				| Running remote iexplorer browser instance (d)	|
 
-(*) You need to install Selenium Standalone Server (http://docs.seleniumhq.org/download/) and passing the '-Dwebdriver.firefox.bin' jar argument point to firefox bin browser<br/>
-(**) You need to download ChromeWebDriver (http://chromedriver.storage.googleapis.com/index.html?path=2.20/) and setup &lt;localWebDriverPath&gt; node into your config.xml<br/>
-(***) You need to download ChromeWebDriver (http://chromedriver.storage.googleapis.com/index.html?path=2.20/) and passing the '-Dwebdriver.chrome.bin' and
+(a) You need to install Selenium Standalone Server (http://docs.seleniumhq.org/download/) and passing the '-Dwebdriver.firefox.bin' jar argument point to firefox bin browser<br/>
+(b) You need to download ChromeWebDriver (http://chromedriver.storage.googleapis.com/index.html?path=2.20/) and setup &lt;localWebDriverPath&gt; node into your config.xml<br/>
+(c) You need to download ChromeWebDriver (http://chromedriver.storage.googleapis.com/index.html?path=2.20/) and passing the '-Dwebdriver.chrome.bin' and
 '-Dwebdriver.chrome.driver' jar arguments point to chrome bin browser and chrome driver on your remote machine<br/>
-(****) You need to download Internet Explorer Driver Server (http://www.seleniumhq.org/download/) and passing the '-Dwebdriver.ie.driver' jar argument point to iexplorer driver on your remote machine.
+(d) You need to download Internet Explorer Driver Server (http://www.seleniumhq.org/download/) and passing the '-Dwebdriver.ie.driver' jar argument point to iexplorer driver on your remote machine.
 Pay attention that all IExplorer security zone must be the same and the zoom must be setup to 100%
 
 ## Make your plan
