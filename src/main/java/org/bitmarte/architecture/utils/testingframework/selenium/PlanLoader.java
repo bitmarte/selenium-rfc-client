@@ -50,6 +50,12 @@ public class PlanLoader {
 			xStream.processAnnotations(SuccessCondition.class);
 
 			Plan plan = (Plan) xStream.fromXML(xmlPlan);
+
+			// cookies managing
+			if (plan.isCookiesRemoveAll()) {
+				removeAllCookies(driver);
+			}
+
 			LOG.info(plan.getRuns().size() + " runs in plan '"
 					+ xmlPlan.getName() + "'");
 
@@ -58,6 +64,12 @@ public class PlanLoader {
 				currentRun = run;
 				LOG.info("Run name: " + currentRun.getRunName());
 
+				// cookies managing
+				if (currentRun.isCookiesRemoveAll()) {
+					removeAllCookies(driver);
+				}
+
+				// window size managing
 				if (currentRun.getWindowWidthPx() > 0
 						&& currentRun.getWindowHeightPx() > 0) {
 					LOG.info("Setting custom window size: "
@@ -210,5 +222,15 @@ public class PlanLoader {
 					"No successCondition has been specified for run '"
 							+ run.getRunName() + "'!");
 		}
+	}
+
+	/**
+	 * It removes all browser cookies
+	 * 
+	 * @param driver
+	 */
+	private static void removeAllCookies(WebDriver driver) {
+		LOG.debug("Removing all cookies...");
+		driver.manage().deleteAllCookies();
 	}
 }
