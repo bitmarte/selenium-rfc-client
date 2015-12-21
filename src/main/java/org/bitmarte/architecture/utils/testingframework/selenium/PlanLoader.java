@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.InputField;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Run;
@@ -42,6 +43,7 @@ public class PlanLoader {
 
 			xStream.processAnnotations(Plan.class);
 			xStream.processAnnotations(Run.class);
+			xStream.processAnnotations(BrowserAction.class);
 			xStream.processAnnotations(InputField.class);
 			xStream.processAnnotations(SuccessCondition.class);
 
