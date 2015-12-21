@@ -4,7 +4,10 @@ import java.io.File;
 import java.util.StringTokenizer;
 
 import org.apache.commons.io.FileUtils;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.BrowserAction;
+import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
+import org.bitmarte.architecture.utils.testingframework.selenium.exceptions.ConfigException;
 import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
@@ -105,8 +108,43 @@ public class DriverUtils {
 		}
 	}
 
+	/**
+	 * Setup full screen window
+	 * 
+	 * @param driver
+	 */
 	public static void fullScreen(WebDriver driver) {
 		LOG.info("Setup full screen window size...");
 		driver.manage().window().maximize();
+	}
+
+	/**
+	 * Manage browser action
+	 * 
+	 * @param driver
+	 * @param browserAction
+	 */
+	public static void makeBrowserAction(WebDriver driver,
+			BrowserAction browserAction) throws Exception {
+		try {
+			switch (E_BrowserAction.valueOf(browserAction.getAction())) {
+			case REFRESH:
+				LOG.info("window refreshing...");
+				driver.navigate().refresh();
+				break;
+			case BACK:
+				LOG.info("window back...");
+				driver.navigate().back();
+				break;
+			case FORWARD:
+				LOG.info("window forward...");
+				driver.navigate().forward();
+				break;
+			}
+		} catch (Exception e) {
+			throw new ConfigException("Unknow browserAction '"
+					+ browserAction.getAction() + "'!");
+		}
+
 	}
 }

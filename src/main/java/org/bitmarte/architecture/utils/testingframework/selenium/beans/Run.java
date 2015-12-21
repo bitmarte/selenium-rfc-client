@@ -27,6 +27,9 @@ public class Run {
 	@XStreamAlias("runName")
 	private String runName;
 
+	@XStreamAlias("browserAction")
+	private BrowserAction browserAction;
+
 	@XStreamAlias("url")
 	private String url;
 
@@ -131,6 +134,14 @@ public class Run {
 
 	public void setFullscreen(boolean fullscreen) {
 		this.fullscreen = fullscreen;
+	}
+
+	public BrowserAction getBrowserAction() {
+		return browserAction;
+	}
+
+	public void setBrowserAction(BrowserAction browserAction) {
+		this.browserAction = browserAction;
 	}
 
 }

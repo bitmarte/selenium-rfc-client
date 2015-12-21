@@ -90,6 +90,12 @@ public class PlanLoader {
 					}
 				}
 
+				// browser action managing
+				if (currentRun.getBrowserAction() != null) {
+					DriverUtils.makeBrowserAction(driver,
+							currentRun.getBrowserAction());
+				}
+
 				if (currentRun.getUrl() != null) {
 					driver.get(currentRun.getUrl());
 					LOG.info("Go to URL '" + currentRun.getUrl() + "'");
@@ -214,6 +220,18 @@ public class PlanLoader {
 				if (run.getWindowHeightPx() > 0 || run.getWindowHeightPx() > 0) {
 					throw new ConfigException(
 							"Fullscreen setup in your plan, no custom window size allowed for run '"
+									+ run.getRunName() + "'!");
+				}
+			}
+			if (run.getBrowserAction() != null) {
+				if (run.getUrl() != null) {
+					throw new ConfigException(
+							"Browser action setted, no url tag is allowed for run '"
+									+ run.getRunName() + "'!");
+				}
+				if (run.getInputFields() != null) {
+					throw new ConfigException(
+							"Browser action setted, no input filling tag is allowed for run '"
 									+ run.getRunName() + "'!");
 				}
 			}

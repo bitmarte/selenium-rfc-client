@@ -197,3 +197,28 @@ Here you can find an example that you can use for filling value "myValue" into a
 </pre>
 
 **Pay attention: when attribute is not present or an unknown value is used, the dafault content evaluator will be use: BY_XPATH**
+<br/><br/>
+## Advanced run tags
+There are some run tags (optionals) that you can use for advanced behaviors in your tests.
+
+### BrowserAction
+You can use &lt;browserAction&gt; tag for simulating action with top browser bar:
+
+| Attribute value        		| Description																|
+| ----------------------------- | ------------------------------------------------------------------------- |
+| REFRESH						| Refresh current page (reload)												|
+| BACK							| Go back to previous page													|
+| FORWARD						| Go ahead 																	|
+
+<pre>
+	<code>
+&lt;run&gt;
+	&lt;runName&gt;001_refreshPage;/runName&gt;
+	&lt;browserAction action="REFRESH"&gt;/runName&gt;
+	&lt;successCondition&gt;
+		&lt;element&gt;//h2&lt;/element&gt;
+		&lt;elementContent&gt;What is Selenium?&lt;/elementContent&gt;
+	&lt;/successCondition&gt;
+&lt;/run&gt;
+	</code>
+</pre>
