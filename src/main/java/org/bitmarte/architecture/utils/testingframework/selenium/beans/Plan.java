@@ -25,6 +25,12 @@ public class Plan {
 	@XStreamAsAttribute
 	private String cookiesRemove;
 
+	@XStreamAlias("fullscreen")
+	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = {
+			"true", "false" })
+	@XStreamAsAttribute
+	private boolean fullscreen;
+
 	@XStreamImplicit
 	private List<Run> runs;
 
@@ -50,6 +56,14 @@ public class Plan {
 
 	public void setCookiesRemoveAll(boolean cookiesRemoveAll) {
 		this.cookiesRemoveAll = cookiesRemoveAll;
+	}
+
+	public boolean isFullscreen() {
+		return fullscreen;
+	}
+
+	public void setFullscreen(boolean fullscreen) {
+		this.fullscreen = fullscreen;
 	}
 
 }

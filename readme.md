@@ -83,7 +83,7 @@ Pay attention that all IExplorer security zone must be the same and the zoom mus
 			&lt;elementContent&gt;Downloads&lt;/elementContent&gt;
 		&lt;/successCondition&gt;
 	&lt;/run&gt;
-	&lt;run cookiesRemoveAll="true"&gt;
+	&lt;run cookiesRemoveAll="true" fullscreen="true"&gt;
 		&lt;runName&gt;003_search&lt;/runName&gt;
 		&lt;inputFields&gt;
 			&lt;inputField&gt;
@@ -103,8 +103,9 @@ Pay attention that all IExplorer security zone must be the same and the zoom mus
 		<ul>
 			<li>&lt;cookiesRemoveAll&gt; is an **optional** attribute for plan and runs which removes all cookies</li>
 			<li>&lt;cookiesRemove&gt; is an **optional** attribute for plan and runs which removes all passed cookies, comma separated values</li>
-			<li>&lt;windowWidthPx&gt; is an **optional** attribute for runs where you put window width size in pixel</li>
-			<li>&lt;windowHeightPx&gt; is an **optional** attribute for runs where you put window height size in pixel</li>
+			<li>&lt;fullscreen&gt; is an **optional** attribute for plan and runs which maximize the window</li>
+			<li>&lt;windowWidthPx&gt; is an **optional** attribute for runs where you put window width size in pixel. This attribute is not allowed if you are using fullscreen attribute in your plan</li>
+			<li>&lt;windowHeightPx&gt; is an **optional** attribute for runs where you put window height size in pixel. This attribute is not allowed if you are using fullscreen attribute in your plan</li>
 			<li>&lt;runName&gt; is a **require** node where you put the name (unique at all plan) and it used for screenshot naming</li>
 			<li>&lt;url&gt; is an **optional** node where you put the "goToURL". **Remove this if it is not necessary for your run**</li>
 			<li>&lt;inputFields&gt; is an **optional** list where you put your form filler. You must to use XPath for searching element and fill it with a value</li>

@@ -3,7 +3,6 @@ package org.bitmarte.architecture.utils.testingframework.selenium;
 import java.io.File;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.InputField;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
@@ -16,14 +15,9 @@ import org.bitmarte.architecture.utils.testingframework.selenium.driver.DriverUt
 import org.bitmarte.architecture.utils.testingframework.selenium.exceptions.ConfigException;
 import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -61,11 +55,18 @@ public class PlanLoader {
 				DriverUtils.removeCookies(driver, plan.getCookiesRemove());
 			}
 
+			// window size managing
+			if (plan.isFullscreen()) {
+				DriverUtils.fullScreen(driver);
+			}
+
 			LOG.info(plan.getRuns().size() + " runs in plan '"
 					+ xmlPlan.getName() + "'");
 
+			// validation
+			validateRun(plan);
+
 			for (Run run : plan.getRuns()) {
-				validateRun(run);
 				currentRun = run;
 				LOG.info("Run name: " + currentRun.getRunName());
 
@@ -78,15 +79,15 @@ public class PlanLoader {
 				}
 
 				// window size managing
-				if (currentRun.getWindowWidthPx() > 0
-						&& currentRun.getWindowHeightPx() > 0) {
-					LOG.info("Setting custom window size: "
-							+ currentRun.getWindowWidthPx() + "px x "
-							+ currentRun.getWindowHeightPx() + "px");
-					driver.manage().window().setPosition(new Point(0, 0));
-					Dimension d = new Dimension(currentRun.getWindowWidthPx(),
-							currentRun.getWindowHeightPx());
-					driver.manage().window().setSize(d);
+				if (currentRun.isFullscreen()) {
+					DriverUtils.fullScreen(driver);
+				} else {
+					if (currentRun.getWindowWidthPx() > 0
+							&& currentRun.getWindowHeightPx() > 0) {
+						DriverUtils.resizeWindow(driver,
+								currentRun.getWindowWidthPx(),
+								currentRun.getWindowHeightPx());
+					}
 				}
 
 				if (currentRun.getUrl() != null) {
@@ -149,16 +150,16 @@ public class PlanLoader {
 						}
 					});
 
-					takeScreenshot(driver, currentRun, E_TestResult.SUCCESS);
-					testResult = E_TestResult.SUCCESS;
+					testResult = DriverUtils.takeScreenshot(driver,
+							run.getRunName(), E_TestResult.SUCCESS);
 					LOG.info("Success on run '" + currentRun.getRunName() + "'");
 				} catch (TimeoutException te1) {
 					try {
 						wait.until(ExpectedConditions
 								.presenceOfAllElementsLocatedBy(By
 										.className("alert-danger")));
-						takeScreenshot(driver, run, E_TestResult.ERROR);
-						testResult = E_TestResult.ERROR;
+						testResult = DriverUtils.takeScreenshot(driver,
+								run.getRunName(), E_TestResult.ERROR);
 						LOG.error("Error on run '" + run.getRunName() + "'");
 						break;
 					} catch (TimeoutException te2) {
@@ -167,13 +168,14 @@ public class PlanLoader {
 									.textToBePresentInElementLocated(
 											By.className("wpsPortletBody"),
 											"Si è verificato un errore."));
-							takeScreenshot(driver, run, E_TestResult.ERROR);
-							testResult = E_TestResult.ERROR;
+							testResult = DriverUtils.takeScreenshot(driver,
+									run.getRunName(), E_TestResult.ERROR);
+							;
 							LOG.error("Error on run '" + run.getRunName() + "'");
 							break;
 						} catch (TimeoutException te3) {
-							takeScreenshot(driver, run, E_TestResult.TIMEOUT);
-							testResult = E_TestResult.TIMEOUT;
+							testResult = DriverUtils.takeScreenshot(driver,
+									run.getRunName(), E_TestResult.TIMEOUT);
 							LOG.error("Timeout on run '" + run.getRunName()
 									+ "'");
 							break;
@@ -197,38 +199,24 @@ public class PlanLoader {
 		}
 	}
 
-	private static void takeScreenshot(WebDriver driver, Run run,
-			E_TestResult testResult) {
-		try {
-			LOG.debug("Take screenshot '"
-					+ DefaultSeleniumConfig.getConfig().getScreenshotBaseDir()
-					+ run.getRunName() + "_" + testResult.toString() + ".png'");
-
-			WebDriver augmentedDriver = driver;
-			if (DefaultSeleniumConfig.getConfig().getSeleniumRcURL() != null) {
-				augmentedDriver = new Augmenter().augment(driver);
+	private static void validateRun(Plan plan) throws Exception {
+		for (Run run : plan.getRuns()) {
+			if (run.getRunName() == null) {
+				throw new ConfigException(
+						"No runName has been specified for current run!");
 			}
-			File scrFile = ((TakesScreenshot) augmentedDriver)
-					.getScreenshotAs(OutputType.FILE);
-
-			FileUtils.copyFile(scrFile, new File(DefaultSeleniumConfig
-					.getConfig().getScreenshotBaseDir()
-					+ run.getRunName()
-					+ "_" + testResult.toString() + ".png"));
-		} catch (Exception e) {
-			LOG.error("Error takeScreenshot()!", e);
-		}
-	}
-
-	private static void validateRun(Run run) throws Exception {
-		if (run.getRunName() == null) {
-			throw new ConfigException(
-					"No runName has been specified for current run!");
-		}
-		if (run.getSuccessCondition() == null) {
-			throw new ConfigException(
-					"No successCondition has been specified for run '"
-							+ run.getRunName() + "'!");
+			if (run.getSuccessCondition() == null) {
+				throw new ConfigException(
+						"No successCondition has been specified for run '"
+								+ run.getRunName() + "'!");
+			}
+			if (plan.isFullscreen()) {
+				if (run.getWindowHeightPx() > 0 || run.getWindowHeightPx() > 0) {
+					throw new ConfigException(
+							"Fullscreen setup in your plan, no custom window size allowed for run '"
+									+ run.getRunName() + "'!");
+				}
+			}
 		}
 	}
 

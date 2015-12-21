@@ -47,6 +47,12 @@ public class Run {
 	@XStreamAlias("windowHeightPx")
 	private int windowHeightPx = -1;
 
+	@XStreamAlias("fullscreen")
+	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = {
+			"true", "false" })
+	@XStreamAsAttribute
+	private boolean fullscreen;
+
 	public String getRunName() {
 		return runName;
 	}
@@ -117,6 +123,14 @@ public class Run {
 
 	public void setCookiesRemoveAll(boolean cookiesRemoveAll) {
 		this.cookiesRemoveAll = cookiesRemoveAll;
+	}
+
+	public boolean isFullscreen() {
+		return fullscreen;
+	}
+
+	public void setFullscreen(boolean fullscreen) {
+		this.fullscreen = fullscreen;
 	}
 
 }
