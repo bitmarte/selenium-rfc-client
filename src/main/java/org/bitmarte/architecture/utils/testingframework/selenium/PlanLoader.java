@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.InputField;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Run;
@@ -11,6 +12,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.SuccessCo
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.evaluator.ContentEvaluatorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.extractor.ElementExtractorFactory;
+import org.bitmarte.architecture.utils.testingframework.selenium.driver.DriverUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.exceptions.ConfigException;
 import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
 import org.openqa.selenium.By;
@@ -53,7 +55,10 @@ public class PlanLoader {
 
 			// cookies managing
 			if (plan.isCookiesRemoveAll()) {
-				removeAllCookies(driver);
+				DriverUtils.removeAllCookies(driver);
+			}
+			if (!StringUtils.isEmpty(plan.getCookiesRemove())) {
+				DriverUtils.removeCookies(driver, plan.getCookiesRemove());
 			}
 
 			LOG.info(plan.getRuns().size() + " runs in plan '"
@@ -66,7 +71,10 @@ public class PlanLoader {
 
 				// cookies managing
 				if (currentRun.isCookiesRemoveAll()) {
-					removeAllCookies(driver);
+					DriverUtils.removeAllCookies(driver);
+				}
+				if (!StringUtils.isEmpty(plan.getCookiesRemove())) {
+					DriverUtils.removeCookies(driver, plan.getCookiesRemove());
 				}
 
 				// window size managing
@@ -224,13 +232,4 @@ public class PlanLoader {
 		}
 	}
 
-	/**
-	 * It removes all browser cookies
-	 * 
-	 * @param driver
-	 */
-	private static void removeAllCookies(WebDriver driver) {
-		LOG.debug("Removing all cookies...");
-		driver.manage().deleteAllCookies();
-	}
 }
