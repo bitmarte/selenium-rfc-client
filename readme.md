@@ -66,7 +66,7 @@ Pay attention that all IExplorer security zone must be the same and the zoom mus
 		You can find a run example below:
 		<pre>
 			<code>
-&lt;plan&gt;
+&lt;plan cookiesRemoveAll="true"&gt;
 	&lt;run windowWidthPx="1440" windowHeightPx="900"&gt;
 		&lt;runName&gt;001_gotoSeleniumHQ&lt;/runName&gt;
 		&lt;url&gt;http://www.seleniumhq.org/&lt;/url&gt;
@@ -75,7 +75,7 @@ Pay attention that all IExplorer security zone must be the same and the zoom mus
 			&lt;elementContent&gt;What is Selenium?&lt;/elementContent&gt;
 		&lt;/successCondition&gt;
 	&lt;/run&gt;
-	&lt;run&gt;
+	&lt;run cookiesRemove="COOKIE_1,COOKIE_2"&gt;
 		&lt;runName&gt;002_gotoDownload&lt;/runName&gt;
 		&lt;url&gt;http://www.seleniumhq.org/download/&lt;/url&gt;
 		&lt;successCondition&gt;
@@ -83,7 +83,7 @@ Pay attention that all IExplorer security zone must be the same and the zoom mus
 			&lt;elementContent&gt;Downloads&lt;/elementContent&gt;
 		&lt;/successCondition&gt;
 	&lt;/run&gt;
-	&lt;run&gt;
+	&lt;run cookiesRemoveAll="true"&gt;
 		&lt;runName&gt;003_search&lt;/runName&gt;
 		&lt;inputFields&gt;
 			&lt;inputField&gt;
@@ -101,8 +101,10 @@ Pay attention that all IExplorer security zone must be the same and the zoom mus
 			</code>
 		</pre>
 		<ul>
-			<li>&lt;windowWidthPx&gt; is an **optional** attribute where you put window width size in pixel</li>
-			<li>&lt;windowHeightPx&gt; is an **optional** attribute where you put window height size in pixel</li>
+			<li>&lt;cookiesRemoveAll&gt; is an **optional** attribute for plan and runs which removes all cookies</li>
+			<li>&lt;cookiesRemove&gt; is an **optional** attribute for plan and runs which removes all passed cookies, comma separated values</li>
+			<li>&lt;windowWidthPx&gt; is an **optional** attribute for runs where you put window width size in pixel</li>
+			<li>&lt;windowHeightPx&gt; is an **optional** attribute for runs where you put window height size in pixel</li>
 			<li>&lt;runName&gt; is a **require** node where you put the name (unique at all plan) and it used for screenshot naming</li>
 			<li>&lt;url&gt; is an **optional** node where you put the "goToURL". **Remove this if it is not necessary for your run**</li>
 			<li>&lt;inputFields&gt; is an **optional** list where you put your form filler. You must to use XPath for searching element and fill it with a value</li>

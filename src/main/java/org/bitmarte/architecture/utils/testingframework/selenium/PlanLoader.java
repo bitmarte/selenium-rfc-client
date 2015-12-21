@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.InputField;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Run;
@@ -11,6 +12,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.SuccessCo
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.evaluator.ContentEvaluatorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.extractor.ElementExtractorFactory;
+import org.bitmarte.architecture.utils.testingframework.selenium.driver.DriverUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.exceptions.ConfigException;
 import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
 import org.openqa.selenium.By;
@@ -50,6 +52,15 @@ public class PlanLoader {
 			xStream.processAnnotations(SuccessCondition.class);
 
 			Plan plan = (Plan) xStream.fromXML(xmlPlan);
+
+			// cookies managing
+			if (plan.isCookiesRemoveAll()) {
+				DriverUtils.removeAllCookies(driver);
+			}
+			if (!StringUtils.isEmpty(plan.getCookiesRemove())) {
+				DriverUtils.removeCookies(driver, plan.getCookiesRemove());
+			}
+
 			LOG.info(plan.getRuns().size() + " runs in plan '"
 					+ xmlPlan.getName() + "'");
 
@@ -58,6 +69,15 @@ public class PlanLoader {
 				currentRun = run;
 				LOG.info("Run name: " + currentRun.getRunName());
 
+				// cookies managing
+				if (currentRun.isCookiesRemoveAll()) {
+					DriverUtils.removeAllCookies(driver);
+				}
+				if (!StringUtils.isEmpty(plan.getCookiesRemove())) {
+					DriverUtils.removeCookies(driver, plan.getCookiesRemove());
+				}
+
+				// window size managing
 				if (currentRun.getWindowWidthPx() > 0
 						&& currentRun.getWindowHeightPx() > 0) {
 					LOG.info("Setting custom window size: "
@@ -211,4 +231,5 @@ public class PlanLoader {
 							+ run.getRunName() + "'!");
 		}
 	}
+
 }

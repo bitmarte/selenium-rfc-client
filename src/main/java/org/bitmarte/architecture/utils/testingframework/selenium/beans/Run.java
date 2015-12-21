@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamConverter;
+import com.thoughtworks.xstream.converters.basic.BooleanConverter;
 
 /**
  * @author bitmarte
@@ -11,6 +13,16 @@ import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
  */
 @XStreamAlias("run")
 public class Run {
+
+	@XStreamAlias("cookiesRemoveAll")
+	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = {
+			"true", "false" })
+	@XStreamAsAttribute
+	private boolean cookiesRemoveAll;
+
+	@XStreamAlias("cookiesRemove")
+	@XStreamAsAttribute
+	private String cookiesRemove;
 
 	@XStreamAlias("runName")
 	private String runName;
@@ -90,4 +102,21 @@ public class Run {
 	public void setWindowHeightPx(int windowHeightPx) {
 		this.windowHeightPx = windowHeightPx;
 	}
+
+	public String getCookiesRemove() {
+		return cookiesRemove;
+	}
+
+	public void setCookiesRemove(String cookiesRemove) {
+		this.cookiesRemove = cookiesRemove;
+	}
+
+	public boolean isCookiesRemoveAll() {
+		return cookiesRemoveAll;
+	}
+
+	public void setCookiesRemoveAll(boolean cookiesRemoveAll) {
+		this.cookiesRemoveAll = cookiesRemoveAll;
+	}
+
 }
