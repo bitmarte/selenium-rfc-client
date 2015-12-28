@@ -28,15 +28,22 @@ In this case the client execute tests on remote machine.<br/>
 	&lt;seleniumRcURL&gt;http://10.217.xx.xx:4444/wd/hub&lt;/seleniumRcURL&gt;
 	&lt;maxTimeOutPerPageInSec&gt;30&lt;/maxTimeOutPerPageInSec&gt;
 	&lt;screenshotBaseDir&gt;/var/tmp/selenium/check-evidences/&lt;/screenshotBaseDir&gt;
+	&lt;errorConditions&gt;
+		&lt;errorCondition elementExtractor="BY_CLASSNAME" contentEvaluator="CONTAINS"&gt;
+			<element>error-msg-container</element>
+			<elementContent>error-msg-content</elementContent>
+		&lt;/errorCondition&gt;
+	&lt;/errorConditions&gt;
 &lt;/config&gt;
 			</code>
 		</pre>
 		<ul>
 			<li>&lt;browserName&gt; is a **require** node where you put the browser that you want to run tests on. **Take as look below for supported browsers**</li>
-			<li>&lt;localWebDriverPath&gt; is a **optional** node where you put the webdriver path, only if you are not using Firefox</li>
+			<li>&lt;localWebDriverPath&gt; is an **optional** node where you put the webdriver path, only if you are not using Firefox</li>
 			<li>&lt;seleniumRcURL&gt; is an **optional** node where you put the SeleniumRC URL connection. **Remove this node for LOCAL approach**</li>
 			<li>&lt;maxTimeOutPerPageInSec&gt; is a **require** node where you put your waiting timeout in second. It used for checking your success condition</li>
-			<li>&lt;screenshotBaseDir&gt; is a **require** node where you put your preferred location where Selenium save screenshots on at success condition</li>
+			<li>&lt;screenshotBaseDir&gt; is a **require** node where you put your preferred location where Selenium save screenshots on at success/error condition</li>
+			<li>&lt;errorConditions&gt; is an **optional** node where you put your generic error conditions. The elementContent node is an **optional** one</li>
 		</ul>
 	</li>
 </ol>
@@ -160,6 +167,7 @@ You can see the allowed values for this attribute:
 | ----------------------------- | ------------------------------------------------------------------------- |
 | BY_ID							| Using HTML "id" attribute for finding element								|
 | BY_XPATH						| Using XPath for finding element, all matched elements will be returned	|
+| BY_CLASSNAME					| Using HTML "class" attribute for finding element							|
 
 Here you can find an example that you can use for matching all numbers inside an html element with "myName" ID value:
 
@@ -184,6 +192,7 @@ You can see the allowed values for this attribute:
 | ----------------------------- | ------------------------------------------------------------------------- |
 | BY_ID							| Using HTML "id" attribute for finding element								|
 | BY_XPATH						| Using XPath for finding element, all matched elements will be returned	|
+| BY_CLASSNAME					| Using HTML "class" attribute for finding element							|
 
 Here you can find an example that you can use for filling value "myValue" into an html element with "myName" ID value:
 

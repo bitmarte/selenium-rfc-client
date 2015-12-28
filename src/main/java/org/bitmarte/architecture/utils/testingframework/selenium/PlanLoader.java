@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.BrowserAction;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.ErrorCondition;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.InputField;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Run;
@@ -20,7 +21,6 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -162,33 +162,51 @@ public class PlanLoader {
 							run.getRunName(), E_TestResult.SUCCESS);
 					LOG.info("Success on run '" + currentRun.getRunName() + "'");
 				} catch (TimeoutException te1) {
-					try {
-						wait.until(ExpectedConditions
-								.presenceOfAllElementsLocatedBy(By
-										.className("alert-danger")));
-						testResult = DriverUtils.takeScreenshot(driver,
-								run.getRunName(), E_TestResult.ERROR);
-						LOG.error("Error on run '" + run.getRunName() + "'");
-						break;
-					} catch (TimeoutException te2) {
-						try {
-							wait.until(ExpectedConditions
-									.textToBePresentInElementLocated(
-											By.className("wpsPortletBody"),
-											"Si è verificato un errore."));
-							testResult = DriverUtils.takeScreenshot(driver,
-									run.getRunName(), E_TestResult.ERROR);
-							;
-							LOG.error("Error on run '" + run.getRunName() + "'");
-							break;
-						} catch (TimeoutException te3) {
-							testResult = DriverUtils.takeScreenshot(driver,
-									run.getRunName(), E_TestResult.TIMEOUT);
-							LOG.error("Timeout on run '" + run.getRunName()
-									+ "'");
-							break;
+					if (DefaultSeleniumConfig.getConfig().getErrorConditions() != null) {
+						for (final ErrorCondition errorCondition : DefaultSeleniumConfig
+								.getConfig().getErrorConditions()) {
+							try {
+								wait.until(new ExpectedCondition<Boolean>() {
+									public Boolean apply(WebDriver d) {
+										List<WebElement> elements = ElementExtractorFactory
+												.getInstance(
+														errorCondition
+																.getElementExtractor())
+												.getElements(
+														d,
+														errorCondition
+																.getElement());
+										if (errorCondition.getElementContent() != null) {
+											for (WebElement webElement : elements) {
+												return ContentEvaluatorFactory
+														.getInstance(
+																errorCondition
+																		.getContentEvaluator())
+														.evaluate(
+																errorCondition
+																		.getElementContent(),
+																webElement
+																		.getText());
+											}
+										}
+										return false;
+									}
+								});
+
+								testResult = DriverUtils.takeScreenshot(driver,
+										run.getRunName(), E_TestResult.ERROR);
+								LOG.error("Error on run '" + run.getRunName()
+										+ "'");
+								break;
+							} catch (Exception e) {
+								// TODO: handle exception
+							}
 						}
 					}
+					testResult = DriverUtils.takeScreenshot(driver,
+							run.getRunName(), E_TestResult.TIMEOUT);
+					LOG.error("Timeout on run '" + run.getRunName() + "'");
+					break;
 				}
 			}
 

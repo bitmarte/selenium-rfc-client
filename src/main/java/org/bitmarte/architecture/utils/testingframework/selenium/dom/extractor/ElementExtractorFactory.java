@@ -1,6 +1,7 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.dom.extractor;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_ElementExtractor;
+import org.bitmarte.architecture.utils.testingframework.selenium.dom.extractor.impl.ByClassNameElementExtractor;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.extractor.impl.ByIdElementExtractor;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.extractor.impl.ByXpathElementExtractor;
 
@@ -23,6 +24,8 @@ public class ElementExtractorFactory {
 			return new ByXpathElementExtractor();
 		case BY_ID:
 			return new ByIdElementExtractor();
+		case BY_CLASSNAME:
+			return new ByClassNameElementExtractor();
 
 		default:
 			return new ByXpathElementExtractor();

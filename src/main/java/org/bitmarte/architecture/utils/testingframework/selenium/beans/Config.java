@@ -1,5 +1,7 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.beans;
 
+import java.util.List;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -23,6 +25,9 @@ public class Config {
 
 	@XStreamAlias("screenshotBaseDir")
 	private String screenshotBaseDir;
+
+	@XStreamAlias("errorConditions")
+	private List<ErrorCondition> errorConditions;
 
 	public String getSeleniumRcURL() {
 		return seleniumRcURL;
@@ -62,5 +67,13 @@ public class Config {
 
 	public void setLocalWebDriverPath(String localWebDriverPath) {
 		this.localWebDriverPath = localWebDriverPath;
+	}
+
+	public List<ErrorCondition> getErrorConditions() {
+		return errorConditions;
+	}
+
+	public void setErrorConditions(List<ErrorCondition> errorConditions) {
+		this.errorConditions = errorConditions;
 	}
 }
