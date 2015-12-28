@@ -27,74 +27,74 @@ public class DriverUtils {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(DriverUtils.class);
 
+	private WebDriver driver;
+	private String planName;
+
+	public DriverUtils(WebDriver driver, String planName) {
+		this.driver = driver;
+		this.planName = planName;
+	}
+
 	/**
 	 * It removes all browser cookies
-	 * 
-	 * @param driver
 	 */
-	public static void removeAllCookies(WebDriver driver) {
+	public void removeAllCookies() {
 		LOG.info("Removing all cookies...");
-		driver.manage().deleteAllCookies();
+		this.driver.manage().deleteAllCookies();
 	}
 
 	/**
 	 * It removes passed cookies, comma separated values
 	 * 
-	 * @param driver
 	 * @param cookiesCommaSeparatedValues
 	 */
-	public static void removeCookies(WebDriver driver,
-			String cookiesCommaSeparatedValues) {
+	public void removeCookies(String cookiesCommaSeparatedValues) {
 		StringTokenizer stringTokenizer = new StringTokenizer(
 				cookiesCommaSeparatedValues, ",");
 		while (stringTokenizer.hasMoreTokens()) {
 			String cookieName = stringTokenizer.nextToken();
 			LOG.info("Removing cookie '" + cookieName + "'...");
-			driver.manage().deleteCookieNamed(cookieName);
+			this.driver.manage().deleteCookieNamed(cookieName);
 		}
 	}
 
 	/**
 	 * It resizes window's browser
 	 * 
-	 * @param driver
 	 * @param wPx
 	 * @param hPx
 	 */
-	public static void resizeWindow(WebDriver driver, int wPx, int hPx) {
+	public void resizeWindow(int wPx, int hPx) {
 		LOG.info("Setting custom window size: " + wPx + "px x " + hPx + "px");
-		driver.manage().window().setPosition(new Point(0, 0));
+		this.driver.manage().window().setPosition(new Point(0, 0));
 		Dimension d = new Dimension(wPx, hPx);
-		driver.manage().window().setSize(d);
+		this.driver.manage().window().setSize(d);
 	}
 
 	/**
 	 * Take a screenshot and save it with a specified name
 	 * 
-	 * @param driver
 	 * @param fileName
 	 * @param testResult
 	 */
 	@SuppressWarnings("finally")
-	public static E_TestResult takeScreenshot(WebDriver driver,
-			String fileName, E_TestResult testResult) {
+	public E_TestResult takeScreenshot(String fileName, E_TestResult testResult) {
 		boolean hasError = false;
 		try {
-			LOG.debug("Take screenshot '"
-					+ DefaultSeleniumConfig.getConfig().getScreenshotBaseDir()
-					+ fileName + "_" + testResult.toString() + ".png'");
+			String archivePath = DefaultSeleniumConfig.getConfig()
+					.getScreenshotBaseDir() + this.planName + "/";
 
-			WebDriver augmentedDriver = driver;
+			LOG.debug("Take screenshot '" + archivePath + fileName + "_"
+					+ testResult.toString() + ".png'");
+
+			WebDriver augmentedDriver = this.driver;
 			if (DefaultSeleniumConfig.getConfig().getSeleniumRcURL() != null) {
-				augmentedDriver = new Augmenter().augment(driver);
+				augmentedDriver = new Augmenter().augment(this.driver);
 			}
 			File scrFile = ((TakesScreenshot) augmentedDriver)
 					.getScreenshotAs(OutputType.FILE);
 
-			FileUtils.copyFile(scrFile, new File(DefaultSeleniumConfig
-					.getConfig().getScreenshotBaseDir()
-					+ fileName
-					+ "_"
+			FileUtils.copyFile(scrFile, new File(archivePath + fileName + "_"
 					+ testResult.toString() + ".png"));
 		} catch (Exception e) {
 			hasError = true;
@@ -110,35 +110,31 @@ public class DriverUtils {
 
 	/**
 	 * Setup full screen window
-	 * 
-	 * @param driver
 	 */
-	public static void fullScreen(WebDriver driver) {
+	public void fullScreen() {
 		LOG.info("Setup full screen window size...");
-		driver.manage().window().maximize();
+		this.driver.manage().window().maximize();
 	}
 
 	/**
 	 * Manage browser action
 	 * 
-	 * @param driver
 	 * @param browserAction
 	 */
-	public static void makeBrowserAction(WebDriver driver,
-			BrowserAction browserAction) throws Exception {
+	public void makeBrowserAction(BrowserAction browserAction) throws Exception {
 		try {
 			switch (E_BrowserAction.valueOf(browserAction.getAction())) {
 			case REFRESH:
 				LOG.info("window refreshing...");
-				driver.navigate().refresh();
+				this.driver.navigate().refresh();
 				break;
 			case BACK:
 				LOG.info("window back...");
-				driver.navigate().back();
+				this.driver.navigate().back();
 				break;
 			case FORWARD:
 				LOG.info("window forward...");
-				driver.navigate().forward();
+				this.driver.navigate().forward();
 				break;
 			}
 		} catch (Exception e) {

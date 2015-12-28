@@ -50,17 +50,21 @@ public class PlanLoader {
 
 			Plan plan = (Plan) xStream.fromXML(xmlPlan);
 
+			DriverUtils driverUtils = new DriverUtils(driver,
+					StringUtils.substring(xmlPlan.getName(), 0, xmlPlan
+							.getName().lastIndexOf(".")));
+
 			// cookies managing
 			if (plan.isCookiesRemoveAll()) {
-				DriverUtils.removeAllCookies(driver);
+				driverUtils.removeAllCookies();
 			}
 			if (!StringUtils.isEmpty(plan.getCookiesRemove())) {
-				DriverUtils.removeCookies(driver, plan.getCookiesRemove());
+				driverUtils.removeCookies(plan.getCookiesRemove());
 			}
 
 			// window size managing
 			if (plan.isFullscreen()) {
-				DriverUtils.fullScreen(driver);
+				driverUtils.fullScreen();
 			}
 
 			LOG.info(plan.getRuns().size() + " runs in plan '"
@@ -75,28 +79,27 @@ public class PlanLoader {
 
 				// cookies managing
 				if (currentRun.isCookiesRemoveAll()) {
-					DriverUtils.removeAllCookies(driver);
+					driverUtils.removeAllCookies();
 				}
 				if (!StringUtils.isEmpty(plan.getCookiesRemove())) {
-					DriverUtils.removeCookies(driver, plan.getCookiesRemove());
+					driverUtils.removeCookies(plan.getCookiesRemove());
 				}
 
 				// window size managing
 				if (currentRun.isFullscreen()) {
-					DriverUtils.fullScreen(driver);
+					driverUtils.fullScreen();
 				} else {
 					if (currentRun.getWindowWidthPx() > 0
 							&& currentRun.getWindowHeightPx() > 0) {
-						DriverUtils.resizeWindow(driver,
-								currentRun.getWindowWidthPx(),
+						driverUtils.resizeWindow(currentRun.getWindowWidthPx(),
 								currentRun.getWindowHeightPx());
 					}
 				}
 
 				// browser action managing
 				if (currentRun.getBrowserAction() != null) {
-					DriverUtils.makeBrowserAction(driver,
-							currentRun.getBrowserAction());
+					driverUtils
+							.makeBrowserAction(currentRun.getBrowserAction());
 				}
 
 				if (currentRun.getUrl() != null) {
@@ -159,8 +162,8 @@ public class PlanLoader {
 						}
 					});
 
-					testResult = DriverUtils.takeScreenshot(driver,
-							run.getRunName(), E_TestResult.SUCCESS);
+					testResult = driverUtils.takeScreenshot(run.getRunName(),
+							E_TestResult.SUCCESS);
 					LOG.info("Success on run '" + currentRun.getRunName() + "'");
 				} catch (TimeoutException te1) {
 					if (DefaultSeleniumConfig.getConfig().getErrorConditions() != null) {
@@ -194,7 +197,7 @@ public class PlanLoader {
 									}
 								});
 
-								testResult = DriverUtils.takeScreenshot(driver,
+								testResult = driverUtils.takeScreenshot(
 										run.getRunName(), E_TestResult.ERROR);
 								LOG.error("Error on run '" + run.getRunName()
 										+ "'");
@@ -204,8 +207,8 @@ public class PlanLoader {
 							}
 						}
 					}
-					testResult = DriverUtils.takeScreenshot(driver,
-							run.getRunName(), E_TestResult.TIMEOUT);
+					testResult = driverUtils.takeScreenshot(run.getRunName(),
+							E_TestResult.TIMEOUT);
 					LOG.error("Timeout on run '" + run.getRunName() + "'");
 					break;
 				}
