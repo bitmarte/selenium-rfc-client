@@ -3,6 +3,7 @@ package org.bitmarte.architecture.utils.testingframework.selenium.setup;
 import java.io.File;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Config;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.ErrorCondition;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_WebDriver;
 import org.bitmarte.architecture.utils.testingframework.selenium.exceptions.ConfigException;
 import org.slf4j.Logger;
@@ -26,6 +27,7 @@ public class DefaultSeleniumConfig {
 			XStream xStream = new XStream();
 
 			xStream.processAnnotations(Config.class);
+			xStream.processAnnotations(ErrorCondition.class);
 			File file = new File(params[0] + "/config.xml");
 			configuration = (Config) xStream.fromXML(file);
 
@@ -63,7 +65,7 @@ public class DefaultSeleniumConfig {
 							"Property 'seleniumRcURL' is required for 'CHROME_REMOTE' configuration!");
 				}
 			case CHROME_LOCAL:
-				if(getConfig().getLocalWebDriverPath() == null) {
+				if (getConfig().getLocalWebDriverPath() == null) {
 					throw new ConfigException(
 							"Property 'localWebDriverPath' is required for 'CHROME_LOCAL' configuration!");
 				}
