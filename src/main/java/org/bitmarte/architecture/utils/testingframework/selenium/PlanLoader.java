@@ -46,6 +46,7 @@ public class PlanLoader {
 			xStream.processAnnotations(BrowserAction.class);
 			xStream.processAnnotations(InputField.class);
 			xStream.processAnnotations(SuccessCondition.class);
+			xStream.processAnnotations(ErrorCondition.class);
 
 			Plan plan = (Plan) xStream.fromXML(xmlPlan);
 
