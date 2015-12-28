@@ -30,8 +30,8 @@ In this case the client execute tests on remote machine.<br/>
 	&lt;screenshotBaseDir&gt;/var/tmp/selenium/check-evidences/&lt;/screenshotBaseDir&gt;
 	&lt;errorConditions&gt;
 		&lt;errorCondition elementExtractor="BY_CLASSNAME" contentEvaluator="CONTAINS"&gt;
-			<element>error-msg-container</element>
-			<elementContent>error-msg-content</elementContent>
+			&lt;element&gt;error-msg-container&lt;/element&gt;
+			&lt;elementContent&gt;error-msg-content&lt;/elementContent&gt;
 		&lt;/errorCondition&gt;
 	&lt;/errorConditions&gt;
 &lt;/config&gt;
