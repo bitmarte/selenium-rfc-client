@@ -82,7 +82,7 @@ public class DriverUtils {
 		boolean hasError = false;
 		try {
 			String archivePath = DefaultSeleniumConfig.getConfig()
-					.getScreenshotBaseDir() + this.planName + "/";
+					.getReportBaseDir() + this.planName + "/screenshots/";
 
 			LOG.debug("Take screenshot '" + archivePath + fileName + "_"
 					+ testResult.toString() + ".png'");
