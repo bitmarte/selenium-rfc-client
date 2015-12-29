@@ -24,10 +24,11 @@ In this case the client execute tests on remote machine.<br/>
 		<pre>
 			<code>
 &lt;config&gt;
-	&lt;browserName&gt;FIREFOX_REMOTE&lt;/browserName&gt;
+	&lt;browserMode&gt;REMOTE&lt;/browserMode&gt;
+	&lt;browserName&gt;FIREFOX&lt;/browserName&gt;
 	&lt;seleniumRcURL&gt;http://10.217.xx.xx:4444/wd/hub&lt;/seleniumRcURL&gt;
 	&lt;maxTimeOutPerPageInSec&gt;30&lt;/maxTimeOutPerPageInSec&gt;
-	&lt;screenshotBaseDir&gt;/var/tmp/selenium/check-evidences/&lt;/screenshotBaseDir&gt;
+	&lt;reportBaseDir&gt;/var/tmp/selenium/check-evidences/&lt;/reportBaseDir&gt;
 	&lt;errorConditions&gt;
 		&lt;errorCondition elementExtractor="BY_CLASSNAME" contentEvaluator="CONTAINS"&gt;
 			&lt;element&gt;error-msg-container&lt;/element&gt;
@@ -38,31 +39,36 @@ In this case the client execute tests on remote machine.<br/>
 			</code>
 		</pre>
 		<ul>
+			<li>&lt;browserMode&gt; is **require** node where you put the test approach. **Take as look below for supported browsers**</li>
 			<li>&lt;browserName&gt; is a **require** node where you put the browser that you want to run tests on. **Take as look below for supported browsers**</li>
 			<li>&lt;localWebDriverPath&gt; is an **optional** node where you put the webdriver path, only if you are not using Firefox</li>
 			<li>&lt;seleniumRcURL&gt; is an **optional** node where you put the SeleniumRC URL connection. **Remove this node for LOCAL approach**</li>
 			<li>&lt;maxTimeOutPerPageInSec&gt; is a **require** node where you put your waiting timeout in second. It used for checking your success condition</li>
-			<li>&lt;screenshotBaseDir&gt; is a **require** node where you put your preferred location where Selenium save screenshots on at success/error condition</li>
+			<li>&lt;reportBaseDir&gt; is a **require** node where you put your preferred location where Selenium save reports</li>
 			<li>&lt;errorConditions&gt; is an **optional** node where you put your generic error conditions. The elementContent node is an **optional** one</li>
 		</ul>
 	</li>
 </ol>
 
-You can see the allowed values for &lt;browserName&gt; attribute:
+You can see the allowed values for &lt;browserMode&gt; attribute:
 
 | Attribute value        		| Description										|
 | ----------------------------- | ------------------------------------------------- |
-| FIREFOX_LOCAL					| Running local firefox browser instance			|
-| FIREFOX_REMOTE				| Running remote firefox browser instance (a)		|
-| CHROME_LOCAL					| Running local chrome browser instance (b)		|
-| CHROME_REMOTE					| Running remote chrome browser instance (c)		|
-| IEXPLORER_REMOTE				| Running remote iexplorer browser instance (d)	|
+| LOCAL							| Running local browser instance					|
+| REMOTE						| Running remote browser instance (a)				|
 
-(a) You need to install Selenium Standalone Server (http://docs.seleniumhq.org/download/) and passing the '-Dwebdriver.firefox.bin' jar argument point to firefox bin browser<br/>
-(b) You need to download ChromeWebDriver (http://chromedriver.storage.googleapis.com/index.html?path=2.20/) and setup &lt;localWebDriverPath&gt; node into your config.xml<br/>
-(c) You need to download ChromeWebDriver (http://chromedriver.storage.googleapis.com/index.html?path=2.20/) and passing the '-Dwebdriver.chrome.bin' and
-'-Dwebdriver.chrome.driver' jar arguments point to chrome bin browser and chrome driver on your remote machine<br/>
-(d) You need to download Internet Explorer Driver Server (http://www.seleniumhq.org/download/) and passing the '-Dwebdriver.ie.driver' jar argument point to iexplorer driver on your remote machine.
+(a) You need to install Selenium Standalone Server (http://docs.seleniumhq.org/download/), configure it with the right jar agruments
+and put the right URL for property &lt;seleniumRcURL&gt; in your config.xml file for running your remote browser instance
+
+You can see the allowed values for &lt;browserName&gt; attribute:
+
+| Attribute value        		| Description															|
+| ----------------------------- | --------------------------------------------------------------------- |
+| FIREFOX						| Using firefox browser instance										|
+| CHROME						| Using chrome browser instance											|
+| IEXPLORER						| Using iexplorer browser instance, only remote mode is allowed (b)		|
+
+(b) You need to download Internet Explorer Driver Server (http://www.seleniumhq.org/download/) and passing the '-Dwebdriver.ie.driver' jar argument point to iexplorer driver on your remote machine.
 Pay attention that all IExplorer security zone must be the same and the zoom must be setup to 100%
 
 ## Make your plan

@@ -2,10 +2,13 @@ package org.bitmarte.architecture.utils.testingframework.selenium.beans;
 
 import java.util.List;
 
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.reports.PlanReport;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import com.thoughtworks.xstream.converters.basic.BooleanConverter;
 
 /**
@@ -14,6 +17,12 @@ import com.thoughtworks.xstream.converters.basic.BooleanConverter;
  */
 @XStreamAlias("plan")
 public class Plan {
+
+	@XStreamOmitField
+	private String planName;
+
+	@XStreamOmitField
+	private PlanReport planReport;
 
 	@XStreamAlias("cookiesRemoveAll")
 	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = {
@@ -33,6 +42,14 @@ public class Plan {
 
 	@XStreamImplicit
 	private List<Run> runs;
+
+	public String getPlanName() {
+		return planName;
+	}
+
+	public void setPlanName(String planName) {
+		this.planName = planName;
+	}
 
 	public List<Run> getRuns() {
 		return runs;
@@ -64,6 +81,13 @@ public class Plan {
 
 	public void setFullscreen(boolean fullscreen) {
 		this.fullscreen = fullscreen;
+	}
+
+	public PlanReport getPlanReport() {
+		if (this.planReport == null) {
+			this.planReport = new PlanReport();
+		}
+		return planReport;
 	}
 
 }

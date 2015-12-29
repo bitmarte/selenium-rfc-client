@@ -3,6 +3,7 @@ package org.bitmarte.architecture.utils.testingframework.selenium;
 import java.io.File;
 import java.io.FileFilter;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.driver.WebDriverFactory;
@@ -25,7 +26,10 @@ public class RunTestSuite {
 		try {
 			DefaultSeleniumConfig.loadConfiguration(args);
 
+			cleanReportFolder();
+
 			driver = WebDriverFactory.getInstance(DefaultSeleniumConfig
+					.getConfig().getBrowserMode(), DefaultSeleniumConfig
 					.getConfig().getBrowserName());
 
 			File configFolder = new File(args[0] + "/plans");
@@ -57,6 +61,22 @@ public class RunTestSuite {
 			} catch (Exception e2) {
 				LOG.error("WebDriver does not close correctly!");
 			}
+		}
+	}
+
+	/**
+	 * Clean report folder
+	 */
+	private static void cleanReportFolder() {
+		File reportFolder = new File(DefaultSeleniumConfig.getConfig()
+				.getReportBaseDir());
+		try {
+			for (File file : reportFolder.listFiles()) {
+				LOG.debug("removing file: " + file.getAbsolutePath());
+				FileUtils.deleteDirectory(file);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 	}
 }

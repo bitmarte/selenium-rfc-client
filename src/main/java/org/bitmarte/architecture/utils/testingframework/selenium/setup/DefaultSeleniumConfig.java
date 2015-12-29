@@ -4,7 +4,8 @@ import java.io.File;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Config;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.ErrorCondition;
-import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_WebDriver;
+import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserMode;
+import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserName;
 import org.bitmarte.architecture.utils.testingframework.selenium.exceptions.ConfigException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,44 +43,60 @@ public class DefaultSeleniumConfig {
 	}
 
 	private static void configValidation() throws Exception {
+		// checking for required configuration
 		if (getConfig().getBrowserName() == null) {
-			throw new ConfigException("Property 'browserName' is required!");
-		} else {
-			E_WebDriver e_WebDriver = null;
-			try {
-				e_WebDriver = E_WebDriver.valueOf(getConfig().getBrowserName());
-			} catch (Exception e) {
-				throw new ConfigException("We are sorry but '"
-						+ getConfig().getBrowserName() + "' is not supported!");
-			}
-
-			switch (e_WebDriver) {
-			case FIREFOX_REMOTE:
-				if (getConfig().getSeleniumRcURL() == null) {
-					throw new ConfigException(
-							"Property 'seleniumRcURL' is required for 'FIREFOX_REMOTE' configuration!");
-				}
-			case CHROME_REMOTE:
-				if (getConfig().getSeleniumRcURL() == null) {
-					throw new ConfigException(
-							"Property 'seleniumRcURL' is required for 'CHROME_REMOTE' configuration!");
-				}
-			case CHROME_LOCAL:
-				if (getConfig().getLocalWebDriverPath() == null) {
-					throw new ConfigException(
-							"Property 'localWebDriverPath' is required for 'CHROME_LOCAL' configuration!");
-				}
-			}
+			throw new ConfigException("Property 'browserName' is missing!");
 		}
-
+		if (getConfig().getBrowserMode() == null) {
+			throw new ConfigException("Property 'browserMode' is missing!");
+		}
 		if (getConfig().getMaxTimeOutPerPageInSec() == -1) {
 			throw new ConfigException(
-					"Property 'maxTimeOutPerPageInSec' is required!");
+					"Property 'maxTimeOutPerPageInSec' is missing!");
 		}
-		if (getConfig().getScreenshotBaseDir() == null) {
+		if (getConfig().getReportBaseDir() == null) {
 			throw new ConfigException(
-					"Property 'screenshotBaseDir' is required!");
+					"Property 'screenshotBaseDir' is missing!");
 		}
+
+		// checking for allowed values
+		try {
+			E_BrowserName.valueOf(getConfig().getBrowserName());
+		} catch (Exception e) {
+			throw new ConfigException("Value '" + getConfig().getBrowserName()
+					+ "' for property 'browserName' is not allowed!");
+		}
+		try {
+			E_BrowserMode.valueOf(getConfig().getBrowserMode());
+		} catch (Exception e) {
+			throw new ConfigException("Value '" + getConfig().getBrowserMode()
+					+ "' for property 'browserMode' is not allowed!");
+		}
+
+		// checking for restrictions
+		if (E_BrowserMode.valueOf(getConfig().getBrowserMode()).equals(
+				E_BrowserMode.LOCAL)
+				&& E_BrowserName.valueOf(getConfig().getBrowserName()).equals(
+						E_BrowserName.IEXPLORER)) {
+			throw new ConfigException(
+					"BrowserName 'IEXPLORER' for browserMode 'LOCAL' is not allowed!");
+		}
+		if (E_BrowserMode.valueOf(getConfig().getBrowserMode()).equals(
+				E_BrowserMode.REMOTE)
+				&& getConfig().getSeleniumRcURL() == null) {
+			throw new ConfigException(
+					"Property 'seleniumRcURL' for browserMode 'REMOTE' is required!");
+		}
+		if (E_BrowserMode.valueOf(getConfig().getBrowserMode()).equals(
+				E_BrowserMode.LOCAL)
+				&& !E_BrowserName.valueOf(getConfig().getBrowserName()).equals(
+						E_BrowserName.FIREFOX)
+				&& getConfig().getLocalWebDriverPath() == null) {
+			throw new ConfigException(
+					"Property 'localWebDriverPath' for browserName '"
+							+ getConfig().getBrowserName() + "' is required!");
+		}
+
 	}
 
 }

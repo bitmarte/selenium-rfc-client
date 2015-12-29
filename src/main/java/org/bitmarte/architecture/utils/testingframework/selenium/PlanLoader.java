@@ -15,6 +15,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.dom.evaluator.C
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.extractor.ElementExtractorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.driver.DriverUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.exceptions.ConfigException;
+import org.bitmarte.architecture.utils.testingframework.selenium.reports.ReportsUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -50,9 +51,12 @@ public class PlanLoader {
 
 			Plan plan = (Plan) xStream.fromXML(xmlPlan);
 
-			DriverUtils driverUtils = new DriverUtils(driver,
-					StringUtils.substring(xmlPlan.getName(), 0, xmlPlan
-							.getName().lastIndexOf(".")));
+			String planFileName = StringUtils.substring(xmlPlan.getName(), 0,
+					xmlPlan.getName().lastIndexOf("."));
+
+			plan.setPlanName(planFileName);
+
+			DriverUtils driverUtils = new DriverUtils(driver, planFileName);
 
 			// cookies managing
 			if (plan.isCookiesRemoveAll()) {
@@ -71,7 +75,7 @@ public class PlanLoader {
 					+ xmlPlan.getName() + "'");
 
 			// validation
-			validateRun(plan);
+			validatePlan(plan);
 
 			for (Run run : plan.getRuns()) {
 				currentRun = run;
@@ -162,6 +166,7 @@ public class PlanLoader {
 						}
 					});
 
+					run.getRunReport().setTestResult(E_TestResult.SUCCESS);
 					testResult = driverUtils.takeScreenshot(run.getRunName(),
 							E_TestResult.SUCCESS);
 					LOG.info("Success on run '" + currentRun.getRunName() + "'");
@@ -197,6 +202,10 @@ public class PlanLoader {
 									}
 								});
 
+								plan.getPlanReport().setTestResult(
+										E_TestResult.ERROR);
+								run.getRunReport().setTestResult(
+										E_TestResult.ERROR);
 								testResult = driverUtils.takeScreenshot(
 										run.getRunName(), E_TestResult.ERROR);
 								LOG.error("Error on run '" + run.getRunName()
@@ -207,6 +216,9 @@ public class PlanLoader {
 							}
 						}
 					}
+
+					plan.getPlanReport().setTestResult(E_TestResult.ERROR);
+					run.getRunReport().setTestResult(E_TestResult.TIMEOUT);
 					testResult = driverUtils.takeScreenshot(run.getRunName(),
 							E_TestResult.TIMEOUT);
 					LOG.error("Timeout on run '" + run.getRunName() + "'");
@@ -223,13 +235,18 @@ public class PlanLoader {
 						+ "' terminated with some error!");
 				break;
 			}
+
+			// generating reports...
+			ReportsUtils.generate(plan);
+
 		} catch (Exception e) {
 			LOG.error("Error load()!", e);
 			throw e;
 		}
 	}
 
-	private static void validateRun(Plan plan) throws Exception {
+	private static void validatePlan(Plan plan) throws Exception {
+		LOG.debug("Validating plan...");
 		for (Run run : plan.getRuns()) {
 			if (run.getRunName() == null) {
 				throw new ConfigException(
