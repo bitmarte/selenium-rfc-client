@@ -28,7 +28,7 @@ In this case the client execute tests on remote machine.<br/>
 	&lt;browserName&gt;FIREFOX&lt;/browserName&gt;
 	&lt;seleniumRcURL&gt;http://10.217.xx.xx:4444/wd/hub&lt;/seleniumRcURL&gt;
 	&lt;maxTimeOutPerPageInSec&gt;30&lt;/maxTimeOutPerPageInSec&gt;
-	&lt;reportBaseDir&gt;/var/tmp/selenium/check-evidences/&lt;/reportBaseDir&gt;
+	&lt;reportBaseDir&gt;/var/tmp/selenium/reports/&lt;/reportBaseDir&gt;
 	&lt;errorConditions&gt;
 		&lt;errorCondition elementExtractor="BY_CLASSNAME" contentEvaluator="CONTAINS"&gt;
 			&lt;element&gt;error-msg-container&lt;/element&gt;
