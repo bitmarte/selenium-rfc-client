@@ -3,6 +3,8 @@ package org.bitmarte.architecture.utils.testingframework.selenium.beans;
 import java.util.List;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.reports.PlanReport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
@@ -17,6 +19,8 @@ import com.thoughtworks.xstream.converters.basic.BooleanConverter;
  */
 @XStreamAlias("plan")
 public class Plan {
+
+	private static final Logger LOG = LoggerFactory.getLogger(Plan.class);
 
 	@XStreamOmitField
 	private String planName;
@@ -84,7 +88,7 @@ public class Plan {
 	}
 
 	public PlanReport getPlanReport() {
-		if (this.planReport == null) {
+		if (planReport == null) {
 			this.planReport = new PlanReport();
 		}
 		return planReport;

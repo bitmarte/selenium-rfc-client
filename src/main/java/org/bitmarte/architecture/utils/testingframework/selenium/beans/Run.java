@@ -151,7 +151,7 @@ public class Run {
 	}
 
 	public RunReport getRunReport() {
-		if (this.runReport == null) {
+		if (runReport == null) {
 			this.runReport = new RunReport();
 		}
 		return runReport;

@@ -1,12 +1,11 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.reports;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
-import java.util.HashMap;
 import java.util.Map;
 
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
-import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +22,9 @@ public class ReportsUtils {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(ReportsUtils.class);
 
-	public static void generate(Plan plan) throws Exception {
+	private Configuration configuration = null;
+
+	public ReportsUtils() {
 		Configuration configuration = new Configuration(
 				Configuration.VERSION_2_3_23);
 		configuration.setClassLoaderForTemplateLoading(
@@ -38,14 +39,43 @@ public class ReportsUtils {
 					.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 		}
 
-		Map<String, Object> root = new HashMap<String, Object>();
-		root.put("plan", plan);
+		this.configuration = configuration;
+	}
 
-		Template template = configuration.getTemplate("index.html");
-		Writer fileOutputStream = new FileWriter(DefaultSeleniumConfig
-				.getConfig().getReportBaseDir()
-				+ plan.getPlanName()
-				+ "/index.html");
-		template.process(root, fileOutputStream);
+	/**
+	 * Merge template with data and produce the output file
+	 * 
+	 * @param templateName
+	 * @param outputFilePath
+	 * @param data
+	 * @throws Exception
+	 */
+	public void produce(String templateName, String outputFilePath,
+			Map<String, Object> data) throws Exception {
+		try {
+			this.copyTheme(outputFilePath);
+
+			Template template = this.configuration.getTemplate(templateName);
+			Writer fileOutputStream = new FileWriter(outputFilePath);
+			template.process(data, fileOutputStream);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	/**
+	 * Create theme
+	 * 
+	 * @param outputFilePath
+	 * @throws Exception
+	 */
+	private void copyTheme(String outputFilePath) throws Exception {
+		try {
+			FileUtils.copyDirectory(new File(getClass().getClassLoader()
+					.getResource("/freemarker/theme").getFile()), new File(
+					outputFilePath));
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 }

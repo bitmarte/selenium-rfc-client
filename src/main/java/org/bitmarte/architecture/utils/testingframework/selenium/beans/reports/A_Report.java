@@ -1,20 +1,18 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.beans.reports;
 
-import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
-
 /**
  * @author bitmarte
  *
  */
 public abstract class A_Report {
 
-	private E_TestResult testResult;
+	private String testResult;
 
-	public E_TestResult getTestResult() {
+	public String getTestResult() {
 		return testResult;
 	}
 
-	public void setTestResult(E_TestResult testResult) {
+	public void setTestResult(String testResult) {
 		this.testResult = testResult;
 	}
 
