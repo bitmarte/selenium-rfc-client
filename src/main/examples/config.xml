@@ -10,4 +10,5 @@
 			<elementContent>error-msg-content</elementContent>
 		</errorCondition>
 	</errorConditions>
+	<closeBrowserOnFinish>true</closeBrowserOnFinish>
 </config>

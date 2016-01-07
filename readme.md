@@ -35,6 +35,7 @@ In this case the client execute tests on remote machine.<br/>
 			&lt;elementContent&gt;error-msg-content&lt;/elementContent&gt;
 		&lt;/errorCondition&gt;
 	&lt;/errorConditions&gt;
+	&lt;closeBrowserOnFinish&gt;true&lt;/closeBrowserOnFinish&gt;
 &lt;/config&gt;
 			</code>
 		</pre>
@@ -46,6 +47,7 @@ In this case the client execute tests on remote machine.<br/>
 			<li>&lt;maxTimeOutPerPageInSec&gt; is a **require** node where you put your waiting timeout in second. It used for checking your success condition</li>
 			<li>&lt;reportBaseDir&gt; is a **require** node where you put your preferred location where Selenium save reports</li>
 			<li>&lt;errorConditions&gt; is an **optional** node where you put your generic error conditions. The elementContent node is an **optional** one</li>
+			<li>&lt;closeBrowserOnFinish&gt; is an **optional** node used to close browser at the end of your test, boolean value. The default value is true</li>
 		</ul>
 	</li>
 </ol>

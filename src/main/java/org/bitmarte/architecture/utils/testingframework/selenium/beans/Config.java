@@ -3,6 +3,8 @@ package org.bitmarte.architecture.utils.testingframework.selenium.beans;
 import java.util.List;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamConverter;
+import com.thoughtworks.xstream.converters.basic.BooleanConverter;
 
 /**
  * @author bitmarte
@@ -31,6 +33,11 @@ public class Config {
 
 	@XStreamAlias("errorConditions")
 	private List<ErrorCondition> errorConditions;
+
+	@XStreamAlias("closeBrowserOnFinish")
+	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = {
+			"true", "false" })
+	private boolean closeBrowserOnFinish;
 
 	public String getSeleniumRcURL() {
 		return seleniumRcURL;
@@ -86,5 +93,13 @@ public class Config {
 
 	public void setErrorConditions(List<ErrorCondition> errorConditions) {
 		this.errorConditions = errorConditions;
+	}
+
+	public boolean isCloseBrowserOnFinish() {
+		return closeBrowserOnFinish;
+	}
+
+	public void setCloseBrowserOnFinish(boolean closeBrowserOnFinish) {
+		this.closeBrowserOnFinish = closeBrowserOnFinish;
 	}
 }
