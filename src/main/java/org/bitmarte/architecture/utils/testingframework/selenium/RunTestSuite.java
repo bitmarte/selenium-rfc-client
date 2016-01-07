@@ -52,10 +52,12 @@ public class RunTestSuite {
 		} catch (Exception e) {
 			LOG.error("Generic error! ", e);
 		} finally {
-			try {
-				driver.close();
-			} catch (Exception e2) {
-				LOG.error("WebDriver does not close correctly!");
+			if (DefaultSeleniumConfig.getConfig().isCloseBrowserOnFinish()) {
+				try {
+					driver.close();
+				} catch (Exception e2) {
+					LOG.error("WebDriver does not close correctly!");
+				}
 			}
 		}
 	}
