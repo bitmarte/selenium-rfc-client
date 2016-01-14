@@ -32,4 +32,14 @@
 			<version>1.4.8</version>
 		</dependency>
 	</dependencies>
+	<distributionManagement>
+                <repository>
+			<id>releases.repo.url</id>
+                        <url>${releases.repo.url}</url>
+                </repository>
+              	<snapshotRepository>
+			<id>snapshots.repo.url</id>
+			<url>${snapshots.repo.url}</url>
+                </snapshotRepository>
+	</distributionManagement>
 </project>
