@@ -4,12 +4,17 @@ import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_Ele
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.extractor.impl.ByClassNameElementExtractor;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.extractor.impl.ByIdElementExtractor;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.extractor.impl.ByXpathElementExtractor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author bitmarte
  *
  */
 public class ElementExtractorFactory {
+
+	private static final Logger LOG = LoggerFactory
+			.getLogger(ElementExtractorFactory.class);
 
 	public static I_ElementExtractor getInstance(String elementExtractor) {
 		E_ElementExtractor e_ElementExtractor = E_ElementExtractor.BY_XPATH;
@@ -28,7 +33,8 @@ public class ElementExtractorFactory {
 			return new ByClassNameElementExtractor();
 
 		default:
-			return new ByXpathElementExtractor();
+			LOG.error("Unknown case on E_ElementExtractor enum!");
+			return null;
 		}
 	}
 }
