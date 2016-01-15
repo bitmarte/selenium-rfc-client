@@ -56,7 +56,8 @@ public class ReportsUtils {
 			this.copyTheme(outputFilePath);
 
 			Template template = this.configuration.getTemplate(templateName);
-			Writer fileOutputStream = new FileWriter(outputFilePath);
+			Writer fileOutputStream = new FileWriter(outputFilePath + "/"
+					+ templateName);
 			template.process(data, fileOutputStream);
 		} catch (Exception e) {
 			throw e;
@@ -71,9 +72,9 @@ public class ReportsUtils {
 	 */
 	private void copyTheme(String outputFilePath) throws Exception {
 		try {
-			FileUtils.copyDirectory(new File(getClass().getClassLoader()
-					.getResource("/freemarker/theme").getFile()), new File(
-					outputFilePath));
+			FileUtils.copyDirectory(
+					new File(getClass().getResource("/freemarker/theme")
+							.getFile()), new File(outputFilePath + "/theme"));
 		} catch (Exception e) {
 			throw e;
 		}

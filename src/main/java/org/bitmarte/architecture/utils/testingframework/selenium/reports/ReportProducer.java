@@ -25,6 +25,6 @@ public class ReportProducer {
 		root.put("plan", plan);
 
 		reportsUtils.produce("index.html", DefaultSeleniumConfig.getConfig()
-				.getReportBaseDir() + plan.getPlanName() + "/index.html", root);
+				.getReportBaseDir() + plan.getPlanName(), root);
 	}
 }
