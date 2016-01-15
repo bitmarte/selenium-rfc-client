@@ -57,8 +57,7 @@ public class WebDriverFactory {
 				capabilities.setBrowserName("internet explorer");
 				return new RemoteWebDriver(new URL(DefaultSeleniumConfig
 						.getConfig().getSeleniumRcURL()), capabilities);
-			default:
-				// Using Firefox as default remote browser
+			case FIREFOX:
 				LOG.info("using remote firefox browser on server '"
 						+ DefaultSeleniumConfig.getConfig().getSeleniumRcURL()
 						+ "'");
@@ -66,8 +65,11 @@ public class WebDriverFactory {
 				capabilities.setBrowserName("firefox");
 				return new RemoteWebDriver(new URL(DefaultSeleniumConfig
 						.getConfig().getSeleniumRcURL()), capabilities);
+
+			default:
+				throw new ConfigException("Unknown case on E_BrowserName enum!");
 			}
-		default:
+		case LOCAL:
 			// Using local mode as default browserMode
 			switch (e_BrowserName) {
 			case CHROME:
@@ -84,6 +86,9 @@ public class WebDriverFactory {
 				LOG.info("using local firefox browser");
 				return new FirefoxDriver();
 			}
+
+		default:
+			throw new ConfigException("Unknown case on E_BrowserMode enum!");
 		}
 	}
 }
