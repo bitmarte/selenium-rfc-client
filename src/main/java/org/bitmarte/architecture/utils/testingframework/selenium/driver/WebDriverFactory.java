@@ -3,6 +3,7 @@ package org.bitmarte.architecture.utils.testingframework.selenium.driver;
 import java.net.URL;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_WebDriver;
+import org.bitmarte.architecture.utils.testingframework.selenium.exceptions.ConfigException;
 import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -66,8 +67,7 @@ public class WebDriverFactory {
 					.getConfig().getSeleniumRcURL()), capabilities);
 
 		default:
-			LOG.warn("using default WebDriver implementation: local firefox browser");
-			return new FirefoxDriver();
+			throw new ConfigException("Unknown case on e_WebDriver enum!");
 		}
 	}
 }

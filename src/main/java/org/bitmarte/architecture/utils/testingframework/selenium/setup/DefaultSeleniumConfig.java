@@ -59,16 +59,21 @@ public class DefaultSeleniumConfig {
 					throw new ConfigException(
 							"Property 'seleniumRcURL' is required for 'FIREFOX_REMOTE' configuration!");
 				}
+				break;
 			case CHROME_REMOTE:
 				if (getConfig().getSeleniumRcURL() == null) {
 					throw new ConfigException(
 							"Property 'seleniumRcURL' is required for 'CHROME_REMOTE' configuration!");
 				}
+				break;
 			case CHROME_LOCAL:
 				if (getConfig().getLocalWebDriverPath() == null) {
 					throw new ConfigException(
 							"Property 'localWebDriverPath' is required for 'CHROME_LOCAL' configuration!");
 				}
+				break;
+			default:
+				throw new ConfigException("Unknown case on e_WebDriver enum!");
 			}
 		}
 

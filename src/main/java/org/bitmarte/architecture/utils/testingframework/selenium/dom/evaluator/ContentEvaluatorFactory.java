@@ -6,12 +6,17 @@ import org.bitmarte.architecture.utils.testingframework.selenium.dom.evaluator.i
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.evaluator.impl.EqualsContentEvaluator;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.evaluator.impl.RegexContentEvaluator;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.evaluator.impl.StartWithContentEvaluator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author bitmarte
  *
  */
 public class ContentEvaluatorFactory {
+
+	private static final Logger LOG = LoggerFactory
+			.getLogger(ContentEvaluatorFactory.class);
 
 	public static I_ContentEvaluator getInstance(String contentEvaluator) {
 		E_ContentEvaluator e_ContentEvaluator = E_ContentEvaluator.EQUALS;
@@ -34,7 +39,8 @@ public class ContentEvaluatorFactory {
 			return new EqualsContentEvaluator();
 
 		default:
-			return new EqualsContentEvaluator();
+			LOG.error("Unknown case on E_ContentEvaluator enum!");
+			return null;
 		}
 	}
 }
