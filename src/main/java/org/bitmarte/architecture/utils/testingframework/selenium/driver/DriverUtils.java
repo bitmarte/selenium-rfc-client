@@ -136,6 +136,10 @@ public class DriverUtils {
 				LOG.info("window forward...");
 				this.driver.navigate().forward();
 				break;
+				
+			default:
+				throw new ConfigException(
+						"Unknown case on E_BrowserAction enum!");
 			}
 		} catch (Exception e) {
 			throw new ConfigException("Unknow browserAction '"
