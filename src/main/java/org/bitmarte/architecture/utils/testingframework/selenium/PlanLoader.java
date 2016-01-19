@@ -26,6 +26,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.thoughtworks.selenium.webdriven.commands.GetAlert;
 import com.thoughtworks.xstream.XStream;
 
 /**
@@ -40,6 +41,7 @@ public class PlanLoader {
 		Plan plan = null;
 		Run currentRun = null;
 		E_TestResult testResult = null;
+		DriverUtils driverUtils = null;
 		try {
 			XStream xStream = new XStream();
 
@@ -57,7 +59,7 @@ public class PlanLoader {
 
 			plan.setPlanName(planFileName);
 
-			DriverUtils driverUtils = new DriverUtils(driver, planFileName);
+			driverUtils = new DriverUtils(driver, planFileName);
 
 			// cookies managing
 			if (plan.isCookiesRemoveAll()) {
@@ -167,10 +169,10 @@ public class PlanLoader {
 						}
 					});
 
-					run.getRunReport().setTestResult(
+					currentRun.getRunReport().setTestResult(
 							E_TestResult.SUCCESS.name());
-					testResult = driverUtils.takeScreenshot(run.getRunName(),
-							E_TestResult.SUCCESS);
+					testResult = driverUtils.takeScreenshot(
+							currentRun.getRunName(), E_TestResult.SUCCESS);
 					LOG.info("Success on run '" + currentRun.getRunName() + "'");
 				} catch (TimeoutException te1) {
 					if (DefaultSeleniumConfig.getConfig().getErrorConditions() != null) {
@@ -206,26 +208,27 @@ public class PlanLoader {
 
 								plan.getPlanReport().setTestResult(
 										E_TestResult.ERROR.name());
-								run.getRunReport().setTestResult(
+								currentRun.getRunReport().setTestResult(
 										E_TestResult.ERROR.name());
 								testResult = driverUtils.takeScreenshot(
-										run.getRunName(), E_TestResult.ERROR);
-								LOG.error("Error on run '" + run.getRunName()
-										+ "'");
+										currentRun.getRunName(),
+										E_TestResult.ERROR);
+								LOG.error("Error on run '"
+										+ currentRun.getRunName() + "'");
 								break;
 							} catch (Exception e) {
 								// TODO: handle exception
 							}
 						}
 					}
-
-					plan.getPlanReport().setTestResult(
-							E_TestResult.ERROR.name());
-					run.getRunReport().setTestResult(
-							E_TestResult.TIMEOUT.name());
-					testResult = driverUtils.takeScreenshot(run.getRunName(),
+					driverUtils.takeScreenshot(currentRun.getRunName(),
 							E_TestResult.TIMEOUT);
-					LOG.error("Timeout on run '" + run.getRunName() + "'");
+					currentRun.getRunReport().setTestResult(
+							E_TestResult.TIMEOUT.name());
+					testResult = driverUtils.takeScreenshot(
+							currentRun.getRunName(), E_TestResult.TIMEOUT);
+					LOG.error("Timeout on run '" + currentRun.getRunName()
+							+ "'");
 					break;
 				}
 			}
@@ -242,6 +245,9 @@ public class PlanLoader {
 
 		} catch (Exception e) {
 			LOG.error("Error load()!", e);
+
+			driverUtils.takeScreenshot(currentRun.getRunName(),
+					E_TestResult.ERROR);
 			plan.getPlanReport().setTestResult(E_TestResult.ERROR.name());
 			currentRun.getRunReport().setTestResult(E_TestResult.ERROR.name());
 			throw e;

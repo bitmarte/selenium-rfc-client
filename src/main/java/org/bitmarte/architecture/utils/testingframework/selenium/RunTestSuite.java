@@ -26,7 +26,9 @@ public class RunTestSuite {
 		try {
 			DefaultSeleniumConfig.loadConfiguration(args);
 
-			cleanReportFolder();
+			if (DefaultSeleniumConfig.getConfig().isCleanReportBaseDirOnStart()) {
+				cleanReportFolder();
+			}
 
 			driver = WebDriverFactory.getInstance(DefaultSeleniumConfig
 					.getConfig().getBrowserMode(), DefaultSeleniumConfig

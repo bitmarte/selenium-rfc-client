@@ -37,7 +37,12 @@ public class Config {
 	@XStreamAlias("closeBrowserOnFinish")
 	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = {
 			"true", "false" })
-	private boolean closeBrowserOnFinish;
+	private boolean closeBrowserOnFinish = true;
+
+	@XStreamAlias("cleanReportBaseDirOnStart")
+	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = {
+			"true", "false" })
+	private boolean cleanReportBaseDirOnStart = false;
 
 	public String getSeleniumRcURL() {
 		return seleniumRcURL;
@@ -101,5 +106,13 @@ public class Config {
 
 	public void setCloseBrowserOnFinish(boolean closeBrowserOnFinish) {
 		this.closeBrowserOnFinish = closeBrowserOnFinish;
+	}
+
+	public boolean isCleanReportBaseDirOnStart() {
+		return cleanReportBaseDirOnStart;
+	}
+
+	public void setCleanReportBaseDirOnStart(boolean cleanReportBaseDirOnStart) {
+		this.cleanReportBaseDirOnStart = cleanReportBaseDirOnStart;
 	}
 }

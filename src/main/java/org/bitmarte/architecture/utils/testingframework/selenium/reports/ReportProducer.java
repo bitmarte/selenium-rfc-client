@@ -21,10 +21,9 @@ public class ReportProducer {
 		ReportsUtils reportsUtils = new ReportsUtils();
 
 		Map<String, Object> root = new HashMap<String, Object>();
-		root.put("config", new ReportsConfig());
 		root.put("plan", plan);
 
-		reportsUtils.produce("index.html", DefaultSeleniumConfig.getConfig()
+		reportsUtils.produce("report.html", DefaultSeleniumConfig.getConfig()
 				.getReportBaseDir() + plan.getPlanName(), root);
 	}
 }

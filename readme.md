@@ -29,13 +29,14 @@ In this case the client execute tests on remote machine.<br/>
 	&lt;seleniumRcURL&gt;http://10.217.xx.xx:4444/wd/hub&lt;/seleniumRcURL&gt;
 	&lt;maxTimeOutPerPageInSec&gt;30&lt;/maxTimeOutPerPageInSec&gt;
 	&lt;reportBaseDir&gt;/var/tmp/selenium/reports/&lt;/reportBaseDir&gt;
+	&lt;cleanReportBaseDirOnStart&gt;true&lt;/cleanReportBaseDirOnStart&gt;
 	&lt;errorConditions&gt;
 		&lt;errorCondition elementExtractor="BY_CLASSNAME" contentEvaluator="CONTAINS"&gt;
 			&lt;element&gt;error-msg-container&lt;/element&gt;
 			&lt;elementContent&gt;error-msg-content&lt;/elementContent&gt;
 		&lt;/errorCondition&gt;
 	&lt;/errorConditions&gt;
-	&lt;closeBrowserOnFinish&gt;true&lt;/closeBrowserOnFinish&gt;
+	&lt;closeBrowserOnFinish&gt;false&lt;/closeBrowserOnFinish&gt;
 &lt;/config&gt;
 			</code>
 		</pre>
@@ -46,6 +47,7 @@ In this case the client execute tests on remote machine.<br/>
 			<li>&lt;seleniumRcURL&gt; is an **optional** node where you put the SeleniumRC URL connection. **Remove this node for LOCAL approach**</li>
 			<li>&lt;maxTimeOutPerPageInSec&gt; is a **require** node where you put your waiting timeout in second. It used for checking your success condition</li>
 			<li>&lt;reportBaseDir&gt; is a **require** node where you put your preferred location where Selenium save reports</li>
+			<li>&lt;cleanReportBaseDirOnStart&gt; is an **optional** node used to clean the location where Selenium save reports before run. The default value is false</li>
 			<li>&lt;errorConditions&gt; is an **optional** node where you put your generic error conditions. The elementContent node is an **optional** one</li>
 			<li>&lt;closeBrowserOnFinish&gt; is an **optional** node used to close browser at the end of your test, boolean value. The default value is true</li>
 		</ul>
