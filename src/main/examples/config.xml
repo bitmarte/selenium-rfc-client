@@ -1,13 +1,13 @@
 <config>
-	<browserName>FIREFOX_REMOTE</browserName>
+	<browserMode>REMOTE</browserMode>
+	<browserName>FIREFOX</browserName>
 	<seleniumRcURL>http://10.217.xx.xx:4444/wd/hub</seleniumRcURL>
 	<maxTimeOutPerPageInSec>30</maxTimeOutPerPageInSec>
-	<screenshotBaseDir>/var/tmp/selenium/check-evidences/</screenshotBaseDir>
+	<reportBaseDir>/var/tmp/selenium/reports/</reportBaseDir>
 	<errorConditions>
 		<errorCondition elementExtractor="BY_CLASSNAME" contentEvaluator="CONTAINS">
 			<element>error-msg-container</element>
 			<elementContent>error-msg-content</elementContent>
 		</errorCondition>
 	</errorConditions>
-	<closeBrowserOnFinish>true</closeBrowserOnFinish>
 </config>

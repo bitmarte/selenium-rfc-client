@@ -1,0 +1,37 @@
+<html>
+	<head>
+		<title>${plan.planName} test report</title>
+	</head>
+	<body>
+		<h2>
+			${plan.planName} test report:
+						
+			<#if plan.planReport.testResult == "SUCCESS">
+				<span style="color:green;">${plan.planReport.testResult}</span>
+			<#elseif plan.planReport.testResult == "ERROR">
+				<span style="color:red;">${plan.planReport.testResult}</span>
+			<#elseif plan.planReport.testResult == "TIMEOUT">
+				<span style="color:yellow;">${plan.planReport.testResult}</span>
+			</#if>
+		</h2>
+		
+		<table border="1px solid #000" style="padding:5px;">
+			<tr>
+				<th style="font-weight: bold;">RUN NAME</th>
+				<th style="font-weight: bold;">RESULT</th>
+			</tr>
+			<#list plan.runs as run>
+				<tr>
+					<td>${run.runName}</td>
+					<#if run.runReport.testResult == "SUCCESS">
+						<td><p style="color:green;">${run.runReport.testResult}</p></td>
+					<#elseif run.runReport.testResult == "ERROR">
+						<td><p style="color:red;">${run.runReport.testResult}</p></td>
+					<#elseif run.runReport.testResult == "TIMEOUT">
+						<td><p style="color:yellow;">${run.runReport.testResult}</p></td>
+					</#if>
+				</tr>
+			</#list>
+		</table>
+	</body>
+</html>

@@ -16,6 +16,9 @@ public class Config {
 	@XStreamAlias("seleniumRcURL")
 	private String seleniumRcURL;
 
+	@XStreamAlias("browserMode")
+	private String browserMode;
+
 	@XStreamAlias("browserName")
 	private String browserName;
 
@@ -25,8 +28,8 @@ public class Config {
 	@XStreamAlias("maxTimeOutPerPageInSec")
 	private int maxTimeOutPerPageInSec = -1;
 
-	@XStreamAlias("screenshotBaseDir")
-	private String screenshotBaseDir;
+	@XStreamAlias("reportBaseDir")
+	private String reportBaseDir;
 
 	@XStreamAlias("errorConditions")
 	private List<ErrorCondition> errorConditions;
@@ -34,7 +37,12 @@ public class Config {
 	@XStreamAlias("closeBrowserOnFinish")
 	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = {
 			"true", "false" })
-	private boolean closeBrowserOnFinish;
+	private boolean closeBrowserOnFinish = true;
+
+	@XStreamAlias("cleanReportBaseDirOnStart")
+	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = {
+			"true", "false" })
+	private boolean cleanReportBaseDirOnStart = false;
 
 	public String getSeleniumRcURL() {
 		return seleniumRcURL;
@@ -52,12 +60,20 @@ public class Config {
 		this.maxTimeOutPerPageInSec = maxTimeOutPerPageInSec;
 	}
 
-	public String getScreenshotBaseDir() {
-		return screenshotBaseDir;
+	public String getReportBaseDir() {
+		return reportBaseDir;
 	}
 
-	public void setScreenshotBaseDir(String screenshotBaseDir) {
-		this.screenshotBaseDir = screenshotBaseDir;
+	public void setReportBaseDir(String reportBaseDir) {
+		this.reportBaseDir = reportBaseDir;
+	}
+
+	public String getBrowserMode() {
+		return browserMode;
+	}
+
+	public void setBrowserMode(String browserMode) {
+		this.browserMode = browserMode;
 	}
 
 	public String getBrowserName() {
@@ -90,5 +106,13 @@ public class Config {
 
 	public void setCloseBrowserOnFinish(boolean closeBrowserOnFinish) {
 		this.closeBrowserOnFinish = closeBrowserOnFinish;
+	}
+
+	public boolean isCleanReportBaseDirOnStart() {
+		return cleanReportBaseDirOnStart;
+	}
+
+	public void setCleanReportBaseDirOnStart(boolean cleanReportBaseDirOnStart) {
+		this.cleanReportBaseDirOnStart = cleanReportBaseDirOnStart;
 	}
 }

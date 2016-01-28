@@ -15,6 +15,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.dom.evaluator.C
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.extractor.ElementExtractorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.driver.DriverUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.exceptions.ConfigException;
+import org.bitmarte.architecture.utils.testingframework.selenium.reports.ReportProducer;
 import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -25,6 +26,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.thoughtworks.selenium.webdriven.commands.GetAlert;
 import com.thoughtworks.xstream.XStream;
 
 /**
@@ -36,8 +38,10 @@ public class PlanLoader {
 	private static final Logger LOG = LoggerFactory.getLogger(PlanLoader.class);
 
 	public static void load(WebDriver driver, File xmlPlan) throws Exception {
+		Plan plan = null;
 		Run currentRun = null;
 		E_TestResult testResult = null;
+		DriverUtils driverUtils = null;
 		try {
 			XStream xStream = new XStream();
 
@@ -48,26 +52,33 @@ public class PlanLoader {
 			xStream.processAnnotations(SuccessCondition.class);
 			xStream.processAnnotations(ErrorCondition.class);
 
-			Plan plan = (Plan) xStream.fromXML(xmlPlan);
+			plan = (Plan) xStream.fromXML(xmlPlan);
+
+			String planFileName = StringUtils.substring(xmlPlan.getName(), 0,
+					xmlPlan.getName().lastIndexOf("."));
+
+			plan.setPlanName(planFileName);
+
+			driverUtils = new DriverUtils(driver, planFileName);
 
 			// cookies managing
 			if (plan.isCookiesRemoveAll()) {
-				DriverUtils.removeAllCookies(driver);
+				driverUtils.removeAllCookies();
 			}
 			if (!StringUtils.isEmpty(plan.getCookiesRemove())) {
-				DriverUtils.removeCookies(driver, plan.getCookiesRemove());
+				driverUtils.removeCookies(plan.getCookiesRemove());
 			}
 
 			// window size managing
 			if (plan.isFullscreen()) {
-				DriverUtils.fullScreen(driver);
+				driverUtils.fullScreen();
 			}
 
 			LOG.info(plan.getRuns().size() + " runs in plan '"
 					+ xmlPlan.getName() + "'");
 
 			// validation
-			validateRun(plan);
+			validatePlan(plan);
 
 			for (Run run : plan.getRuns()) {
 				currentRun = run;
@@ -75,28 +86,27 @@ public class PlanLoader {
 
 				// cookies managing
 				if (currentRun.isCookiesRemoveAll()) {
-					DriverUtils.removeAllCookies(driver);
+					driverUtils.removeAllCookies();
 				}
 				if (!StringUtils.isEmpty(plan.getCookiesRemove())) {
-					DriverUtils.removeCookies(driver, plan.getCookiesRemove());
+					driverUtils.removeCookies(plan.getCookiesRemove());
 				}
 
 				// window size managing
 				if (currentRun.isFullscreen()) {
-					DriverUtils.fullScreen(driver);
+					driverUtils.fullScreen();
 				} else {
 					if (currentRun.getWindowWidthPx() > 0
 							&& currentRun.getWindowHeightPx() > 0) {
-						DriverUtils.resizeWindow(driver,
-								currentRun.getWindowWidthPx(),
+						driverUtils.resizeWindow(currentRun.getWindowWidthPx(),
 								currentRun.getWindowHeightPx());
 					}
 				}
 
 				// browser action managing
 				if (currentRun.getBrowserAction() != null) {
-					DriverUtils.makeBrowserAction(driver,
-							currentRun.getBrowserAction());
+					driverUtils
+							.makeBrowserAction(currentRun.getBrowserAction());
 				}
 
 				if (currentRun.getUrl() != null) {
@@ -159,8 +169,10 @@ public class PlanLoader {
 						}
 					});
 
-					testResult = DriverUtils.takeScreenshot(driver,
-							run.getRunName(), E_TestResult.SUCCESS);
+					currentRun.getRunReport().setTestResult(
+							E_TestResult.SUCCESS.name());
+					testResult = driverUtils.takeScreenshot(
+							currentRun.getRunName(), E_TestResult.SUCCESS);
 					LOG.info("Success on run '" + currentRun.getRunName() + "'");
 				} catch (TimeoutException te1) {
 					if (DefaultSeleniumConfig.getConfig().getErrorConditions() != null) {
@@ -194,19 +206,29 @@ public class PlanLoader {
 									}
 								});
 
-								testResult = DriverUtils.takeScreenshot(driver,
-										run.getRunName(), E_TestResult.ERROR);
-								LOG.error("Error on run '" + run.getRunName()
-										+ "'");
+								plan.getPlanReport().setTestResult(
+										E_TestResult.ERROR.name());
+								currentRun.getRunReport().setTestResult(
+										E_TestResult.ERROR.name());
+								testResult = driverUtils.takeScreenshot(
+										currentRun.getRunName(),
+										E_TestResult.ERROR);
+								LOG.error("Error on run '"
+										+ currentRun.getRunName() + "'");
 								break;
 							} catch (Exception e) {
 								// TODO: handle exception
 							}
 						}
 					}
-					testResult = DriverUtils.takeScreenshot(driver,
-							run.getRunName(), E_TestResult.TIMEOUT);
-					LOG.error("Timeout on run '" + run.getRunName() + "'");
+					driverUtils.takeScreenshot(currentRun.getRunName(),
+							E_TestResult.TIMEOUT);
+					currentRun.getRunReport().setTestResult(
+							E_TestResult.TIMEOUT.name());
+					testResult = driverUtils.takeScreenshot(
+							currentRun.getRunName(), E_TestResult.TIMEOUT);
+					LOG.error("Timeout on run '" + currentRun.getRunName()
+							+ "'");
 					break;
 				}
 			}
@@ -220,13 +242,23 @@ public class PlanLoader {
 						+ "' terminated with some error!");
 				break;
 			}
+
 		} catch (Exception e) {
 			LOG.error("Error load()!", e);
+
+			driverUtils.takeScreenshot(currentRun.getRunName(),
+					E_TestResult.ERROR);
+			plan.getPlanReport().setTestResult(E_TestResult.ERROR.name());
+			currentRun.getRunReport().setTestResult(E_TestResult.ERROR.name());
 			throw e;
+		} finally {
+			// generating reports...
+			ReportProducer.generate(plan);
 		}
 	}
 
-	private static void validateRun(Plan plan) throws Exception {
+	private static void validatePlan(Plan plan) throws Exception {
+		LOG.debug("Validating plan...");
 		for (Run run : plan.getRuns()) {
 			if (run.getRunName() == null) {
 				throw new ConfigException(

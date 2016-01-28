@@ -2,9 +2,12 @@ package org.bitmarte.architecture.utils.testingframework.selenium.beans;
 
 import java.util.List;
 
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.reports.RunReport;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import com.thoughtworks.xstream.converters.basic.BooleanConverter;
 
 /**
@@ -13,6 +16,9 @@ import com.thoughtworks.xstream.converters.basic.BooleanConverter;
  */
 @XStreamAlias("run")
 public class Run {
+
+	@XStreamOmitField
+	private RunReport runReport;
 
 	@XStreamAlias("cookiesRemoveAll")
 	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = {
@@ -142,6 +148,13 @@ public class Run {
 
 	public void setBrowserAction(BrowserAction browserAction) {
 		this.browserAction = browserAction;
+	}
+
+	public RunReport getRunReport() {
+		if (runReport == null) {
+			this.runReport = new RunReport();
+		}
+		return runReport;
 	}
 
 }
