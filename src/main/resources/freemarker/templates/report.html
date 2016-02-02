@@ -23,12 +23,16 @@
 			<#list plan.runs as run>
 				<tr>
 					<td>${run.runName}</td>
-					<#if run.runReport.testResult == "SUCCESS">
+					<#if run.runReport.testResult??>
+						<#if run.runReport.testResult == "SUCCESS">
 						<td><p style="color:green;">${run.runReport.testResult}</p></td>
-					<#elseif run.runReport.testResult == "ERROR">
+						<#elseif run.runReport.testResult == "ERROR">
 						<td><p style="color:red;">${run.runReport.testResult}</p></td>
-					<#elseif run.runReport.testResult == "TIMEOUT">
+						<#elseif run.runReport.testResult == "TIMEOUT">
 						<td><p style="color:yellow;">${run.runReport.testResult}</p></td>
+						</#if>
+					<#else>
+					<td><p style="color:gray;">UNTESTED</p></td>
 					</#if>
 				</tr>
 			</#list>

@@ -26,7 +26,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.thoughtworks.selenium.webdriven.commands.GetAlert;
 import com.thoughtworks.xstream.XStream;
 
 /**
@@ -156,14 +155,22 @@ public class PlanLoader {
 											d,
 											finalRun.getSuccessCondition()
 													.getElement());
-							for (WebElement webElement : elements) {
-								return ContentEvaluatorFactory.getInstance(
-										finalRun.getSuccessCondition()
-												.getContentEvaluator())
-										.evaluate(
-												finalRun.getSuccessCondition()
-														.getElementContent(),
-												webElement.getText());
+							if (!elements.isEmpty()) {
+								if (finalRun.getSuccessCondition()
+										.getElementContent() != null) {
+									for (WebElement webElement : elements) {
+										return ContentEvaluatorFactory
+												.getInstance(
+														finalRun.getSuccessCondition()
+																.getContentEvaluator())
+												.evaluate(
+														finalRun.getSuccessCondition()
+																.getElementContent(),
+														webElement.getText());
+									}
+								} else {
+									return true;
+								}
 							}
 							return false;
 						}
@@ -189,17 +196,22 @@ public class PlanLoader {
 														d,
 														errorCondition
 																.getElement());
-										if (errorCondition.getElementContent() != null) {
-											for (WebElement webElement : elements) {
-												return ContentEvaluatorFactory
-														.getInstance(
-																errorCondition
-																		.getContentEvaluator())
-														.evaluate(
-																errorCondition
-																		.getElementContent(),
-																webElement
-																		.getText());
+										if (!elements.isEmpty()) {
+											if (errorCondition
+													.getElementContent() != null) {
+												for (WebElement webElement : elements) {
+													return ContentEvaluatorFactory
+															.getInstance(
+																	errorCondition
+																			.getContentEvaluator())
+															.evaluate(
+																	errorCondition
+																			.getElementContent(),
+																	webElement
+																			.getText());
+												}
+											} else {
+												return true;
 											}
 										}
 										return false;
@@ -215,20 +227,22 @@ public class PlanLoader {
 										E_TestResult.ERROR);
 								LOG.error("Error on run '"
 										+ currentRun.getRunName() + "'");
+
 								break;
 							} catch (Exception e) {
-								// TODO: handle exception
+
 							}
 						}
+					} else {
+						driverUtils.takeScreenshot(currentRun.getRunName(),
+								E_TestResult.TIMEOUT);
+						currentRun.getRunReport().setTestResult(
+								E_TestResult.TIMEOUT.name());
+						testResult = driverUtils.takeScreenshot(
+								currentRun.getRunName(), E_TestResult.TIMEOUT);
+						LOG.error("Timeout on run '" + currentRun.getRunName()
+								+ "'");
 					}
-					driverUtils.takeScreenshot(currentRun.getRunName(),
-							E_TestResult.TIMEOUT);
-					currentRun.getRunReport().setTestResult(
-							E_TestResult.TIMEOUT.name());
-					testResult = driverUtils.takeScreenshot(
-							currentRun.getRunName(), E_TestResult.TIMEOUT);
-					LOG.error("Timeout on run '" + currentRun.getRunName()
-							+ "'");
 					break;
 				}
 			}

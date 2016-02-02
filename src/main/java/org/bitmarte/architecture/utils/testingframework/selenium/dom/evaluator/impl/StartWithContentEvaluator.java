@@ -19,7 +19,7 @@ public class StartWithContentEvaluator extends A_ContentEvaluator {
 	public boolean evaluate(String str1, String str2) {
 		LOG.debug("using StartWithContentEvaluator...");
 		boolean result = false;
-		if (StringUtils.startsWithIgnoreCase(str1, str2)) {
+		if (StringUtils.startsWithIgnoreCase(str2, str1)) {
 			result = true;
 		}
 		return result;
