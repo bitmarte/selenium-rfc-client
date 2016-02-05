@@ -39,7 +39,6 @@ public class PlanLoader {
 	public static void load(WebDriver driver, File xmlPlan) throws Exception {
 		Plan plan = null;
 		Run currentRun = null;
-		E_TestResult testResult = null;
 		DriverUtils driverUtils = null;
 		try {
 			XStream xStream = new XStream();
@@ -135,12 +134,7 @@ public class PlanLoader {
 						DefaultSeleniumConfig.getConfig()
 								.getMaxTimeOutPerPageInSec());
 				try {
-					LOG.debug("Serching by xpath '"
-							+ currentRun.getSuccessCondition().getElement()
-							+ "'  with content '"
-							+ currentRun.getSuccessCondition()
-									.getElementContent()
-							+ "' unit "
+					LOG.debug("Serching success condition unit "
 							+ DefaultSeleniumConfig.getConfig()
 									.getMaxTimeOutPerPageInSec() + " sec...");
 
@@ -178,10 +172,11 @@ public class PlanLoader {
 
 					currentRun.getRunReport().setTestResult(
 							E_TestResult.SUCCESS.name());
-					testResult = driverUtils.takeScreenshot(
-							currentRun.getRunName(), E_TestResult.SUCCESS);
 					LOG.info("Success on run '" + currentRun.getRunName() + "'");
 				} catch (TimeoutException te1) {
+					LOG.debug("Searching error condition unit "
+							+ DefaultSeleniumConfig.getConfig()
+									.getMaxTimeOutPerPageInSec() + " sec...");
 					if (DefaultSeleniumConfig.getConfig().getErrorConditions() != null) {
 						for (final ErrorCondition errorCondition : DefaultSeleniumConfig
 								.getConfig().getErrorConditions()) {
@@ -217,37 +212,47 @@ public class PlanLoader {
 										return false;
 									}
 								});
-
-								plan.getPlanReport().setTestResult(
-										E_TestResult.ERROR.name());
 								currentRun.getRunReport().setTestResult(
 										E_TestResult.ERROR.name());
-								testResult = driverUtils.takeScreenshot(
-										currentRun.getRunName(),
-										E_TestResult.ERROR);
+								plan.getPlanReport().setTestResult(
+										E_TestResult.ERROR.name());
 								LOG.error("Error on run '"
 										+ currentRun.getRunName() + "'");
 
 								break;
 							} catch (Exception e) {
-
+								currentRun.getRunReport().setTestResult(
+										E_TestResult.TIMEOUT.name());
+								if (!E_TestResult.ERROR.name().equals(
+										currentRun.getRunReport()
+												.getTestResult())) {
+									plan.getPlanReport().setTestResult(
+											E_TestResult.TIMEOUT.name());
+								}
+								LOG.error("Timeout on run '"
+										+ currentRun.getRunName() + "'");
 							}
 						}
 					} else {
-						driverUtils.takeScreenshot(currentRun.getRunName(),
-								E_TestResult.TIMEOUT);
 						currentRun.getRunReport().setTestResult(
 								E_TestResult.TIMEOUT.name());
-						testResult = driverUtils.takeScreenshot(
-								currentRun.getRunName(), E_TestResult.TIMEOUT);
+						if (!E_TestResult.ERROR.name().equals(
+								currentRun.getRunReport().getTestResult())) {
+							plan.getPlanReport().setTestResult(
+									E_TestResult.TIMEOUT.name());
+						}
 						LOG.error("Timeout on run '" + currentRun.getRunName()
 								+ "'");
 					}
 					break;
+				} finally {
+					driverUtils.takeScreenshot(currentRun.getRunName(),
+							E_TestResult.valueOf(currentRun.getRunReport()
+									.getTestResult()));
 				}
 			}
 
-			switch (testResult) {
+			switch (E_TestResult.valueOf(plan.getPlanReport().getTestResult())) {
 			case SUCCESS:
 				LOG.info("Plan '" + xmlPlan.getName() + "' completed!");
 				break;

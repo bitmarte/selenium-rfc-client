@@ -3,6 +3,7 @@ package org.bitmarte.architecture.utils.testingframework.selenium.beans;
 import java.util.List;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.reports.PlanReport;
+import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,6 +93,44 @@ public class Plan {
 			this.planReport = new PlanReport();
 		}
 		return planReport;
+	}
+
+	public int getTotalRun() {
+		return this.runs.size();
+	}
+
+	public int getSuccessRun() {
+		int counter = 0;
+		for (Run run : this.runs) {
+			if (run.getRunReport().getTestResult() != null
+					&& run.getRunReport().getTestResult()
+							.equals(E_TestResult.SUCCESS.name())) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
+	public int getErrorRun() {
+		int counter = 0;
+		for (Run run : this.runs) {
+			if (run.getRunReport().getTestResult() != null
+					&& run.getRunReport().getTestResult()
+							.equals(E_TestResult.ERROR.name())) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
+	public int getUntestedRun() {
+		int counter = 0;
+		for (Run run : this.runs) {
+			if (run.getRunReport().getTestResult() == null) {
+				counter++;
+			}
+		}
+		return counter;
 	}
 
 }

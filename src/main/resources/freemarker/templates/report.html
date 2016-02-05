@@ -1,6 +1,16 @@
 <html>
 	<head>
 		<title>${plan.planName} test report</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+		<style>
+			body{
+				padding: 0;
+				margin: 0;
+			}
+			#canvas-holder{
+				width:20%;
+			}
+		</style>
 	</head>
 	<body>
 		<h2>
@@ -15,6 +25,11 @@
 			</#if>
 		</h2>
 		
+		<div id="canvas-holder">
+			<canvas id="chart-area" width="500" height="500"/>
+		</div>
+		
+		<br/>
 		<table border="1px solid #000" style="padding:5px;">
 			<tr>
 				<th style="font-weight: bold;">RUN NAME</th>
@@ -25,11 +40,11 @@
 					<td>${run.runName}</td>
 					<#if run.runReport.testResult??>
 						<#if run.runReport.testResult == "SUCCESS">
-						<td><p style="color:green;">${run.runReport.testResult}</p></td>
+						<td style="background-color:green">${run.runReport.testResult}</td>
 						<#elseif run.runReport.testResult == "ERROR">
-						<td><p style="color:red;">${run.runReport.testResult}</p></td>
+						<td style="background-color:red">${run.runReport.testResult}</td>
 						<#elseif run.runReport.testResult == "TIMEOUT">
-						<td><p style="color:yellow;">${run.runReport.testResult}</p></td>
+						<td style="background-color:yellow">${run.runReport.testResult}</td>
 						</#if>
 					<#else>
 					<td><p style="color:gray;">UNTESTED</p></td>
@@ -37,5 +52,41 @@
 				</tr>
 			</#list>
 		</table>
+		
+		<!--S charts -->
+		<script>
+			var doughnutData = [
+					{
+						value: ${plan.successRun},
+						color:"#009933",
+						highlight: "#00E64D",
+						label: "SUCCESS"
+					},
+					{
+						value: ${plan.errorRun},
+						color: "#CC2900",
+						highlight: "#FF3300",
+						label: "FAILED"
+					},
+					{
+						value: ${plan.untestedRun},
+						color: "#949FB1",
+						highlight: "#A8B3C5",
+						label: "UNTESTED"
+					},
+					{
+						value: ${plan.totalRun} - ${plan.successRun} - ${plan.errorRun} - ${plan.untestedRun},
+						color: "#FFFF00",
+						highlight: "#E5E600",
+						label: "TIMEOUT"
+					}
+				];
+				window.onload = function(){
+					var ctx = document.getElementById("chart-area").getContext("2d");
+					window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
+				};
+		</script>
+		<!--E charts -->
+		
 	</body>
 </html>
