@@ -139,13 +139,15 @@ public class PlanLoader {
 				}
 
 				LOG.info("Test result checking...");
-				WebDriverWait wait = new WebDriverWait(driver,
-						DefaultSeleniumConfig.getConfig()
-								.getMaxTimeOutPerPageInSec());
+				WebDriverWait wait = null;
 				try {
+					wait = new WebDriverWait(driver, DefaultSeleniumConfig
+							.getConfig()
+							.getMaxTimeOutPerSuccessConditionInSec());
 					LOG.debug("Serching success condition unit "
 							+ DefaultSeleniumConfig.getConfig()
-									.getMaxTimeOutPerPageInSec() + " sec...");
+									.getMaxTimeOutPerSuccessConditionInSec()
+							+ " sec...");
 
 					final Run finalRun = currentRun;
 					wait.until(new ExpectedCondition<Boolean>() {
@@ -179,14 +181,18 @@ public class PlanLoader {
 						}
 					});
 
-					plan.getPlanReport().setTestResult(E_TestResult.SUCCESS.name());
+					plan.getPlanReport().setTestResult(
+							E_TestResult.SUCCESS.name());
 					currentRun.getRunReport().setTestResult(
 							E_TestResult.SUCCESS.name());
 					LOG.info("Success on run '" + currentRun.getRunName() + "'");
 				} catch (TimeoutException te1) {
+					wait = new WebDriverWait(driver, DefaultSeleniumConfig
+							.getConfig().getMaxTimeOutPerErrorConditionInSec());
 					LOG.debug("Searching error condition unit "
 							+ DefaultSeleniumConfig.getConfig()
-									.getMaxTimeOutPerPageInSec() + " sec...");
+									.getMaxTimeOutPerErrorConditionInSec()
+							+ " sec...");
 					if (DefaultSeleniumConfig.getConfig().getErrorConditions() != null) {
 						for (final ErrorCondition errorCondition : DefaultSeleniumConfig
 								.getConfig().getErrorConditions()) {

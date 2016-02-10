@@ -25,8 +25,11 @@ public class Config {
 	@XStreamAlias("localWebDriverPath")
 	private String localWebDriverPath;
 
-	@XStreamAlias("maxTimeOutPerPageInSec")
-	private int maxTimeOutPerPageInSec = -1;
+	@XStreamAlias("maxTimeOutPerSuccessConditionInSec")
+	private int maxTimeOutPerSuccessConditionInSec;
+
+	@XStreamAlias("maxTimeOutPerErrorConditionInSec")
+	private int maxTimeOutPerErrorConditionInSec;
 
 	@XStreamAlias("reportBaseDir")
 	private String reportBaseDir;
@@ -37,12 +40,12 @@ public class Config {
 	@XStreamAlias("closeBrowserOnFinish")
 	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = {
 			"true", "false" })
-	private boolean closeBrowserOnFinish = true;
+	private boolean closeBrowserOnFinish;
 
 	@XStreamAlias("cleanReportBaseDirOnStart")
 	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = {
 			"true", "false" })
-	private boolean cleanReportBaseDirOnStart = false;
+	private boolean cleanReportBaseDirOnStart;
 
 	public String getSeleniumRcURL() {
 		return seleniumRcURL;
@@ -52,12 +55,22 @@ public class Config {
 		this.seleniumRcURL = seleniumRcURL;
 	}
 
-	public int getMaxTimeOutPerPageInSec() {
-		return maxTimeOutPerPageInSec;
+	public int getMaxTimeOutPerSuccessConditionInSec() {
+		return maxTimeOutPerSuccessConditionInSec;
 	}
 
-	public void setMaxTimeOutPerPageInSec(int maxTimeOutPerPageInSec) {
-		this.maxTimeOutPerPageInSec = maxTimeOutPerPageInSec;
+	public void setMaxTimeOutPerSuccessConditionInSec(
+			int maxTimeOutPerSuccessConditionInSec) {
+		this.maxTimeOutPerSuccessConditionInSec = maxTimeOutPerSuccessConditionInSec;
+	}
+
+	public int getMaxTimeOutPerErrorConditionInSec() {
+		return maxTimeOutPerErrorConditionInSec;
+	}
+
+	public void setMaxTimeOutPerErrorConditionInSec(
+			int maxTimeOutPerErrorConditionInSec) {
+		this.maxTimeOutPerErrorConditionInSec = maxTimeOutPerErrorConditionInSec;
 	}
 
 	public String getReportBaseDir() {
