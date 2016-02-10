@@ -27,7 +27,6 @@ In this case the client execute tests on remote machine.<br/>
 	&lt;browserMode&gt;REMOTE&lt;/browserMode&gt;
 	&lt;browserName&gt;FIREFOX&lt;/browserName&gt;
 	&lt;seleniumRcURL&gt;http://10.217.xx.xx:4444/wd/hub&lt;/seleniumRcURL&gt;
-	&lt;maxTimeOutPerPageInSec&gt;30&lt;/maxTimeOutPerPageInSec&gt;
 	&lt;reportBaseDir&gt;/var/tmp/selenium/reports/&lt;/reportBaseDir&gt;
 	&lt;cleanReportBaseDirOnStart&gt;true&lt;/cleanReportBaseDirOnStart&gt;
 	&lt;errorConditions&gt;
@@ -45,7 +44,8 @@ In this case the client execute tests on remote machine.<br/>
 			<li>&lt;browserName&gt; is a **require** node where you put the browser that you want to run tests on. **Take as look below for supported browsers**</li>
 			<li>&lt;localWebDriverPath&gt; is an **optional** node where you put the webdriver path, only if you are not using Firefox</li>
 			<li>&lt;seleniumRcURL&gt; is an **optional** node where you put the SeleniumRC URL connection. **Remove this node for LOCAL approach**</li>
-			<li>&lt;maxTimeOutPerPageInSec&gt; is a **require** node where you put your waiting timeout in second. It used for checking your success condition</li>
+			<li>&lt;maxTimeOutPerSuccessConditionInSec&gt; is an **optional** node where you put your waiting timeout in second that it used for checking your success condition. The default value is 10 sec.</li>
+			<li>&lt;maxTimeOutPerErrorConditionInSec&gt; is an "optional" node where you put your waiting timeout in second that it used for checking yours error condition. The default value is 2 sec.</li>
 			<li>&lt;reportBaseDir&gt; is a **require** node where you put your preferred location where Selenium save reports</li>
 			<li>&lt;cleanReportBaseDirOnStart&gt; is an **optional** node used to clean the location where Selenium save reports before run. The default value is false</li>
 			<li>&lt;errorConditions&gt; is an **optional** node where you put your generic error conditions. The elementContent node is an **optional** one</li>

@@ -20,6 +20,8 @@ public class DefaultSeleniumConfig {
 
 	private static final Logger LOG = LoggerFactory
 			.getLogger(DefaultSeleniumConfig.class);
+	private static final int MAX_TIMEOUT_PER_SUCCESS_CONDITION_IN_SEC = 10;
+	private static final int MAX_TIMEOUT_PER_ERROR_CONDITION_IN_SEC = 2;
 
 	private static Config configuration = null;
 
@@ -33,6 +35,7 @@ public class DefaultSeleniumConfig {
 			configuration = (Config) xStream.fromXML(file);
 
 			configValidation();
+			setDefaultValues();
 		} catch (Exception e) {
 			throw e;
 		}
@@ -42,6 +45,26 @@ public class DefaultSeleniumConfig {
 		return configuration;
 	}
 
+	private static void setDefaultValues() {
+		LOG.debug("Setting defalut config...");
+		if (getConfig().getMaxTimeOutPerSuccessConditionInSec() == 0) {
+			getConfig().setMaxTimeOutPerSuccessConditionInSec(
+					MAX_TIMEOUT_PER_SUCCESS_CONDITION_IN_SEC);
+			LOG.info("setMaxTimeOutPerSuccessConditionInSec = "
+					+ MAX_TIMEOUT_PER_SUCCESS_CONDITION_IN_SEC);
+		}
+		if (getConfig().getMaxTimeOutPerErrorConditionInSec() == 0) {
+			getConfig().setMaxTimeOutPerErrorConditionInSec(
+					MAX_TIMEOUT_PER_ERROR_CONDITION_IN_SEC);
+			LOG.info("setMaxTimeOutPerErrorConditionInSec = "
+					+ MAX_TIMEOUT_PER_ERROR_CONDITION_IN_SEC);
+		}
+		if (!getConfig().isCloseBrowserOnFinish()) {
+			getConfig().setCloseBrowserOnFinish(true);
+			LOG.info("setCloseBrowserOnFinish = true");
+		}
+	}
+
 	private static void configValidation() throws Exception {
 		// checking for required configuration
 		if (getConfig().getBrowserName() == null) {
@@ -49,10 +72,6 @@ public class DefaultSeleniumConfig {
 		}
 		if (getConfig().getBrowserMode() == null) {
 			throw new ConfigException("Property 'browserMode' is missing!");
-		}
-		if (getConfig().getMaxTimeOutPerPageInSec() == -1) {
-			throw new ConfigException(
-					"Property 'maxTimeOutPerPageInSec' is missing!");
 		}
 		if (getConfig().getReportBaseDir() == null) {
 			throw new ConfigException(
