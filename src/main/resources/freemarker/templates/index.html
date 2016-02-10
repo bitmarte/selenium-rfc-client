@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<title>Report Index</title>
+	</head>
+	<body>
+		<h2>Report Index</h2>
+		<table border="1px solid #000" style="padding:5px;">
+			<tr>
+				<th style="font-weight: bold;">PLAN NAME</th>
+				<th style="font-weight: bold;">RESULT</th>
+				<th style="font-weight: bold;">PLAN REPORT</th>
+			</tr>
+			<#list plans as plan>
+				<tr>
+					<td>${plan.planName}</td>
+					<#if plan.planReport.testResult == "SUCCESS">
+						<td style="background-color:green">${plan.planReport.testResult}</td>
+					<#elseif plan.planReport.testResult == "ERROR">
+						<td style="background-color:red">${plan.planReport.testResult}</td>
+					<#elseif plan.planReport.testResult == "TIMEOUT">
+						<td style="background-color:yellow">${plan.planReport.testResult}</td>
+					</#if>
+					<td><a href="${reportBasePath}${plan.planName}/plan-report.html" target="_blank">Open report...</a></td>
+				</tr>
+			</#list>
+		</table>
+	</body>
+</html>

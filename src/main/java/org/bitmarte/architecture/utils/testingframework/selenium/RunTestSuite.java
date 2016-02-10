@@ -2,11 +2,15 @@ package org.bitmarte.architecture.utils.testingframework.selenium;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.driver.WebDriverFactory;
+import org.bitmarte.architecture.utils.testingframework.selenium.reports.ReportProducer;
 import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
@@ -23,6 +27,7 @@ public class RunTestSuite {
 
 	public static void main(String[] args) throws Exception {
 		WebDriver driver = null;
+		List<Plan> workedPlans = new ArrayList<Plan>();
 		try {
 			DefaultSeleniumConfig.loadConfiguration(args);
 
@@ -49,7 +54,7 @@ public class RunTestSuite {
 
 			if (plans.length > 0) {
 				for (File file : plans) {
-					PlanLoader.load(driver, file);
+					workedPlans.add(PlanLoader.load(driver, file));
 				}
 			} else {
 				LOG.warn("No plans exist!");
@@ -58,6 +63,8 @@ public class RunTestSuite {
 		} catch (Exception e) {
 			LOG.error("Generic error! ", e);
 		} finally {
+			ReportProducer.generateIndex(workedPlans);
+
 			if (DefaultSeleniumConfig.getConfig().isCloseBrowserOnFinish()) {
 				try {
 					driver.close();
@@ -77,10 +84,10 @@ public class RunTestSuite {
 		try {
 			for (File file : reportFolder.listFiles()) {
 				LOG.debug("removing file: " + file.getAbsolutePath());
-				FileUtils.deleteDirectory(file);
+				FileUtils.deleteQuietly(file);
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			LOG.error("error", e);
 		}
 	}
 }

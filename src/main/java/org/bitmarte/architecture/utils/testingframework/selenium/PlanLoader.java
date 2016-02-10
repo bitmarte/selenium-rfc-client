@@ -36,7 +36,8 @@ public class PlanLoader {
 
 	private static final Logger LOG = LoggerFactory.getLogger(PlanLoader.class);
 
-	public static void load(WebDriver driver, File xmlPlan) throws Exception {
+	@SuppressWarnings("finally")
+	public static Plan load(WebDriver driver, File xmlPlan) throws Exception {
 		Plan plan = null;
 		Run currentRun = null;
 		DriverUtils driverUtils = null;
@@ -57,7 +58,13 @@ public class PlanLoader {
 
 			plan.setPlanName(planFileName);
 
-			driverUtils = new DriverUtils(driver, planFileName);
+			plan.getPlanReport().setTestResult(E_TestResult.ERROR.name());
+		} catch (Exception e) {
+			throw e;
+		}
+
+		try {
+			driverUtils = new DriverUtils(driver, plan.getPlanName());
 
 			// cookies managing
 			if (plan.isCookiesRemoveAll()) {
@@ -80,6 +87,8 @@ public class PlanLoader {
 
 			for (Run run : plan.getRuns()) {
 				currentRun = run;
+				currentRun.getRunReport().setTestResult(
+						E_TestResult.ERROR.name());
 				LOG.info("Run name: " + currentRun.getRunName());
 
 				// cookies managing
@@ -170,6 +179,7 @@ public class PlanLoader {
 						}
 					});
 
+					plan.getPlanReport().setTestResult(E_TestResult.SUCCESS.name());
 					currentRun.getRunReport().setTestResult(
 							E_TestResult.SUCCESS.name());
 					LOG.info("Success on run '" + currentRun.getRunName() + "'");
@@ -212,10 +222,6 @@ public class PlanLoader {
 										return false;
 									}
 								});
-								currentRun.getRunReport().setTestResult(
-										E_TestResult.ERROR.name());
-								plan.getPlanReport().setTestResult(
-										E_TestResult.ERROR.name());
 								LOG.error("Error on run '"
 										+ currentRun.getRunName() + "'");
 
@@ -223,12 +229,6 @@ public class PlanLoader {
 							} catch (Exception e) {
 								currentRun.getRunReport().setTestResult(
 										E_TestResult.TIMEOUT.name());
-								if (!E_TestResult.ERROR.name().equals(
-										currentRun.getRunReport()
-												.getTestResult())) {
-									plan.getPlanReport().setTestResult(
-											E_TestResult.TIMEOUT.name());
-								}
 								LOG.error("Timeout on run '"
 										+ currentRun.getRunName() + "'");
 							}
@@ -236,11 +236,6 @@ public class PlanLoader {
 					} else {
 						currentRun.getRunReport().setTestResult(
 								E_TestResult.TIMEOUT.name());
-						if (!E_TestResult.ERROR.name().equals(
-								currentRun.getRunReport().getTestResult())) {
-							plan.getPlanReport().setTestResult(
-									E_TestResult.TIMEOUT.name());
-						}
 						LOG.error("Timeout on run '" + currentRun.getRunName()
 								+ "'");
 					}
@@ -267,12 +262,11 @@ public class PlanLoader {
 
 			driverUtils.takeScreenshot(currentRun.getRunName(),
 					E_TestResult.ERROR);
-			plan.getPlanReport().setTestResult(E_TestResult.ERROR.name());
-			currentRun.getRunReport().setTestResult(E_TestResult.ERROR.name());
 			throw e;
 		} finally {
 			// generating reports...
-			ReportProducer.generate(plan);
+			ReportProducer.generatePlanReport(plan);
+			return plan;
 		}
 	}
 
