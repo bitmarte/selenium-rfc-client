@@ -17,6 +17,9 @@ public class ElementExtractorFactory {
 			.getLogger(ElementExtractorFactory.class);
 
 	public static I_ElementExtractor getInstance(String elementExtractor) {
+		if (elementExtractor == null) {
+			elementExtractor = E_ElementExtractor.BY_XPATH.name();
+		}
 		switch (E_ElementExtractor.valueOf(elementExtractor)) {
 		case BY_XPATH:
 			return new ByXpathElementExtractor();

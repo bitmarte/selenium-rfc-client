@@ -19,6 +19,9 @@ public class ContentEvaluatorFactory {
 			.getLogger(ContentEvaluatorFactory.class);
 
 	public static I_ContentEvaluator getInstance(String contentEvaluator) {
+		if (contentEvaluator == null) {
+			contentEvaluator = E_ContentEvaluator.EQUALS.name();
+		}
 		switch (E_ContentEvaluator.valueOf(contentEvaluator)) {
 		case CONTAINS:
 			return new ContainsContentEvaluator();
