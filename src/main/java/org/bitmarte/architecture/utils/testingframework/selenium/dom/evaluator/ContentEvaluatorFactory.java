@@ -19,14 +19,7 @@ public class ContentEvaluatorFactory {
 			.getLogger(ContentEvaluatorFactory.class);
 
 	public static I_ContentEvaluator getInstance(String contentEvaluator) {
-		E_ContentEvaluator e_ContentEvaluator = E_ContentEvaluator.EQUALS;
-		try {
-			e_ContentEvaluator = E_ContentEvaluator.valueOf(contentEvaluator);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-
-		switch (e_ContentEvaluator) {
+		switch (E_ContentEvaluator.valueOf(contentEvaluator)) {
 		case CONTAINS:
 			return new ContainsContentEvaluator();
 		case STARTWITH:
@@ -39,8 +32,8 @@ public class ContentEvaluatorFactory {
 			return new EqualsContentEvaluator();
 
 		default:
-			LOG.error("Unknown case on E_ContentEvaluator enum!");
-			return null;
+			LOG.info("Using default ContentEvaluator - EqualsContentEvaluator");
+			return new EqualsContentEvaluator();
 		}
 	}
 }

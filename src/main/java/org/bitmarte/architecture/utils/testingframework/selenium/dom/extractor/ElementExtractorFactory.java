@@ -17,14 +17,7 @@ public class ElementExtractorFactory {
 			.getLogger(ElementExtractorFactory.class);
 
 	public static I_ElementExtractor getInstance(String elementExtractor) {
-		E_ElementExtractor e_ElementExtractor = E_ElementExtractor.BY_XPATH;
-		try {
-			e_ElementExtractor = E_ElementExtractor.valueOf(elementExtractor);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-
-		switch (e_ElementExtractor) {
+		switch (E_ElementExtractor.valueOf(elementExtractor)) {
 		case BY_XPATH:
 			return new ByXpathElementExtractor();
 		case BY_ID:
@@ -33,8 +26,8 @@ public class ElementExtractorFactory {
 			return new ByClassNameElementExtractor();
 
 		default:
-			LOG.error("Unknown case on E_ElementExtractor enum!");
-			return null;
+			LOG.info("Using default ElementExtractor - ByXpathElementExtractor");
+			return new ByXpathElementExtractor();
 		}
 	}
 }
