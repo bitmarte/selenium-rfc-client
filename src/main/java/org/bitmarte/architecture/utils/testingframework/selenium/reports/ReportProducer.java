@@ -54,11 +54,6 @@ public class ReportProducer {
 		root.put("reportBasePath", DefaultSeleniumConfig.getConfig()
 				.getReportBaseDir());
 
-		if (LOG.isDebugEnabled()) {
-			for (String rootKey : root.keySet()) {
-				LOG.debug("adding '" + rootKey + "' element");
-			}
-		}
 		return root;
 	}
 }
