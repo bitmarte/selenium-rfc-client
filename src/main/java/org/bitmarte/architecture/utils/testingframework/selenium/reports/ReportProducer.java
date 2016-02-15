@@ -23,6 +23,8 @@ public class ReportProducer {
 
 		Map<String, Object> root = new HashMap<String, Object>();
 		root.put("plan", plan);
+		root.put("reportBasePath", DefaultSeleniumConfig.getConfig()
+				.getReportBaseDir());
 
 		reportsUtils.produce("plan-report.html", DefaultSeleniumConfig
 				.getConfig().getReportBaseDir() + plan.getPlanName(), root);
