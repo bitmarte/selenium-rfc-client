@@ -34,6 +34,7 @@
 			<tr>
 				<th style="font-weight: bold;">RUN NAME</th>
 				<th style="font-weight: bold;">RESULT</th>
+				<th>SCREENSHOT</th>
 			</tr>
 			<#list plan.runs as run>
 				<tr>
@@ -49,6 +50,15 @@
 					<#else>
 					<td><p style="color:gray;">UNTESTED</p></td>
 					</#if>
+					<td>
+						<#if run.runReport.testResult??>
+						<a href="${reportBasePath}${plan.planName}/screenshots/${run.runName}_${run.runReport.testResult}.png" target="_blank" style="border:0px;">
+							<img src="${reportBasePath}${plan.planName}/screenshots/${run.runName}_${run.runReport.testResult}.png" width="150px"/>
+						</a>
+						<#else>
+						-
+						</#if>
+					</td>
 				</tr>
 			</#list>
 		</table>

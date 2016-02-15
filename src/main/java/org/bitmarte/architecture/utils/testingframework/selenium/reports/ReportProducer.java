@@ -21,7 +21,7 @@ public class ReportProducer {
 	public static void generatePlanReport(Plan plan) throws Exception {
 		ReportsUtils reportsUtils = new ReportsUtils();
 
-		Map<String, Object> root = new HashMap<String, Object>();
+		Map<String, Object> root = getCommonRootData();
 		root.put("plan", plan);
 
 		reportsUtils.produce("plan-report.html", DefaultSeleniumConfig
@@ -31,12 +31,29 @@ public class ReportProducer {
 	public static void generateIndex(List<Plan> plans) throws Exception {
 		ReportsUtils reportsUtils = new ReportsUtils();
 
-		Map<String, Object> root = new HashMap<String, Object>();
+		Map<String, Object> root = getCommonRootData();
 		root.put("plans", plans);
-		root.put("reportBasePath", DefaultSeleniumConfig.getConfig()
-				.getReportBaseDir());
 
 		reportsUtils.produce("index.html", DefaultSeleniumConfig.getConfig()
 				.getReportBaseDir(), root);
+	}
+
+	/**
+	 * Setting common root data
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	private static Map<String, Object> getCommonRootData() throws Exception {
+		LOG.debug("Setting common root data...");
+		Map<String, Object> root = new HashMap<String, Object>();
+
+		/*
+		 * Add here common static data
+		 */
+		root.put("reportBasePath", DefaultSeleniumConfig.getConfig()
+				.getReportBaseDir());
+
+		return root;
 	}
 }
