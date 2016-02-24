@@ -52,8 +52,8 @@
 					</#if>
 					<td>
 						<#if run.runReport.testResult??>
-						<a href="${reportBasePath}${plan.planName}/screenshots/${run.runName}_${run.runReport.testResult}.png" target="_blank" style="border:0px;">
-							<img src="${reportBasePath}${plan.planName}/screenshots/${run.runName}_${run.runReport.testResult}.png" width="150px"/>
+						<a href="screenshots/${run.runName}_${run.runReport.testResult}.png" target="_blank" style="border:0px;">
+							<img src="screenshots/${run.runName}_${run.runReport.testResult}.png" width="150px"/>
 						</a>
 						<#else>
 						-

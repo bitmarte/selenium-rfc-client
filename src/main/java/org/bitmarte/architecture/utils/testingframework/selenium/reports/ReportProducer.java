@@ -15,8 +15,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ReportProducer {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(ReportProducer.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ReportProducer.class);
 
 	public static void generatePlanReport(Plan plan) throws Exception {
 		ReportsUtils reportsUtils = new ReportsUtils();
@@ -24,8 +23,8 @@ public class ReportProducer {
 		Map<String, Object> root = getCommonRootData();
 		root.put("plan", plan);
 
-		reportsUtils.produce("plan-report.html", DefaultSeleniumConfig
-				.getConfig().getReportBaseDir() + plan.getPlanName(), root);
+		reportsUtils.produce("plan-report.html",
+				DefaultSeleniumConfig.getConfig().getReportBaseDir() + plan.getPlanName(), root);
 	}
 
 	public static void generateIndex(List<Plan> plans) throws Exception {
@@ -34,8 +33,7 @@ public class ReportProducer {
 		Map<String, Object> root = getCommonRootData();
 		root.put("plans", plans);
 
-		reportsUtils.produce("index.html", DefaultSeleniumConfig.getConfig()
-				.getReportBaseDir(), root);
+		reportsUtils.produce("index.html", DefaultSeleniumConfig.getConfig().getReportBaseDir(), root);
 	}
 
 	/**
@@ -51,8 +49,6 @@ public class ReportProducer {
 		/*
 		 * Add here common static data
 		 */
-		root.put("reportBasePath", DefaultSeleniumConfig.getConfig()
-				.getReportBaseDir());
 
 		return root;
 	}
