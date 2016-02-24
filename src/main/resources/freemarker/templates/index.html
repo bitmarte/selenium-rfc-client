@@ -20,7 +20,7 @@
 					<#elseif plan.planReport.testResult == "TIMEOUT">
 						<td style="background-color:yellow">${plan.planReport.testResult}</td>
 					</#if>
-					<td><a href="${reportBasePath}${plan.planName}/plan-report.html" target="_blank">Open report...</a></td>
+					<td><a href="${plan.planName}/plan-report.html" target="_blank">Open report...</a></td>
 				</tr>
 			</#list>
 		</table>
