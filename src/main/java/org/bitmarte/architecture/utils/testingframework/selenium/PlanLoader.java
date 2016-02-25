@@ -4,12 +4,15 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.bitmarte.architecture.utils.testingframework.selenium.authentication.NTLMAuthentication;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.Authentication;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.ErrorCondition;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.InputField;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.SuccessCondition;
+import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_AuthType;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.evaluator.ContentEvaluatorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.extractor.ElementExtractorFactory;
@@ -45,6 +48,7 @@ public class PlanLoader {
 			XStream xStream = new XStream();
 
 			xStream.processAnnotations(Plan.class);
+			xStream.processAnnotations(Authentication.class);
 			xStream.processAnnotations(Run.class);
 			xStream.processAnnotations(BrowserAction.class);
 			xStream.processAnnotations(InputField.class);
@@ -53,8 +57,7 @@ public class PlanLoader {
 
 			plan = (Plan) xStream.fromXML(xmlPlan);
 
-			String planFileName = StringUtils.substring(xmlPlan.getName(), 0,
-					xmlPlan.getName().lastIndexOf("."));
+			String planFileName = StringUtils.substring(xmlPlan.getName(), 0, xmlPlan.getName().lastIndexOf("."));
 
 			plan.setPlanName(planFileName);
 
@@ -79,16 +82,14 @@ public class PlanLoader {
 				driverUtils.fullScreen();
 			}
 
-			LOG.info(plan.getRuns().size() + " runs in plan '"
-					+ xmlPlan.getName() + "'");
+			LOG.info(plan.getRuns().size() + " runs in plan '" + xmlPlan.getName() + "'");
 
 			// validation
 			validatePlan(plan);
 
 			for (Run run : plan.getRuns()) {
 				currentRun = run;
-				currentRun.getRunReport().setTestResult(
-						E_TestResult.ERROR.name());
+				currentRun.getRunReport().setTestResult(E_TestResult.ERROR.name());
 				LOG.info("Run name: " + currentRun.getRunName());
 
 				// cookies managing
@@ -103,74 +104,67 @@ public class PlanLoader {
 				if (currentRun.isFullscreen()) {
 					driverUtils.fullScreen();
 				} else {
-					if (currentRun.getWindowWidthPx() > 0
-							&& currentRun.getWindowHeightPx() > 0) {
-						driverUtils.resizeWindow(currentRun.getWindowWidthPx(),
-								currentRun.getWindowHeightPx());
+					if (currentRun.getWindowWidthPx() > 0 && currentRun.getWindowHeightPx() > 0) {
+						driverUtils.resizeWindow(currentRun.getWindowWidthPx(), currentRun.getWindowHeightPx());
 					}
 				}
 
 				// browser action managing
 				if (currentRun.getBrowserAction() != null) {
-					driverUtils
-							.makeBrowserAction(currentRun.getBrowserAction());
+					driverUtils.makeBrowserAction(currentRun.getBrowserAction());
 				}
 
+				WebDriverWait wait = null;
+
+				driver.get(currentRun.getUrl());
+				LOG.info("Go to URL '" + currentRun.getUrl() + "'");
+
+				// manage authentication
 				if (currentRun.getUrl() != null) {
-					driver.get(currentRun.getUrl());
-					LOG.info("Go to URL '" + currentRun.getUrl() + "'");
+					if (currentRun.getAuthentication() != null) {
+						switch (E_AuthType.valueOf(currentRun.getAuthentication().getAuthType())) {
+						default:
+							LOG.debug("using authType '" + E_AuthType.NTLM.name() + "'...");
+							(new Thread(new NTLMAuthentication(currentRun))).start();
+							Thread.currentThread();
+							Thread.sleep(currentRun.getAuthentication().getWaitPromptInSec() + 8000);
+							break;
+						}
+					}
 				}
 
 				if (currentRun.getInputFields() != null) {
 					LOG.info("Form filling...");
 					for (InputField field : currentRun.getInputFields()) {
-						ElementExtractorFactory
-								.getInstance(field.getElementExtractor())
-								.getElements(driver, field.getElement()).get(0)
-								.sendKeys(field.getValue());
+						ElementExtractorFactory.getInstance(field.getElementExtractor())
+								.getElements(driver, field.getElement()).get(0).sendKeys(field.getValue());
 					}
 				}
 
 				if (currentRun.getClickByXPATH() != null) {
-					LOG.info("Make a click on '" + currentRun.getClickByXPATH()
-							+ "'");
-					driver.findElement(By.xpath(currentRun.getClickByXPATH()))
-							.click();
+					LOG.info("Make a click on '" + currentRun.getClickByXPATH() + "'");
+					driver.findElement(By.xpath(currentRun.getClickByXPATH())).click();
 				}
 
 				LOG.info("Test result checking...");
-				WebDriverWait wait = null;
+				final Run finalRun = currentRun;
 				try {
-					wait = new WebDriverWait(driver, DefaultSeleniumConfig
-							.getConfig()
-							.getMaxTimeOutPerSuccessConditionInSec());
+					wait = new WebDriverWait(driver,
+							DefaultSeleniumConfig.getConfig().getMaxTimeOutPerSuccessConditionInSec());
 					LOG.debug("Serching success condition unit "
-							+ DefaultSeleniumConfig.getConfig()
-									.getMaxTimeOutPerSuccessConditionInSec()
-							+ " sec...");
+							+ DefaultSeleniumConfig.getConfig().getMaxTimeOutPerSuccessConditionInSec() + " sec...");
 
-					final Run finalRun = currentRun;
 					wait.until(new ExpectedCondition<Boolean>() {
 						public Boolean apply(WebDriver d) {
 							List<WebElement> elements = ElementExtractorFactory
-									.getInstance(
-											finalRun.getSuccessCondition()
-													.getElementExtractor())
-									.getElements(
-											d,
-											finalRun.getSuccessCondition()
-													.getElement());
+									.getInstance(finalRun.getSuccessCondition().getElementExtractor())
+									.getElements(d, finalRun.getSuccessCondition().getElement());
 							if (!elements.isEmpty()) {
-								if (finalRun.getSuccessCondition()
-										.getElementContent() != null) {
+								if (finalRun.getSuccessCondition().getElementContent() != null) {
 									for (WebElement webElement : elements) {
 										return ContentEvaluatorFactory
-												.getInstance(
-														finalRun.getSuccessCondition()
-																.getContentEvaluator())
-												.evaluate(
-														finalRun.getSuccessCondition()
-																.getElementContent(),
+												.getInstance(finalRun.getSuccessCondition().getContentEvaluator())
+												.evaluate(finalRun.getSuccessCondition().getElementContent(),
 														webElement.getText());
 									}
 								} else {
@@ -181,45 +175,30 @@ public class PlanLoader {
 						}
 					});
 
-					plan.getPlanReport().setTestResult(
-							E_TestResult.SUCCESS.name());
-					currentRun.getRunReport().setTestResult(
-							E_TestResult.SUCCESS.name());
+					plan.getPlanReport().setTestResult(E_TestResult.SUCCESS.name());
+					currentRun.getRunReport().setTestResult(E_TestResult.SUCCESS.name());
 					LOG.info("Success on run '" + currentRun.getRunName() + "'");
 				} catch (TimeoutException te1) {
-					wait = new WebDriverWait(driver, DefaultSeleniumConfig
-							.getConfig().getMaxTimeOutPerErrorConditionInSec());
+					wait = new WebDriverWait(driver,
+							DefaultSeleniumConfig.getConfig().getMaxTimeOutPerErrorConditionInSec());
 					LOG.debug("Searching error condition unit "
-							+ DefaultSeleniumConfig.getConfig()
-									.getMaxTimeOutPerErrorConditionInSec()
-							+ " sec...");
+							+ DefaultSeleniumConfig.getConfig().getMaxTimeOutPerErrorConditionInSec() + " sec...");
 					if (DefaultSeleniumConfig.getConfig().getErrorConditions() != null) {
-						for (final ErrorCondition errorCondition : DefaultSeleniumConfig
-								.getConfig().getErrorConditions()) {
+						for (final ErrorCondition errorCondition : DefaultSeleniumConfig.getConfig()
+								.getErrorConditions()) {
 							try {
 								wait.until(new ExpectedCondition<Boolean>() {
 									public Boolean apply(WebDriver d) {
 										List<WebElement> elements = ElementExtractorFactory
-												.getInstance(
-														errorCondition
-																.getElementExtractor())
-												.getElements(
-														d,
-														errorCondition
-																.getElement());
+												.getInstance(errorCondition.getElementExtractor())
+												.getElements(d, errorCondition.getElement());
 										if (!elements.isEmpty()) {
-											if (errorCondition
-													.getElementContent() != null) {
+											if (errorCondition.getElementContent() != null) {
 												for (WebElement webElement : elements) {
 													return ContentEvaluatorFactory
-															.getInstance(
-																	errorCondition
-																			.getContentEvaluator())
-															.evaluate(
-																	errorCondition
-																			.getElementContent(),
-																	webElement
-																			.getText());
+															.getInstance(errorCondition.getContentEvaluator())
+															.evaluate(errorCondition.getElementContent(),
+																	webElement.getText());
 												}
 											} else {
 												return true;
@@ -228,28 +207,22 @@ public class PlanLoader {
 										return false;
 									}
 								});
-								LOG.error("Error on run '"
-										+ currentRun.getRunName() + "'");
+								LOG.error("Error on run '" + currentRun.getRunName() + "'");
 
 								break;
 							} catch (Exception e) {
-								currentRun.getRunReport().setTestResult(
-										E_TestResult.TIMEOUT.name());
-								LOG.error("Timeout on run '"
-										+ currentRun.getRunName() + "'");
+								currentRun.getRunReport().setTestResult(E_TestResult.TIMEOUT.name());
+								LOG.error("Timeout on run '" + currentRun.getRunName() + "'");
 							}
 						}
 					} else {
-						currentRun.getRunReport().setTestResult(
-								E_TestResult.TIMEOUT.name());
-						LOG.error("Timeout on run '" + currentRun.getRunName()
-								+ "'");
+						currentRun.getRunReport().setTestResult(E_TestResult.TIMEOUT.name());
+						LOG.error("Timeout on run '" + currentRun.getRunName() + "'");
 					}
 					break;
 				} finally {
 					driverUtils.takeScreenshot(currentRun.getRunName(),
-							E_TestResult.valueOf(currentRun.getRunReport()
-									.getTestResult()));
+							E_TestResult.valueOf(currentRun.getRunReport().getTestResult()));
 				}
 			}
 
@@ -258,16 +231,14 @@ public class PlanLoader {
 				LOG.info("Plan '" + xmlPlan.getName() + "' completed!");
 				break;
 			default:
-				LOG.error("Plan '" + xmlPlan.getName()
-						+ "' terminated with some error!");
+				LOG.error("Plan '" + xmlPlan.getName() + "' terminated with some error!");
 				break;
 			}
 
 		} catch (Exception e) {
 			LOG.error("Error load()!", e);
 
-			driverUtils.takeScreenshot(currentRun.getRunName(),
-					E_TestResult.ERROR);
+			driverUtils.takeScreenshot(currentRun.getRunName(), E_TestResult.ERROR);
 			throw e;
 		} finally {
 			// generating reports...
@@ -280,31 +251,51 @@ public class PlanLoader {
 		LOG.debug("Validating plan...");
 		for (Run run : plan.getRuns()) {
 			if (run.getRunName() == null) {
-				throw new ConfigException(
-						"No runName has been specified for current run!");
+				throw new ConfigException("No runName has been specified for current run!");
 			}
 			if (run.getSuccessCondition() == null) {
-				throw new ConfigException(
-						"No successCondition has been specified for run '"
-								+ run.getRunName() + "'!");
+				throw new ConfigException("No successCondition has been specified for run '" + run.getRunName() + "'!");
 			}
 			if (plan.isFullscreen()) {
 				if (run.getWindowHeightPx() > 0 || run.getWindowHeightPx() > 0) {
-					throw new ConfigException(
-							"Fullscreen setup in your plan, no custom window size allowed for run '"
-									+ run.getRunName() + "'!");
+					throw new ConfigException("Fullscreen setup in your plan, no custom window size allowed for run '"
+							+ run.getRunName() + "'!");
 				}
 			}
 			if (run.getBrowserAction() != null) {
 				if (run.getUrl() != null) {
 					throw new ConfigException(
-							"Browser action setted, no url tag is allowed for run '"
-									+ run.getRunName() + "'!");
+							"Browser action setted, no url tag is allowed for run '" + run.getRunName() + "'!");
 				}
 				if (run.getInputFields() != null) {
+					throw new ConfigException("Browser action setted, no input filling tag is allowed for run '"
+							+ run.getRunName() + "'!");
+				}
+			}
+			if (run.getAuthentication() != null) {
+				if (run.getAuthentication().getAuthType() == null) {
 					throw new ConfigException(
-							"Browser action setted, no input filling tag is allowed for run '"
-									+ run.getRunName() + "'!");
+							"Authentication setted, please give me the authType for run '" + run.getRunName() + "'!");
+				} else {
+					try {
+						E_AuthType.valueOf(run.getAuthentication().getAuthType());
+					} catch (Exception e) {
+						throw new ConfigException("Value '" + run.getAuthentication().getAuthType()
+								+ "' for property 'authType' is not allowed!");
+					}
+					if (run.getAuthentication().getUsername() == null) {
+						throw new ConfigException("Authentication setted, please give me the username at authType '"
+								+ run.getAuthentication().getAuthType() + "' for run '" + run.getRunName() + "'!");
+					}
+					if (run.getAuthentication().getPassword() == null) {
+						throw new ConfigException("Authentication setted, please give me the password at authType '"
+								+ run.getAuthentication().getAuthType() + "' for run '" + run.getRunName() + "'!");
+					}
+					if (run.getAuthentication().getWaitPromptInSec() == 0) {
+						LOG.info(
+								"using default waitPromptInSec time: " + NTLMAuthentication.DEFAULT_WAIT_PROMPT_IN_SEC);
+						run.getAuthentication().setWaitPromptInSec(NTLMAuthentication.DEFAULT_WAIT_PROMPT_IN_SEC);
+					}
 				}
 			}
 		}

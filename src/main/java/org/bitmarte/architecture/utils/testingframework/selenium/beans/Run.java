@@ -21,8 +21,7 @@ public class Run {
 	private RunReport runReport;
 
 	@XStreamAlias("cookiesRemoveAll")
-	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = {
-			"true", "false" })
+	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = { "true", "false" })
 	@XStreamAsAttribute
 	private boolean cookiesRemoveAll;
 
@@ -35,6 +34,9 @@ public class Run {
 
 	@XStreamAlias("browserAction")
 	private BrowserAction browserAction;
+
+	@XStreamAlias("authentication")
+	private Authentication authentication;
 
 	@XStreamAlias("url")
 	private String url;
@@ -50,15 +52,14 @@ public class Run {
 
 	@XStreamAsAttribute
 	@XStreamAlias("windowWidthPx")
-	private int windowWidthPx = -1;
+	private int windowWidthPx;
 
 	@XStreamAsAttribute
 	@XStreamAlias("windowHeightPx")
-	private int windowHeightPx = -1;
+	private int windowHeightPx;
 
 	@XStreamAlias("fullscreen")
-	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = {
-			"true", "false" })
+	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = { "true", "false" })
 	@XStreamAsAttribute
 	private boolean fullscreen;
 
@@ -68,6 +69,14 @@ public class Run {
 
 	public void setRunName(String runName) {
 		this.runName = runName;
+	}
+
+	public Authentication getAuthentication() {
+		return authentication;
+	}
+
+	public void setAuthentication(Authentication authentication) {
+		this.authentication = authentication;
 	}
 
 	public String getUrl() {
