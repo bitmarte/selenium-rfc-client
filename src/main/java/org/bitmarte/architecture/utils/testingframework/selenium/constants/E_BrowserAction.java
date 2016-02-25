@@ -5,5 +5,5 @@ package org.bitmarte.architecture.utils.testingframework.selenium.constants;
  *
  */
 public enum E_BrowserAction {
-	REFRESH, FORWARD, BACK
+	REFRESH, FORWARD, BACK, IFRAME_SWITCH
 }

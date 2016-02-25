@@ -13,6 +13,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.SuccessCondition;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_AuthType;
+import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.evaluator.ContentEvaluatorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.extractor.ElementExtractorFactory;
@@ -92,6 +93,11 @@ public class PlanLoader {
 				currentRun.getRunReport().setTestResult(E_TestResult.ERROR.name());
 				LOG.info("Run name: " + currentRun.getRunName());
 
+				// browser action managing
+				if (currentRun.getBrowserAction() != null) {
+					driverUtils.makeBrowserAction(currentRun.getBrowserAction());
+				}
+
 				// cookies managing
 				if (currentRun.isCookiesRemoveAll()) {
 					driverUtils.removeAllCookies();
@@ -107,11 +113,6 @@ public class PlanLoader {
 					if (currentRun.getWindowWidthPx() > 0 && currentRun.getWindowHeightPx() > 0) {
 						driverUtils.resizeWindow(currentRun.getWindowWidthPx(), currentRun.getWindowHeightPx());
 					}
-				}
-
-				// browser action managing
-				if (currentRun.getBrowserAction() != null) {
-					driverUtils.makeBrowserAction(currentRun.getBrowserAction());
 				}
 
 				WebDriverWait wait = null;
@@ -221,6 +222,12 @@ public class PlanLoader {
 					}
 					break;
 				} finally {
+					if (currentRun.getBrowserAction() != null
+							&& E_BrowserAction.IFRAME_SWITCH.name().equals(currentRun.getBrowserAction().getAction())
+							&& currentRun.getBrowserAction().getElementByXPath() == null) {
+						LOG.debug("iframe used, switching to default content...");
+						driver.switchTo().defaultContent();
+					}
 					driverUtils.takeScreenshot(currentRun.getRunName(),
 							E_TestResult.valueOf(currentRun.getRunReport().getTestResult()));
 				}
@@ -270,6 +277,12 @@ public class PlanLoader {
 				if (run.getInputFields() != null) {
 					throw new ConfigException("Browser action setted, no input filling tag is allowed for run '"
 							+ run.getRunName() + "'!");
+				}
+				if (run.getBrowserAction().getAction().equals(E_BrowserAction.IFRAME_SWITCH.name())) {
+					if (run.getBrowserAction().getElementByXPath() == null) {
+						throw new ConfigException("Browser action '" + E_BrowserAction.IFRAME_SWITCH.name()
+								+ "' setted, please give me its level property for run '" + run.getRunName() + "'!");
+					}
 				}
 			}
 			if (run.getAuthentication() != null) {

@@ -14,12 +14,24 @@ public class BrowserAction {
 	@XStreamAsAttribute
 	private String action;
 
+	@XStreamAlias("elementByXPath")
+	@XStreamAsAttribute
+	private String elementByXPath;
+
 	public String getAction() {
 		return action;
 	}
 
 	public void setAction(String action) {
 		this.action = action;
+	}
+
+	public String getElementByXPath() {
+		return elementByXPath;
+	}
+
+	public void setElementByXPath(String elementByXPath) {
+		this.elementByXPath = elementByXPath;
 	}
 
 }
