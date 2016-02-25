@@ -143,6 +143,41 @@ mvn -f pom.xml compile exec:java -Dexec.mainClass=org.bitmarte.architecture.util
 **Pay attention: specify your base config path as the only require java argument ("/var/selenium/my-cfg" for this tutorial)**
 
 <br/><br/><hr/>
+## NTLM authentication
+You can use NTLM authentication directly in your every runs which it need.
+<pre>
+	<code>
+&lt;run&gt;
+	&lt;runName&gt;001_ntlm&lt/runName&gt;
+	...
+	&lt;authentication authType="NTLM" waitPromptInSec="5"&gt;
+		&lt;username>MY_USERNAME&lt;/username&gt;
+		&lt;password>MY_PASSWORD&lt;/password&gt;
+	&lt;/authentication&gt;
+	...
+	&lt;successCondition&gt;
+		&lt;element&gt;//h2&lt;/element&gt;
+		&lt;elementContent&gt;What is Selenium?&lt;/elementContent&gt;
+	&lt;/successCondition&gt;
+&lt;/run&gt;
+	</code>
+</pre>
+Optionally you can use a custom attribute for setting up the NTLM prompt alert waiting time (waitPromptInSec):
+<pre>
+	<code>
+&lt;run&gt;
+	&lt;runName&gt;001_ntlm&lt/runName&gt;
+	...
+	&lt;authentication authType="NTLM" waitPromptInSec="5"&gt;
+		&lt;username>MY_USERNAME&lt;/username&gt;
+		&lt;password>MY_PASSWORD&lt;/password&gt;
+	&lt;/authentication&gt;
+	...
+&lt;/run&gt;
+	</code>
+</pre>
+The default value is 5 sec.
+<br/><br/>
 ## Advanced success condition usage
 You can use some advanced matchers at &lt;successCondition&gt; node in order to use make your test more powerful.
 
@@ -232,8 +267,8 @@ You can use &lt;browserAction&gt; tag for simulating action with top browser bar
 <pre>
 	<code>
 &lt;run&gt;
-	&lt;runName&gt;001_refreshPage;/runName&gt;
-	&lt;browserAction action="REFRESH"&gt;/runName&gt;
+	&lt;runName&gt;001_refreshPage&lt/runName&gt;
+	&lt;browserAction action="REFRESH"/&gt;
 	&lt;successCondition&gt;
 		&lt;element&gt;//h2&lt;/element&gt;
 		&lt;elementContent&gt;What is Selenium?&lt;/elementContent&gt;
