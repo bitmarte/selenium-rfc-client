@@ -150,7 +150,7 @@ You can use NTLM authentication directly in your every runs which it need.
 &lt;run&gt;
 	&lt;runName&gt;001_ntlm&lt/runName&gt;
 	...
-	&lt;authentication authType="NTML" waitPromptInSec="5"&gt;
+	&lt;authentication authType="NTLM" waitPromptInSec="5"&gt;
 		&lt;username>MY_USERNAME&lt;/username&gt;
 		&lt;password>MY_PASSWORD&lt;/password&gt;
 	&lt;/authentication&gt;
@@ -168,7 +168,7 @@ Optionally you can use a custom attribute for setting up the NTLM prompt alert w
 &lt;run&gt;
 	&lt;runName&gt;001_ntlm&lt/runName&gt;
 	...
-	&lt;authentication authType="NTML" waitPromptInSec="5"&gt;
+	&lt;authentication authType="NTLM" waitPromptInSec="5"&gt;
 		&lt;username>MY_USERNAME&lt;/username&gt;
 		&lt;password>MY_PASSWORD&lt;/password&gt;
 	&lt;/authentication&gt;
