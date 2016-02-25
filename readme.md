@@ -258,11 +258,12 @@ There are some run tags (optionals) that you can use for advanced behaviors in y
 ### BrowserAction
 You can use &lt;browserAction&gt; tag for simulating action with top browser bar:
 
-| Attribute value        		| Description																|
-| ----------------------------- | ------------------------------------------------------------------------- |
-| REFRESH						| Refresh current page (reload)												|
-| BACK							| Go back to previous page													|
-| FORWARD						| Go ahead 																	|
+| Attribute value        		| Description																				|
+| ----------------------------- | ----------------------------------------------------------------------------------------- |
+| REFRESH						| Refresh current page (reload)																|
+| BACK							| Go back to previous page																	|
+| FORWARD						| Go ahead 																					|
+| IFRAME_SWITCH					| Switch to iframe at a given XPath, the first one (elementByXPath attribute)				|
 
 <pre>
 	<code>
@@ -274,5 +275,16 @@ You can use &lt;browserAction&gt; tag for simulating action with top browser bar
 		&lt;elementContent&gt;What is Selenium?&lt;/elementContent&gt;
 	&lt;/successCondition&gt;
 &lt;/run&gt;
+...
+&lt;run&gt;
+	&lt;runName&gt;001_refreshPage&lt/runName&gt;
+	&lt;browserAction action="IFRAME_SWITCH" elementByXPath="//iframe"/&gt;
+	&lt;successCondition&gt;
+		&lt;element&gt;//h2&lt;/element&gt;
+		&lt;elementContent&gt;What is Selenium?&lt;/elementContent&gt;
+	&lt;/successCondition&gt;
+&lt;/run&gt;
 	</code>
 </pre>
+
+**Pay attention: &lt;browserAction&gt; tag is the first task that will be execute on your run, so you in some cases you need to separate your conceptual test run in more than one**

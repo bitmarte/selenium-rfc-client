@@ -9,6 +9,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_Bro
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.exceptions.ConfigException;
 import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
@@ -24,8 +25,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DriverUtils {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(DriverUtils.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DriverUtils.class);
 
 	private WebDriver driver;
 	private String planName;
@@ -49,8 +49,7 @@ public class DriverUtils {
 	 * @param cookiesCommaSeparatedValues
 	 */
 	public void removeCookies(String cookiesCommaSeparatedValues) {
-		StringTokenizer stringTokenizer = new StringTokenizer(
-				cookiesCommaSeparatedValues, ",");
+		StringTokenizer stringTokenizer = new StringTokenizer(cookiesCommaSeparatedValues, ",");
 		while (stringTokenizer.hasMoreTokens()) {
 			String cookieName = stringTokenizer.nextToken();
 			LOG.info("Removing cookie '" + cookieName + "'...");
@@ -81,21 +80,17 @@ public class DriverUtils {
 	public E_TestResult takeScreenshot(String fileName, E_TestResult testResult) {
 		boolean hasError = false;
 		try {
-			String archivePath = DefaultSeleniumConfig.getConfig()
-					.getReportBaseDir() + this.planName + "/screenshots/";
+			String archivePath = DefaultSeleniumConfig.getConfig().getReportBaseDir() + this.planName + "/screenshots/";
 
-			LOG.debug("Take screenshot '" + archivePath + fileName + "_"
-					+ testResult.toString() + ".png'");
+			LOG.debug("Take screenshot '" + archivePath + fileName + "_" + testResult.toString() + ".png'");
 
 			WebDriver augmentedDriver = this.driver;
 			if (DefaultSeleniumConfig.getConfig().getSeleniumRcURL() != null) {
 				augmentedDriver = new Augmenter().augment(this.driver);
 			}
-			File scrFile = ((TakesScreenshot) augmentedDriver)
-					.getScreenshotAs(OutputType.FILE);
+			File scrFile = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
 
-			FileUtils.copyFile(scrFile, new File(archivePath + fileName + "_"
-					+ testResult.toString() + ".png"));
+			FileUtils.copyFile(scrFile, new File(archivePath + fileName + "_" + testResult.toString() + ".png"));
 		} catch (Exception e) {
 			hasError = true;
 			LOG.error("Error takeScreenshot()!", e);
@@ -136,14 +131,19 @@ public class DriverUtils {
 				LOG.info("window forward...");
 				this.driver.navigate().forward();
 				break;
+			case IFRAME_SWITCH:
+				this.driver.switchTo()
+						.frame(this.driver.findElements(By.xpath(browserAction.getElementByXPath())).get(0));
+				break;
 
 			default:
-				throw new ConfigException(
-						"Unknown case on E_BrowserAction enum!");
+				LOG.info("using default action: window refreshing...");
+				this.driver.navigate().refresh();
+				break;
 			}
 		} catch (Exception e) {
-			throw new ConfigException("Unknow browserAction '"
-					+ browserAction.getAction() + "'!");
+			LOG.error("Error on makeBrowserAction '" + browserAction.getAction() + "' !", e);
+			throw new ConfigException("Error on browserAction '" + browserAction.getAction() + "'!");
 		}
 
 	}
