@@ -116,20 +116,20 @@ public class PlanLoader {
 
 				WebDriverWait wait = null;
 
-				driver.get(currentRun.getUrl());
-				LOG.info("Go to URL '" + currentRun.getUrl() + "'");
+				if (currentRun.getUrl() != null) {
+					LOG.info("Go to URL '" + currentRun.getUrl() + "'");
+					driver.get(currentRun.getUrl());
+				}
 
 				// manage authentication
-				if (currentRun.getUrl() != null) {
-					if (currentRun.getAuthentication() != null) {
-						switch (E_AuthType.valueOf(currentRun.getAuthentication().getAuthType())) {
-						default:
-							LOG.debug("using authType '" + E_AuthType.NTLM.name() + "'...");
-							(new Thread(new NTLMAuthentication(currentRun))).start();
-							Thread.currentThread();
-							Thread.sleep(currentRun.getAuthentication().getWaitPromptInSec() + 8000);
-							break;
-						}
+				if (currentRun.getAuthentication() != null) {
+					switch (E_AuthType.valueOf(currentRun.getAuthentication().getAuthType())) {
+					default:
+						LOG.debug("using authType '" + E_AuthType.NTLM.name() + "'...");
+						(new Thread(new NTLMAuthentication(currentRun))).start();
+						Thread.currentThread();
+						Thread.sleep(currentRun.getAuthentication().getWaitPromptInSec() + 8000);
+						break;
 					}
 				}
 
