@@ -1,4 +1,4 @@
-package org.bitmarte.architecture.utils.testingframework.selenium.authentication;
+package org.bitmarte.architecture.utils.testingframework.selenium.authentication.impl;
 
 import java.awt.Robot;
 import java.awt.Toolkit;

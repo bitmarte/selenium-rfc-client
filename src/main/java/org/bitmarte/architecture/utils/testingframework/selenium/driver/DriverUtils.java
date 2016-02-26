@@ -7,7 +7,6 @@ import org.apache.commons.io.FileUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
-import org.bitmarte.architecture.utils.testingframework.selenium.exceptions.ConfigException;
 import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -15,6 +14,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.remote.Augmenter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -143,7 +143,7 @@ public class DriverUtils {
 			}
 		} catch (Exception e) {
 			LOG.error("Error on makeBrowserAction '" + browserAction.getAction() + "' !", e);
-			throw new ConfigException("Error on browserAction '" + browserAction.getAction() + "'!");
+			throw new WebDriverException("Error on browserAction '" + browserAction.getAction() + "'!");
 		}
 
 	}

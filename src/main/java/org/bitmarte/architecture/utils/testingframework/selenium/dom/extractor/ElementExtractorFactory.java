@@ -1,6 +1,5 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.dom.extractor;
 
-import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_ElementExtractor;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.extractor.impl.ByClassNameElementExtractor;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.extractor.impl.ByIdElementExtractor;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.extractor.impl.ByXpathElementExtractor;

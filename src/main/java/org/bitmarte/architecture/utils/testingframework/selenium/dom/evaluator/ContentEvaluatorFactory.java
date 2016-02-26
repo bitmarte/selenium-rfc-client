@@ -1,6 +1,5 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.dom.evaluator;
 
-import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_ContentEvaluator;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.evaluator.impl.ContainsContentEvaluator;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.evaluator.impl.EndWithContentEvaluator;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.evaluator.impl.EqualsContentEvaluator;

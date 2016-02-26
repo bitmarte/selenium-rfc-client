@@ -4,7 +4,8 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.bitmarte.architecture.utils.testingframework.selenium.authentication.NTLMAuthentication;
+import org.bitmarte.architecture.utils.testingframework.selenium.authentication.E_AuthType;
+import org.bitmarte.architecture.utils.testingframework.selenium.authentication.impl.NTLMAuthentication;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Authentication;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.ErrorCondition;
@@ -12,15 +13,14 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.InputFiel
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.SuccessCondition;
-import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_AuthType;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.evaluator.ContentEvaluatorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.dom.extractor.ElementExtractorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.driver.DriverUtils;
-import org.bitmarte.architecture.utils.testingframework.selenium.exceptions.ConfigException;
 import org.bitmarte.architecture.utils.testingframework.selenium.reports.ReportProducer;
 import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
+import org.bitmarte.architecture.utils.testingframework.selenium.validators.ValidatorHandler;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -45,6 +45,7 @@ public class PlanLoader {
 		Plan plan = null;
 		Run currentRun = null;
 		DriverUtils driverUtils = null;
+
 		try {
 			XStream xStream = new XStream();
 
@@ -61,6 +62,9 @@ public class PlanLoader {
 			String planFileName = StringUtils.substring(xmlPlan.getName(), 0, xmlPlan.getName().lastIndexOf("."));
 
 			plan.setPlanName(planFileName);
+
+			// validation
+			ValidatorHandler.execute(plan);
 
 			plan.getPlanReport().setTestResult(E_TestResult.ERROR.name());
 		} catch (Exception e) {
@@ -84,9 +88,6 @@ public class PlanLoader {
 			}
 
 			LOG.info(plan.getRuns().size() + " runs in plan '" + xmlPlan.getName() + "'");
-
-			// validation
-			validatePlan(plan);
 
 			for (Run run : plan.getRuns()) {
 				currentRun = run;
@@ -251,66 +252,6 @@ public class PlanLoader {
 			// generating reports...
 			ReportProducer.generatePlanReport(plan);
 			return plan;
-		}
-	}
-
-	private static void validatePlan(Plan plan) throws Exception {
-		LOG.debug("Validating plan...");
-		for (Run run : plan.getRuns()) {
-			if (run.getRunName() == null) {
-				throw new ConfigException("No runName has been specified for current run!");
-			}
-			if (run.getSuccessCondition() == null) {
-				throw new ConfigException("No successCondition has been specified for run '" + run.getRunName() + "'!");
-			}
-			if (plan.isFullscreen()) {
-				if (run.getWindowHeightPx() > 0 || run.getWindowHeightPx() > 0) {
-					throw new ConfigException("Fullscreen setup in your plan, no custom window size allowed for run '"
-							+ run.getRunName() + "'!");
-				}
-			}
-			if (run.getBrowserAction() != null) {
-				if (run.getUrl() != null) {
-					throw new ConfigException(
-							"Browser action setted, no url tag is allowed for run '" + run.getRunName() + "'!");
-				}
-				if (run.getInputFields() != null) {
-					throw new ConfigException("Browser action setted, no input filling tag is allowed for run '"
-							+ run.getRunName() + "'!");
-				}
-				if (run.getBrowserAction().getAction().equals(E_BrowserAction.IFRAME_SWITCH.name())) {
-					if (run.getBrowserAction().getElementByXPath() == null) {
-						throw new ConfigException("Browser action '" + E_BrowserAction.IFRAME_SWITCH.name()
-								+ "' setted, please give me its level property for run '" + run.getRunName() + "'!");
-					}
-				}
-			}
-			if (run.getAuthentication() != null) {
-				if (run.getAuthentication().getAuthType() == null) {
-					throw new ConfigException(
-							"Authentication setted, please give me the authType for run '" + run.getRunName() + "'!");
-				} else {
-					try {
-						E_AuthType.valueOf(run.getAuthentication().getAuthType());
-					} catch (Exception e) {
-						throw new ConfigException("Value '" + run.getAuthentication().getAuthType()
-								+ "' for property 'authType' is not allowed!");
-					}
-					if (run.getAuthentication().getUsername() == null) {
-						throw new ConfigException("Authentication setted, please give me the username at authType '"
-								+ run.getAuthentication().getAuthType() + "' for run '" + run.getRunName() + "'!");
-					}
-					if (run.getAuthentication().getPassword() == null) {
-						throw new ConfigException("Authentication setted, please give me the password at authType '"
-								+ run.getAuthentication().getAuthType() + "' for run '" + run.getRunName() + "'!");
-					}
-					if (run.getAuthentication().getWaitPromptInSec() == 0) {
-						LOG.info(
-								"using default waitPromptInSec time: " + NTLMAuthentication.DEFAULT_WAIT_PROMPT_IN_SEC);
-						run.getAuthentication().setWaitPromptInSec(NTLMAuthentication.DEFAULT_WAIT_PROMPT_IN_SEC);
-					}
-				}
-			}
 		}
 	}
 

@@ -1,4 +1,4 @@
-package org.bitmarte.architecture.utils.testingframework.selenium.constants;
+package org.bitmarte.architecture.utils.testingframework.selenium.dom.extractor;
 
 /**
  * @author bitmarte

@@ -22,8 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 public class RunTestSuite {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(RunTestSuite.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RunTestSuite.class);
 
 	public static void main(String[] args) throws Exception {
 		WebDriver driver = null;
@@ -35,22 +34,20 @@ public class RunTestSuite {
 				cleanReportFolder();
 			}
 
-			driver = WebDriverFactory.getInstance(DefaultSeleniumConfig
-					.getConfig().getBrowserMode(), DefaultSeleniumConfig
-					.getConfig().getBrowserName());
-
 			File configFolder = new File(args[0] + "/plans");
 			File[] plans = configFolder.listFiles(new FileFilter() {
 				public boolean accept(File pathname) {
 					boolean checker = false;
-					if (StringUtils.equalsIgnoreCase(FilenameUtils
-							.getExtension(pathname.getAbsolutePath()), "xml")) {
+					if (StringUtils.equalsIgnoreCase(FilenameUtils.getExtension(pathname.getAbsolutePath()), "xml")) {
 						LOG.debug("Load '" + pathname.getAbsolutePath() + "'");
 						checker = true;
 					}
 					return checker;
 				}
 			});
+
+			driver = WebDriverFactory.getInstance(DefaultSeleniumConfig.getConfig().getBrowserMode(),
+					DefaultSeleniumConfig.getConfig().getBrowserName());
 
 			if (plans.length > 0) {
 				for (File file : plans) {
@@ -79,8 +76,7 @@ public class RunTestSuite {
 	 * Clean report folder
 	 */
 	private static void cleanReportFolder() {
-		File reportFolder = new File(DefaultSeleniumConfig.getConfig()
-				.getReportBaseDir());
+		File reportFolder = new File(DefaultSeleniumConfig.getConfig().getReportBaseDir());
 		try {
 			for (File file : reportFolder.listFiles()) {
 				LOG.debug("removing file: " + file.getAbsolutePath());

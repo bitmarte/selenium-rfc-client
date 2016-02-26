@@ -1,4 +1,4 @@
-package org.bitmarte.architecture.utils.testingframework.selenium.exceptions;
+package org.bitmarte.architecture.utils.testingframework.selenium.dom.evaluator.exceptions;
 
 /**
  * @author bitmarte
