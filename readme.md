@@ -2,6 +2,33 @@
 This project allow you to create and run ent-to-end tests, running on real browser.<br/>
 The artifact is a simple JAR file that you need to run directly from a shell; it requires only one argument, the path where you put configuration files (setup and plans).
 
+<hr/>
+<ul>
+	<li><a href="#two-different-approaches-local-vs-remote">Two different approaches (local vs. remote)</a></li>
+	<ul>
+		<li><a href="#local-approach">Local approach</a></li>
+		<li><a href="#remote-approach">Remote approach</a></li>
+	</ul>
+	<li><a href="#client-setup">Client Setup</a></li>
+	<li><a href="#make-your-plan">Make your plan</a></li>
+	<li><a href="#execute-your-planplans-and-enjoy-it-">Execute your plan/plans and enjoy it :)</a></li>
+	<li><a href="#ntlm-authentication">NTLM authentication</a></li>
+	<li><a href="#advanced-success-condition-usage">Advanced success condition usage</a></li>
+	<ul>
+		<li><a href="#contentevaluator">contentEvaluator</a></li>
+		<li><a href="#elementextractor">elementExtractor</a></li>
+	</ul>
+	<li><a href="#advanced-input-field-usage">Advanced input field usage</a></li>
+	<ul>
+		<li><a href="#elementextractor-1">elementExtractor</a></li>
+	</ul>
+	<li><a href="#advanced-run-tags">Advanced run tags</a></li>
+	<ul>
+		<li><a href="#browseraction">BrowserAction</a></li>
+	</ul>
+</ul>
+<hr/>
+
 ## Two different approaches (local vs. remote)
 It depends on your goal you can run a test on two different platforms: "local" or "remote".<br/>
 **Don't worry, you can run the same test on both platforms.**<br/>
