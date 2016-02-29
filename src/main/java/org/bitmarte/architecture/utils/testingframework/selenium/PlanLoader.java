@@ -192,11 +192,13 @@ public class PlanLoader {
 								break;
 							} catch (Exception e) {
 								currentRun.getRunReport().setTestResult(E_TestResult.TIMEOUT.name());
+								plan.getPlanReport().setTestResult(E_TestResult.ERROR.name());
 								LOG.error("Timeout on run '" + currentRun.getRunName() + "'");
 							}
 						}
 					} else {
 						currentRun.getRunReport().setTestResult(E_TestResult.TIMEOUT.name());
+						plan.getPlanReport().setTestResult(E_TestResult.ERROR.name());
 						LOG.error("Timeout on run '" + currentRun.getRunName() + "'");
 					}
 					break;
