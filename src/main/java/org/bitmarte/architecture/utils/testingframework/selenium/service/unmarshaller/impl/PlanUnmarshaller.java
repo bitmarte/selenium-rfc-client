@@ -17,7 +17,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.validat
 import com.thoughtworks.xstream.XStream;
 
 /**
- * @author A110282
+ * @author bitmarte
  *
  */
 public class PlanUnmarshaller extends A_Unmarshaller {

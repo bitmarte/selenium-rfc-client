@@ -1,7 +1,7 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.service.unmarshaller.exceptions;
 
 /**
- * @author A110282
+ * @author bitmarte
  *
  */
 @SuppressWarnings("serial")
