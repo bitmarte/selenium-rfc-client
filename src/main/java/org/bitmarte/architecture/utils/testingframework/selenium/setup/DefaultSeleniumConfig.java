@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Config;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.ErrorCondition;
-import org.bitmarte.architecture.utils.testingframework.selenium.validators.ValidatorHandler;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.ValidatorHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
