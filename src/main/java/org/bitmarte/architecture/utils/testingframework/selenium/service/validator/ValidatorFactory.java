@@ -10,9 +10,9 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.validat
  * @author bitmarte
  *
  */
-public class ValidatorHandler {
+public class ValidatorFactory {
 
-	public static I_Validator execute(Object inValidation) throws Exception {
+	public static I_Validator getInstance(Object inValidation) throws Exception {
 		if (inValidation instanceof Config) {
 			return new ConfigValidator((Config) inValidation);
 		}

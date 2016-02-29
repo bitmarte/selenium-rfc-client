@@ -15,12 +15,6 @@ public abstract class A_Validator implements I_Validator {
 
 	public A_Validator(Object inValidation) throws Exception {
 		this.inValidation = inValidation;
-
-		LOG.debug("Validating...");
-		this.validate();
-
-		LOG.debug("Setting default value...");
-		this.setDefaultValue();
 	}
 
 }

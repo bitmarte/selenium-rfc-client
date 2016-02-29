@@ -4,13 +4,10 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Authentication;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.ErrorCondition;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.InputField;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Run;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.SuccessCondition;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.driver.DriverUtils;
@@ -19,7 +16,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.authent
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.impl.NTLMAuthentication;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.evaluator.ContentEvaluatorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.extractor.ElementExtractorFactory;
-import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.ValidatorHandler;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.unmarshaller.UnmarshallerFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -29,8 +26,6 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.thoughtworks.xstream.XStream;
 
 /**
  * @author bitmarte
@@ -47,24 +42,7 @@ public class PlanLoader {
 		DriverUtils driverUtils = null;
 
 		try {
-			XStream xStream = new XStream();
-
-			xStream.processAnnotations(Plan.class);
-			xStream.processAnnotations(Authentication.class);
-			xStream.processAnnotations(Run.class);
-			xStream.processAnnotations(BrowserAction.class);
-			xStream.processAnnotations(InputField.class);
-			xStream.processAnnotations(SuccessCondition.class);
-			xStream.processAnnotations(ErrorCondition.class);
-
-			plan = (Plan) xStream.fromXML(xmlPlan);
-
-			String planFileName = StringUtils.substring(xmlPlan.getName(), 0, xmlPlan.getName().lastIndexOf("."));
-
-			plan.setPlanName(planFileName);
-
-			// validation
-			ValidatorHandler.execute(plan);
+			plan = (Plan) UnmarshallerFactory.getInstance(Plan.class).unmarshall(xmlPlan);
 
 			plan.getPlanReport().setTestResult(E_TestResult.ERROR.name());
 		} catch (Exception e) {
