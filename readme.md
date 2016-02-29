@@ -2,7 +2,7 @@
 This project allow you to create and run ent-to-end tests, running on real browser.<br/>
 The artifact is a simple JAR file that you need to run directly from a shell; it requires only one argument, the path where you put configuration files (setup and plans).
 
-## Index
+<hr/>
 <ul>
 	<li><a href="#two-different-approaches-local-vs-remote">Two different approaches (local vs. remote)</a></li>
 	<ul>
@@ -27,8 +27,8 @@ The artifact is a simple JAR file that you need to run directly from a shell; it
 		<li><a href="#browseraction">BrowserAction</a></li>
 	</ul>
 </ul>
-
 <hr/>
+
 ## Two different approaches (local vs. remote)
 It depends on your goal you can run a test on two different platforms: "local" or "remote".<br/>
 **Don't worry, you can run the same test on both platforms.**<br/>
