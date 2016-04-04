@@ -349,7 +349,6 @@ Here the KPIs that you can check:
 ### Advanced WebTimings configuration
 There are some advanced settings for KPIs performance monitoring
 #### Timeout per KPI measure
-The default value is 5sec.
 <pre>
 	<code>
 &lt;config&gt;
@@ -364,3 +363,4 @@ The default value is 5sec.
 	</code>
 </pre>
 
+The default value is 5sec.
