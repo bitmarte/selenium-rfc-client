@@ -26,9 +26,9 @@ The artifact is a simple JAR file that you need to run directly from a shell; it
 	<ul>
 		<li><a href="#browseraction">BrowserAction</a></li>
 	</ul>
-	<li><a href="#webTimings-performance-monitoring">WebTimings performance monitoring</a></li>
+	<li><a href="#webtimings-performance-monitoring">WebTimings performance monitoring</a></li>
 	<ul>
-		<li><a href="#advanced-webTimings-configuration">Advanced WebTimings configuration</a></li>
+		<li><a href="#advanced-webtimings-configuration">Advanced WebTimings configuration</a></li>
 	</ul>
 </ul>
 <hr/>
