@@ -47,6 +47,9 @@ public class Config {
 
 	@XStreamAlias("webTimings")
 	private WebTimingsConfig webTimings;
+	
+	@XStreamAlias("mobProxy")
+	private MobProxyConfig mobProxy;
 
 	public String getSeleniumRcURL() {
 		return seleniumRcURL;
@@ -134,6 +137,14 @@ public class Config {
 
 	public void setWebTimings(WebTimingsConfig webTimings) {
 		this.webTimings = webTimings;
+	}
+
+	public MobProxyConfig getMobProxy() {
+		return mobProxy;
+	}
+
+	public void setMobProxy(MobProxyConfig mobProxy) {
+		this.mobProxy = mobProxy;
 	}
 
 }

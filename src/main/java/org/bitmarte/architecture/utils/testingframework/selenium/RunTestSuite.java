@@ -5,6 +5,9 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.lightbody.bmp.BrowserMobProxy;
+import net.lightbody.bmp.BrowserMobProxyServer;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -27,6 +30,7 @@ public class RunTestSuite {
 	public static void main(String[] args) throws Exception {
 		WebDriver driver = null;
 		List<Plan> workedPlans = new ArrayList<Plan>();
+		BrowserMobProxy proxy = null;
 		try {
 			DefaultSeleniumConfig.loadConfiguration(args);
 
@@ -45,9 +49,13 @@ public class RunTestSuite {
 					return checker;
 				}
 			});
+			
+			if(DefaultSeleniumConfig.getConfig().getMobProxy() != null) {
+				proxy = new BrowserMobProxyServer();
+			}
 
 			driver = WebDriverFactory.getInstance(DefaultSeleniumConfig.getConfig().getBrowserMode(),
-					DefaultSeleniumConfig.getConfig().getBrowserName());
+					DefaultSeleniumConfig.getConfig().getBrowserName(), proxy);
 
 			if (plans.length > 0) {
 				for (File file : plans) {
@@ -64,6 +72,9 @@ public class RunTestSuite {
 
 			if (DefaultSeleniumConfig.getConfig().isCloseBrowserOnFinish()) {
 				try {
+					if(proxy != null) {
+						proxy.stop();
+					}
 					driver.close();
 				} catch (Exception e2) {
 					LOG.error("WebDriver does not close correctly!");
