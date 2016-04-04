@@ -353,6 +353,7 @@ Here the KPIs that you can check:
 ### Advanced WebTimings configuration
 There are some advanced settings for KPIs performance monitoring
 #### Timeout per KPI measure
+The timeout if the KPI measures are always different each other.
 <pre>
 	<code>
 &lt;config&gt;
@@ -368,6 +369,7 @@ There are some advanced settings for KPIs performance monitoring
 </pre>
 The default value is 5sec.
 #### KPI interval measure
+The time (in sec) between two KPI measures.
 <pre>
 	<code>
 &lt;config&gt;
