@@ -12,6 +12,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_Bro
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.driver.DriverUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.reports.ReportProducer;
+import org.bitmarte.architecture.utils.testingframework.selenium.reports.WebTimingUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.E_AuthType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.impl.NTLMAuthentication;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.evaluator.ContentEvaluatorFactory;
@@ -40,6 +41,7 @@ public class PlanLoader {
 		Plan plan = null;
 		Run currentRun = null;
 		DriverUtils driverUtils = null;
+		WebTimingUtils timingUtils = null;
 
 		try {
 			plan = (Plan) UnmarshallerFactory.getInstance(Plan.class).unmarshall(xmlPlan);
@@ -51,6 +53,7 @@ public class PlanLoader {
 
 		try {
 			driverUtils = new DriverUtils(driver, plan.getPlanName());
+			timingUtils = new WebTimingUtils(driver);
 
 			// cookies managing
 			if (plan.isCookiesRemoveAll()) {
@@ -211,6 +214,11 @@ public class PlanLoader {
 					}
 					driverUtils.takeScreenshot(currentRun.getRunName(),
 							E_TestResult.valueOf(currentRun.getRunReport().getTestResult()));
+
+					// Web Timings API
+					if (DefaultSeleniumConfig.getConfig().getWebTimings() != null) {
+						timingUtils.calculateTimings(currentRun);
+					}
 				}
 			}
 

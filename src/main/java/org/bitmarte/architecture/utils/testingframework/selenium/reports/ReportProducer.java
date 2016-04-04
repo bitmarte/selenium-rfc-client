@@ -49,6 +49,11 @@ public class ReportProducer {
 		/*
 		 * Add here common static data
 		 */
+		if(DefaultSeleniumConfig.getConfig().getWebTimings() != null) {
+			root.put("webTimings", true);
+		} else {
+			root.put("webTimings", false);
+		}
 
 		return root;
 	}

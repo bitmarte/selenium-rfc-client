@@ -26,6 +26,14 @@ The artifact is a simple JAR file that you need to run directly from a shell; it
 	<ul>
 		<li><a href="#browseraction">BrowserAction</a></li>
 	</ul>
+	<li><a href="#webtimings-performance-monitoring">WebTimings performance monitoring</a></li>
+	<ul>
+		<li><a href="#advanced-webtimings-configuration">Advanced WebTimings configuration</a></li>
+		<ul>
+			<li><a href="#timeout-per-kpi-measure">Timeout per KPI measure</a></li>
+			<li><a href="#kpi-interval-measure">KPI interval measure</a></li>
+		</ul>
+	</ul>
 </ul>
 <hr/>
 
@@ -315,3 +323,64 @@ You can use &lt;browserAction&gt; tag for simulating action with top browser bar
 </pre>
 
 **Pay attention: &lt;browserAction&gt; tag is the first task that will be execute on your run, so you in some cases you need to separate your conceptual test run in more than one**
+<br/><br/>
+## WebTimings performance monitoring
+You can monitor the frontend (client) performance using WebTimings API (https://www.w3.org/TR/navigation-timing-2/#h-processing-model) and read it into the final report.
+Here the KPIs that you can check:
+
+| KPI			        		| Description																								|
+| ----------------------------- | --------------------------------------------------------------------------------------------------------- |
+| TOTAL REQUESTS				| The number of entries that browser retrieve																|
+| UPLOAD TIME					| The time spent for the requests (msec) [responseStart - requestStart]										|
+| DOWNLOAD TIME					| The time spent for retrieving the resources (msec) [responseEnd - responseStart]							|
+| BROWSER PROCESSING TIME		| The time spent by your browser for managing response (msec) [domContentLoadEventEnd - responseEnd]		|
+| TOTAL TIME					| The time spent by your browser for managing the page call (msec) [domContentLoadEventEnd - requestStart]	|
+
+<pre>
+	<code>
+&lt;config&gt;
+	&lt;browserMode&gt;REMOTE&lt;/browserMode&gt;
+	&lt;browserName&gt;FIREFOX&lt;/browserName&gt;
+...
+&lt;webTimings/&gt;
+...
+&lt;/config&gt;
+	</code>
+</pre>
+
+**Pay attention: WebTimings API can not be activate on IExplorer**
+
+### Advanced WebTimings configuration
+There are some advanced settings for KPIs performance monitoring
+#### Timeout per KPI measure
+The timeout if the KPI measures are always different each other.
+<pre>
+	<code>
+&lt;config&gt;
+	&lt;browserMode&gt;REMOTE&lt;/browserMode&gt;
+	&lt;browserName&gt;FIREFOX&lt;/browserName&gt;
+...
+&lt;webTimings&gt;
+	&lt;maxTimeoutPerMeasureInSec&gt;10&lt;/maxTimeoutPerMeasureInSec&gt;
+&lt;/webTimings&gt;
+...
+&lt;/config&gt;
+	</code>
+</pre>
+The default value is 5sec.
+#### KPI interval measure
+The time (in sec) between two KPI measures.
+<pre>
+	<code>
+&lt;config&gt;
+	&lt;browserMode&gt;REMOTE&lt;/browserMode&gt;
+	&lt;browserName&gt;FIREFOX&lt;/browserName&gt;
+...
+&lt;webTimings&gt;
+	&lt;kpiIntervalMeasureInSec&gt;1&lt;/kpiIntervalMeasureInSec&gt;
+&lt;/webTimings&gt;
+...
+&lt;/config&gt;
+	</code>
+</pre>
+The default value is 0sec, no delay.

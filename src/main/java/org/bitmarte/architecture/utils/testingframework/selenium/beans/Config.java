@@ -38,14 +38,15 @@ public class Config {
 	private List<ErrorCondition> errorConditions;
 
 	@XStreamAlias("closeBrowserOnFinish")
-	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = {
-			"true", "false" })
+	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = { "true", "false" })
 	private boolean closeBrowserOnFinish;
 
 	@XStreamAlias("cleanReportBaseDirOnStart")
-	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = {
-			"true", "false" })
+	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = { "true", "false" })
 	private boolean cleanReportBaseDirOnStart;
+
+	@XStreamAlias("webTimings")
+	private WebTimingsConfig webTimings;
 
 	public String getSeleniumRcURL() {
 		return seleniumRcURL;
@@ -59,8 +60,7 @@ public class Config {
 		return maxTimeOutPerSuccessConditionInSec;
 	}
 
-	public void setMaxTimeOutPerSuccessConditionInSec(
-			int maxTimeOutPerSuccessConditionInSec) {
+	public void setMaxTimeOutPerSuccessConditionInSec(int maxTimeOutPerSuccessConditionInSec) {
 		this.maxTimeOutPerSuccessConditionInSec = maxTimeOutPerSuccessConditionInSec;
 	}
 
@@ -68,8 +68,7 @@ public class Config {
 		return maxTimeOutPerErrorConditionInSec;
 	}
 
-	public void setMaxTimeOutPerErrorConditionInSec(
-			int maxTimeOutPerErrorConditionInSec) {
+	public void setMaxTimeOutPerErrorConditionInSec(int maxTimeOutPerErrorConditionInSec) {
 		this.maxTimeOutPerErrorConditionInSec = maxTimeOutPerErrorConditionInSec;
 	}
 
@@ -128,4 +127,13 @@ public class Config {
 	public void setCleanReportBaseDirOnStart(boolean cleanReportBaseDirOnStart) {
 		this.cleanReportBaseDirOnStart = cleanReportBaseDirOnStart;
 	}
+
+	public WebTimingsConfig getWebTimings() {
+		return webTimings;
+	}
+
+	public void setWebTimings(WebTimingsConfig webTimings) {
+		this.webTimings = webTimings;
+	}
+
 }

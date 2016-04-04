@@ -15,6 +15,7 @@ public class ConfigValidator extends A_Validator {
 
 	private static final int MAX_TIMEOUT_PER_SUCCESS_CONDITION_IN_SEC = 10;
 	private static final int MAX_TIMEOUT_PER_ERROR_CONDITION_IN_SEC = 2;
+	private static final int MAX_TIMEOUT_PER_MEASURE_IN_SEC = 5;
 
 	public ConfigValidator(Object inValidation) throws Exception {
 		super(inValidation);
@@ -64,16 +65,24 @@ public class ConfigValidator extends A_Validator {
 			throw new ValidatorException(
 					"Property 'localWebDriverPath' for browserName '" + toValidate.getBrowserName() + "' is required!");
 		}
+
+		// checking for webTimingsAPI
+		if (toValidate.getWebTimings() != null) {
+			if (E_BrowserName.valueOf(toValidate.getBrowserName()).equals(E_BrowserName.IEXPLORER)) {
+				throw new ValidatorException(
+						"Property 'webTimings' for browserName '" + toValidate.getBrowserName() + "' is not allowed!");
+			}
+		}
 	}
 
 	public void setDefaultValue() throws Exception {
 		Config toValidate = (Config) this.inValidation;
 
-		if (toValidate.getMaxTimeOutPerSuccessConditionInSec() == 0) {
+		if (toValidate.getMaxTimeOutPerSuccessConditionInSec() <= 0) {
 			toValidate.setMaxTimeOutPerSuccessConditionInSec(MAX_TIMEOUT_PER_SUCCESS_CONDITION_IN_SEC);
 			LOG.info("setMaxTimeOutPerSuccessConditionInSec = " + MAX_TIMEOUT_PER_SUCCESS_CONDITION_IN_SEC);
 		}
-		if (toValidate.getMaxTimeOutPerErrorConditionInSec() == 0) {
+		if (toValidate.getMaxTimeOutPerErrorConditionInSec() <= 0) {
 			toValidate.setMaxTimeOutPerErrorConditionInSec(MAX_TIMEOUT_PER_ERROR_CONDITION_IN_SEC);
 			LOG.info("setMaxTimeOutPerErrorConditionInSec = " + MAX_TIMEOUT_PER_ERROR_CONDITION_IN_SEC);
 		}
@@ -85,6 +94,13 @@ public class ConfigValidator extends A_Validator {
 				|| StringUtils.endsWith(toValidate.getReportBaseDir(), "\\"))) {
 			toValidate.setReportBaseDir(toValidate.getReportBaseDir().concat("/"));
 			LOG.warn("Property 'reportBaseDir' must have a slash '\\' or '/' at the end! - I fix it for you from now");
+		}
+
+		if (toValidate.getWebTimings() != null) {
+			if (toValidate.getWebTimings().getMaxTimeoutPerMeasureInSec() <= 0) {
+				toValidate.getWebTimings().setMaxTimeoutPerMeasureInSec(MAX_TIMEOUT_PER_MEASURE_IN_SEC);
+				LOG.info("setMaxTimeoutPerMeasureInSec = " + MAX_TIMEOUT_PER_MEASURE_IN_SEC);
+			}
 		}
 	}
 
