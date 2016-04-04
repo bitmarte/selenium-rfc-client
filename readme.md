@@ -348,7 +348,7 @@ Here the KPIs that you can check:
 	</code>
 </pre>
 
-**Pay attention: WebTimings API can not be activate on IExplorer**
+**Pay attention: WebTimings API can be activate only on Google Chrome browser**
 
 ### Advanced WebTimings configuration
 There are some advanced settings for KPIs performance monitoring

@@ -68,7 +68,7 @@ public class ConfigValidator extends A_Validator {
 
 		// checking for webTimingsAPI
 		if (toValidate.getWebTimings() != null) {
-			if (E_BrowserName.valueOf(toValidate.getBrowserName()).equals(E_BrowserName.IEXPLORER)) {
+			if (!(E_BrowserName.valueOf(toValidate.getBrowserName())).equals(E_BrowserName.CHROME)) {
 				throw new ValidatorException(
 						"Property 'webTimings' for browserName '" + toValidate.getBrowserName() + "' is not allowed!");
 			}
