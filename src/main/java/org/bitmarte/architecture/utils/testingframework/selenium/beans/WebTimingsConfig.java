@@ -12,12 +12,23 @@ public class WebTimingsConfig {
 	@XStreamAlias("maxTimeoutPerMeasureInSec")
 	private int maxTimeoutPerMeasureInSec;
 
+	@XStreamAlias("kpiIntervalMeasureInSec")
+	private int kpiIntervalMeasureInSec;
+
 	public int getMaxTimeoutPerMeasureInSec() {
 		return maxTimeoutPerMeasureInSec;
 	}
 
 	public void setMaxTimeoutPerMeasureInSec(int maxTimeoutPerMeasureInSec) {
 		this.maxTimeoutPerMeasureInSec = maxTimeoutPerMeasureInSec;
+	}
+
+	public int getKpiIntervalMeasureInSec() {
+		return kpiIntervalMeasureInSec;
+	}
+
+	public void setKpiIntervalMeasureInSec(int kpiIntervalMeasureInSec) {
+		this.kpiIntervalMeasureInSec = kpiIntervalMeasureInSec;
 	}
 
 }

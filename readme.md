@@ -29,6 +29,10 @@ The artifact is a simple JAR file that you need to run directly from a shell; it
 	<li><a href="#webtimings-performance-monitoring">WebTimings performance monitoring</a></li>
 	<ul>
 		<li><a href="#advanced-webtimings-configuration">Advanced WebTimings configuration</a></li>
+		<ul>
+			<li><a href="#timeout-per-kpi-measure">Timeout per KPI measure</a></li>
+			<li><a href="#kpi-interval-measure">KPI interval measure</a></li>
+		</ul>
 	</ul>
 </ul>
 <hr/>
@@ -362,5 +366,19 @@ There are some advanced settings for KPIs performance monitoring
 &lt;/config&gt;
 	</code>
 </pre>
-
 The default value is 5sec.
+#### KPI interval measure
+<pre>
+	<code>
+&lt;config&gt;
+	&lt;browserMode&gt;REMOTE&lt;/browserMode&gt;
+	&lt;browserName&gt;FIREFOX&lt;/browserName&gt;
+...
+&lt;webTimings&gt;
+	&lt;kpiIntervalMeasureInSec&gt;1&lt;/kpiIntervalMeasureInSec&gt;
+&lt;/webTimings&gt;
+...
+&lt;/config&gt;
+	</code>
+</pre>
+The default value is 0sec, no delay.

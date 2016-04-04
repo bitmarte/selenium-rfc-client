@@ -33,7 +33,19 @@ public class WebTimingUtils {
 			long value = -1;
 
 			public Boolean apply(WebDriver d) {
+				if (DefaultSeleniumConfig.getConfig().getWebTimings().getKpiIntervalMeasureInSec() > 0) {
+					LOG.debug("using KpiIntervalMeasureInSec '"
+							+ DefaultSeleniumConfig.getConfig().getWebTimings().getKpiIntervalMeasureInSec() + "s'...");
+					try {
+						Thread.currentThread();
+						Thread.sleep(
+								DefaultSeleniumConfig.getConfig().getWebTimings().getKpiIntervalMeasureInSec() * 1000);
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+				}
 				long valueTmp = (Long) js.executeScript(myKpi);
+				LOG.debug("" + valueTmp);
 				if (valueTmp != value) {
 					value = valueTmp;
 					return false;
