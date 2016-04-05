@@ -34,7 +34,7 @@ The artifact is a simple JAR file that you need to run directly from a shell; it
 			<li><a href="#kpi-interval-measure">KPI interval measure</a></li>
 		</ul>
 	</ul>
-	<li><a href="#">BrowserMob Proxy (bandwidth throttling)</a></li>
+	<li><a href="#browsermob-proxy-bandwidth-throttling-and-more">BrowserMob Proxy (bandwidth throttling)</a></li>
 </ul>
 <hr/>
 
