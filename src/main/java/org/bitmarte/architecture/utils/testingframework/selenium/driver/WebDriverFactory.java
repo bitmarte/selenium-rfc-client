@@ -1,9 +1,7 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.driver;
 
 import java.net.URL;
-
-import net.lightbody.bmp.BrowserMobProxy;
-import net.lightbody.bmp.client.ClientUtil;
+import java.util.concurrent.TimeUnit;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserMode;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserName;
@@ -19,26 +17,27 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.lightbody.bmp.BrowserMobProxy;
+import net.lightbody.bmp.client.ClientUtil;
+
 /**
  * @author bitmarte
  *
  */
 public class WebDriverFactory {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(WebDriverFactory.class);
+	private static final Logger LOG = LoggerFactory.getLogger(WebDriverFactory.class);
 
-	public static WebDriver getInstance(String browserMode, String browserName,
-			BrowserMobProxy proxy) throws Exception {
+	public static WebDriver getInstance(String browserMode, String browserName, BrowserMobProxy proxy)
+			throws Exception {
 		E_BrowserMode e_BrowserMode = E_BrowserMode.LOCAL;
 		E_BrowserName e_BrowserName = E_BrowserName.FIREFOX;
 		try {
 			e_BrowserMode = E_BrowserMode.valueOf(browserMode);
 			e_BrowserName = E_BrowserName.valueOf(browserName);
 		} catch (Exception e) {
-			throw new WebDriverException(
-					"Unsupported testing mode for browserMode '" + browserMode
-							+ "' and browserName '" + browserName + "'", e);
+			throw new WebDriverException("Unsupported testing mode for browserMode '" + browserMode
+					+ "' and browserName '" + browserName + "'", e);
 		}
 
 		DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -55,29 +54,22 @@ public class WebDriverFactory {
 			switch (e_BrowserName) {
 			case CHROME:
 				LOG.info("using remote chrome browser on server '"
-						+ DefaultSeleniumConfig.getConfig().getSeleniumRcURL()
-						+ "'");
+						+ DefaultSeleniumConfig.getConfig().getSeleniumRcURL() + "'");
 				capabilities.setBrowserName("chrome");
-				return new RemoteWebDriver(new URL(DefaultSeleniumConfig
-						.getConfig().getSeleniumRcURL()), capabilities);
+				return new RemoteWebDriver(new URL(DefaultSeleniumConfig.getConfig().getSeleniumRcURL()), capabilities);
 			case IEXPLORER:
 				LOG.info("using remote iexplorer browser on server '"
-						+ DefaultSeleniumConfig.getConfig().getSeleniumRcURL()
-						+ "'");
+						+ DefaultSeleniumConfig.getConfig().getSeleniumRcURL() + "'");
 				capabilities.setBrowserName("internet explorer");
-				return new RemoteWebDriver(new URL(DefaultSeleniumConfig
-						.getConfig().getSeleniumRcURL()), capabilities);
+				return new RemoteWebDriver(new URL(DefaultSeleniumConfig.getConfig().getSeleniumRcURL()), capabilities);
 			case FIREFOX:
 				LOG.info("using remote firefox browser on server '"
-						+ DefaultSeleniumConfig.getConfig().getSeleniumRcURL()
-						+ "'");
+						+ DefaultSeleniumConfig.getConfig().getSeleniumRcURL() + "'");
 				capabilities.setBrowserName("firefox");
-				return new RemoteWebDriver(new URL(DefaultSeleniumConfig
-						.getConfig().getSeleniumRcURL()), capabilities);
+				return new RemoteWebDriver(new URL(DefaultSeleniumConfig.getConfig().getSeleniumRcURL()), capabilities);
 
 			default:
-				throw new WebDriverException(
-						"Unknown case on E_BrowserName enum!");
+				throw new WebDriverException("Unknown case on E_BrowserName enum!");
 			}
 		case LOCAL:
 			// Using local mode as default browserMode
@@ -85,12 +77,10 @@ public class WebDriverFactory {
 			case CHROME:
 				LOG.info("using local chrome browser");
 				System.setProperty("webdriver.chrome.driver",
-						DefaultSeleniumConfig.getConfig()
-								.getLocalWebDriverPath());
+						DefaultSeleniumConfig.getConfig().getLocalWebDriverPath());
 				return new ChromeDriver(capabilities);
 			case IEXPLORER:
-				throw new WebDriverException(
-						"IExplorer browser in remote mode is not supported!");
+				throw new WebDriverException("IExplorer browser in remote mode is not supported!");
 			default:
 				// Using Firefox as default local browser
 				LOG.info("using local firefox browser");
@@ -112,23 +102,25 @@ public class WebDriverFactory {
 		proxy.start(DefaultSeleniumConfig.getConfig().getMobProxy().getPort());
 
 		// DownloadBytePerSec
-		if (DefaultSeleniumConfig.getConfig().getMobProxy()
-				.getDownloadBytePerSec() > 0) {
+		if (DefaultSeleniumConfig.getConfig().getMobProxy().getDownloadBytePerSec() > 0) {
 			LOG.info("setting DownloadBytePerSec: "
-					+ DefaultSeleniumConfig.getConfig().getMobProxy()
-							.getDownloadBytePerSec() + " bps");
-			proxy.setReadBandwidthLimit(DefaultSeleniumConfig.getConfig()
-					.getMobProxy().getDownloadBytePerSec());
+					+ DefaultSeleniumConfig.getConfig().getMobProxy().getDownloadBytePerSec() + " bps");
+			proxy.setReadBandwidthLimit(DefaultSeleniumConfig.getConfig().getMobProxy().getDownloadBytePerSec());
 		}
 
 		// UploadBytePerSec
-		if (DefaultSeleniumConfig.getConfig().getMobProxy()
-				.getUploadBytePerSec() > 0) {
+		if (DefaultSeleniumConfig.getConfig().getMobProxy().getUploadBytePerSec() > 0) {
 			LOG.info("setting UploadBytePerSec: "
-					+ DefaultSeleniumConfig.getConfig().getMobProxy()
-							.getUploadBytePerSec() + " bps");
-			proxy.setWriteBandwidthLimit(DefaultSeleniumConfig.getConfig()
-					.getMobProxy().getUploadBytePerSec());
+					+ DefaultSeleniumConfig.getConfig().getMobProxy().getUploadBytePerSec() + " bps");
+			proxy.setWriteBandwidthLimit(DefaultSeleniumConfig.getConfig().getMobProxy().getUploadBytePerSec());
+		}
+
+		// Latency
+		if (DefaultSeleniumConfig.getConfig().getMobProxy().getLatencyInMillisec() > 0) {
+			LOG.info("setting LatencyInMillisec: "
+					+ DefaultSeleniumConfig.getConfig().getMobProxy().getLatencyInMillisec() + " msec");
+			proxy.setLatency(DefaultSeleniumConfig.getConfig().getMobProxy().getLatencyInMillisec(),
+					TimeUnit.MILLISECONDS);
 		}
 	}
 }

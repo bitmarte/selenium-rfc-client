@@ -18,6 +18,9 @@ public class MobProxyConfig {
 	@XStreamAlias("uploadBytePerSec")
 	private long uploadBytePerSec;
 
+	@XStreamAlias("latencyInMillisec")
+	private long latencyInMillisec;
+
 	public int getPort() {
 		return port;
 	}
@@ -40,6 +43,14 @@ public class MobProxyConfig {
 
 	public void setUploadBytePerSec(long uploadBytePerSec) {
 		this.uploadBytePerSec = uploadBytePerSec;
+	}
+
+	public long getLatencyInMillisec() {
+		return latencyInMillisec;
+	}
+
+	public void setLatencyInMillisec(long latencyInMillisec) {
+		this.latencyInMillisec = latencyInMillisec;
 	}
 
 }

@@ -34,6 +34,7 @@ The artifact is a simple JAR file that you need to run directly from a shell; it
 			<li><a href="#kpi-interval-measure">KPI interval measure</a></li>
 		</ul>
 	</ul>
+	<li><a href="#">BrowserMob Proxy (bandwidth throttling)</a></li>
 </ul>
 <hr/>
 
@@ -84,7 +85,7 @@ In this case the client execute tests on remote machine.<br/>
 			<li>&lt;reportBaseDir&gt; is a **require** node where you put your preferred location where Selenium save reports</li>
 			<li>&lt;cleanReportBaseDirOnStart&gt; is an **optional** node used to clean the location where Selenium save reports before run. The default value is false</li>
 			<li>&lt;errorConditions&gt; is an **optional** node where you put your generic error conditions. The elementContent node is an **optional** one</li>
-			<li>&lt;closeBrowserOnFinish&gt; is an **optional** node used to close browser at the end of your test, boolean value. The default value is true</li>
+			<li>&lt;closeBrowserOnFinish&gt; is an **optional** node used to close browser at the end of your test, boolean value. The default value is false</li>
 		</ul>
 	</li>
 </ol>
@@ -384,3 +385,29 @@ The time (in sec) between two KPI measures.
 	</code>
 </pre>
 The default value is 0sec, no delay.
+<br/><br/>
+## BrowserMob Proxy (bandwidth throttling and more)
+You can use BrowserMob-Proxy (https://github.com/lightbody/browsermob-proxy) in order to introduce a light-proxy in your tests.
+So you will have some features as configuration (config.xml), here in the table below:
+
+| FEATURE		        		| Required (default)	| Description																								|
+| ----------------------------- | ---------------------	|---------------------------------------------------------------------------------------------------------- |
+| &lt;port&gt;					|	NO (0)				| The number of entries that browser retrieve																|
+| &lt;downloadBytePerSec&gt;	|	NO (no limit)		| The time spent for the requests (msec) [responseStart - requestStart]										|
+| &lt;uploadBytePerSec&gt;		| 	NO (no limit)		| The time spent for retrieving the resources (msec) [responseEnd - responseStart]							|
+| &lt;latencyInMillisec&gt;		| 	NO (no limit)		| The time spent by your browser for managing response (msec) [domContentLoadEventEnd - responseEnd]		|
+
+<pre>
+	<code>
+&lt;config&gt;
+	&lt;browserMode&gt;REMOTE&lt;/browserMode&gt;
+	&lt;browserName&gt;FIREFOX&lt;/browserName&gt;
+...
+&lt;mobProxy&gt;
+	&lt;uploadBytePerSec&gt;1048576&lt;/uploadBytePerSec&gt;
+	&lt;downloadBytePerSec&gt;7340032&lt;/downloadBytePerSec&gt;
+&lt;/mobProxy&gt;
+...
+&lt;/config&gt;
+	</code>
+</pre>
