@@ -34,8 +34,6 @@ public class WebTimingUtils {
 
 			public Boolean apply(WebDriver d) {
 				if (DefaultSeleniumConfig.getConfig().getWebTimings().getKpiIntervalMeasureInSec() > 0) {
-					LOG.debug("using KpiIntervalMeasureInSec '"
-							+ DefaultSeleniumConfig.getConfig().getWebTimings().getKpiIntervalMeasureInSec() + "s'...");
 					try {
 						Thread.currentThread();
 						Thread.sleep(
@@ -45,7 +43,6 @@ public class WebTimingUtils {
 					}
 				}
 				long valueTmp = (Long) js.executeScript(myKpi);
-				LOG.debug("" + valueTmp);
 				if (valueTmp != value) {
 					value = valueTmp;
 					return false;
@@ -61,6 +58,10 @@ public class WebTimingUtils {
 		LOG.debug("monitor performance with webTimingsAPI...");
 		if (run.getRunReport().getWebTimings() == null) {
 			run.getRunReport().setWebTimings(new WebTimings());
+		}
+		if (DefaultSeleniumConfig.getConfig().getWebTimings().getKpiIntervalMeasureInSec() > 0) {
+			LOG.debug("using KpiIntervalMeasureInSec '"
+					+ DefaultSeleniumConfig.getConfig().getWebTimings().getKpiIntervalMeasureInSec() + "s'...");
 		}
 
 		// Total request
