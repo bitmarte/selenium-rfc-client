@@ -388,14 +388,14 @@ The default value is 0sec, no delay.
 <br/><br/>
 ## BrowserMob Proxy (bandwidth throttling and more)
 You can use BrowserMob-Proxy (https://github.com/lightbody/browsermob-proxy) in order to introduce a light-proxy in your tests.
-So you will have some features as configuration (config.xml), here in the table below:
+So you will have some features as configuration (config.xml), here in the table below (see BrowserMobProxy interface on github project):
 
-| FEATURE		        		| Required (default)	| Description																								|
-| ----------------------------- | ---------------------	|---------------------------------------------------------------------------------------------------------- |
-| &lt;port&gt;					|	NO (0)				| The number of entries that browser retrieve																|
-| &lt;downloadBytePerSec&gt;	|	NO (no limit)		| The time spent for the requests (msec) [responseStart - requestStart]										|
-| &lt;uploadBytePerSec&gt;		| 	NO (no limit)		| The time spent for retrieving the resources (msec) [responseEnd - responseStart]							|
-| &lt;latencyInMillisec&gt;		| 	NO (no limit)		| The time spent by your browser for managing response (msec) [domContentLoadEventEnd - responseEnd]		|
+| FEATURE	        		| Required (default)	| Description																								|
+| ------------------------- | ---------------------	|---------------------------------------------------------------------------------------------------------- |
+| port						|	NO (0)				| Starts the proxy on the specified port																	|
+| downloadBytePerSec		|	NO (no limit)		| The time spent for the requests (msec) [responseStart - requestStart]										|
+| uploadBytePerSec			| 	NO (no limit)		| The time spent for retrieving the resources (msec) [responseEnd - responseStart]							|
+| latencyInMillisec			| 	NO (no limit)		| Network latency																							|
 
 <pre>
 	<code>
