@@ -1,6 +1,8 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.driver;
 
+import java.net.InetSocketAddress;
 import java.net.URL;
+import java.util.StringTokenizer;
 import java.util.concurrent.TimeUnit;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserMode;
@@ -98,6 +100,20 @@ public class WebDriverFactory {
 	 * @param proxy
 	 */
 	private static void browserMobConfigure(BrowserMobProxy proxy) {
+
+		// ChainedProxy
+		if (DefaultSeleniumConfig.getConfig().getMobProxy().getChainedProxy() != null) {
+			String host = null;
+			int port = -1;
+			StringTokenizer stringTokenizer = new StringTokenizer(
+					DefaultSeleniumConfig.getConfig().getMobProxy().getChainedProxy(), ":");
+			while (stringTokenizer.hasMoreTokens()) {
+				host = stringTokenizer.nextToken();
+				port = Integer.parseInt(stringTokenizer.nextToken());
+			}
+			proxy.setChainedProxy(new InetSocketAddress(host, port));
+		}
+
 		// port
 		proxy.start(DefaultSeleniumConfig.getConfig().getMobProxy().getPort());
 

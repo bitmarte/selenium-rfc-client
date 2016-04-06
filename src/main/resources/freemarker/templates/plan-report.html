@@ -86,7 +86,9 @@
 									</ul>
 								</td>
 								<td>
-									
+									<div class="canvas-holder">
+										<canvas id="chart-area-${run?counter}" width="2500" height="2500"/>
+									</div>
 								</td>
 							</tr>
 						</table>
@@ -134,9 +136,47 @@
 				}
 			];
 			
+			<#if webTimings>
+				<#list plan.runs as run>
+					<!--S perf charts -->
+					var radarChartData_${run?counter} = {
+						labels: ["Redirect", "DomainLookup", "Connect", "Response", "UnloadEvent", "DomContentLoadedEvent", "LoadEvent"],
+						datasets: [
+							{
+								label: "-",
+								fillColor: "rgba(215, 40, 40, 0.9)",
+								strokeColor: "rgba(215, 40, 40, 0.9)",
+								pointColor: "rgba(215, 40, 40, 0.9)",
+								pointStrokeColor: "#fff",
+								pointHighlightFill: "#fff",
+								pointHighlightStroke: "rgba(215, 40, 40, 0.9)",
+								data: [
+									${(run.runReport.webTimings.redirectEnd - run.runReport.webTimings.redirectStart)?c},
+									${(run.runReport.webTimings.domainLookupEnd - run.runReport.webTimings.domainLookupStart)?c},
+									${(run.runReport.webTimings.connectEnd - run.runReport.webTimings.connectStart)?c},
+									${(run.runReport.webTimings.responseEnd - run.runReport.webTimings.requestStart)?c},
+									${(run.runReport.webTimings.unloadEventEnd - run.runReport.webTimings.unloadEventStart)?c},
+									${(run.runReport.webTimings.domContentLoadedEventEnd - run.runReport.webTimings.domContentLoadedEventStart)?c},
+									${(run.runReport.webTimings.loadEventEnd - run.runReport.webTimings.loadEventStart)?c}
+								]
+							}
+						]
+					};
+					<!--E perf charts -->
+				</#list>
+			</#if>
+			
 			window.onload = function(){
 				var ctx = document.getElementById("chart-area").getContext("2d");
 				window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
+				
+				<#if webTimings>
+					<#list plan.runs as run>
+						window.myRadar = new Chart(document.getElementById("chart-area-${run?counter}").getContext("2d")).Radar(radarChartData_${run?counter}, {
+							responsive: true
+						});
+					</#list>
+				</#if>
 			};
 		</script>
 		<!--E charts -->

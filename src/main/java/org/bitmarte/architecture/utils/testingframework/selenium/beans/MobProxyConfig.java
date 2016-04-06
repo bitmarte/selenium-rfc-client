@@ -21,6 +21,9 @@ public class MobProxyConfig {
 	@XStreamAlias("latencyInMillisec")
 	private long latencyInMillisec;
 
+	@XStreamAlias("chainedProxy")
+	private String chainedProxy;
+
 	public int getPort() {
 		return port;
 	}
@@ -51,6 +54,14 @@ public class MobProxyConfig {
 
 	public void setLatencyInMillisec(long latencyInMillisec) {
 		this.latencyInMillisec = latencyInMillisec;
+	}
+
+	public String getChainedProxy() {
+		return chainedProxy;
+	}
+
+	public void setChainedProxy(String chainedProxy) {
+		this.chainedProxy = chainedProxy;
 	}
 
 }

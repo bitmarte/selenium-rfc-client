@@ -392,6 +392,7 @@ So you will have some features as configuration (config.xml), here in the table 
 
 | FEATURE	        		| Required (default)	| Description																								|
 | ------------------------- | ---------------------	|---------------------------------------------------------------------------------------------------------- |
+| chainedProxy				|	NO (no proxy)		| Sets an upstream proxy that this proxy will use to connect to external hosts (eg. hostname:port)			|
 | port						|	NO (0)				| Starts the proxy on the specified port																	|
 | downloadBytePerSec		|	NO (no limit)		| The time spent for the requests (msec) [responseStart - requestStart]										|
 | uploadBytePerSec			| 	NO (no limit)		| The time spent for retrieving the resources (msec) [responseEnd - responseStart]							|
@@ -404,6 +405,7 @@ So you will have some features as configuration (config.xml), here in the table 
 	&lt;browserName&gt;FIREFOX&lt;/browserName&gt;
 ...
 &lt;mobProxy&gt;
+	&lt;chainedProxy&gt;my.host.proxy:9090&lt;/chainedProxy&gt;
 	&lt;uploadBytePerSec&gt;1048576&lt;/uploadBytePerSec&gt;
 	&lt;downloadBytePerSec&gt;7340032&lt;/downloadBytePerSec&gt;
 &lt;/mobProxy&gt;
