@@ -35,7 +35,7 @@
 				<th style="font-weight: bold;">RUN NAME</th>
 				<th style="font-weight: bold;">RESULT</th>
 				<#if webTimings>
-				<th style="font-weight: bold;">WEB TIMINGS</th>
+				<th style="font-weight: bold;">PAGE LOAD TIME BREAKDOWN</th>
 				</#if>
 				<th>SCREENSHOT</th>
 			</tr>
@@ -60,15 +60,34 @@
 								<td>
 									<ul>
 										<li>Total requests: ${run.runReport.webTimings.totalRequests}</li>
-										<li>Total time: ${(run.runReport.webTimings.domContentLoadEventEnd - run.runReport.webTimings.requestStart)?c} msec</li>
-										<li>Upload time: <b style="color:#CC2900;">${(run.runReport.webTimings.responseStart - run.runReport.webTimings.requestStart)?c} msec</b></li>
-										<li>Download time: <b style="color:#009933;">${(run.runReport.webTimings.responseEnd - run.runReport.webTimings.responseStart)?c} msec</b></li>
-										<li>Browser processing time: <b style="color:#0066FF;">${(run.runReport.webTimings.domContentLoadEventEnd - run.runReport.webTimings.responseEnd)?c} msec</b></li>
+										<li>Network latency: ${(run.runReport.webTimings.responseEnd - run.runReport.webTimings.fetchStart)?c} msec</li>
+									</ul>
+									<p>NETWORK KPIs</p>
+									<ul>
+										<li>navigationStart: 0 msec</li>
+										<li>redirect: ${(run.runReport.webTimings.redirectStart - run.runReport.webTimings.navigationStart)?c}-${(run.runReport.webTimings.redirectEnd - run.runReport.webTimings.navigationStart)?c} msec</li>
+										<li>fetchStart: ${(run.runReport.webTimings.fetchStart - run.runReport.webTimings.navigationStart)?c} msec</li>
+										<li>domainLookup: ${(run.runReport.webTimings.domainLookupStart - run.runReport.webTimings.navigationStart)?c}-${(run.runReport.webTimings.domainLookupEnd - run.runReport.webTimings.navigationStart)?c} msec</li>
+										<li>connect: ${(run.runReport.webTimings.connectStart - run.runReport.webTimings.navigationStart)?c}-${(run.runReport.webTimings.connectEnd - run.runReport.webTimings.navigationStart)?c} msec</li>
+									</ul>
+									<p>SERVER KPIs</p>
+									<ul>
+										<li>requestStart: ${(run.runReport.webTimings.requestStart - run.runReport.webTimings.navigationStart)?c} msec</li>
+										<li>response: ${(run.runReport.webTimings.responseStart - run.runReport.webTimings.navigationStart)?c}-${(run.runReport.webTimings.responseEnd - run.runReport.webTimings.navigationStart)?c} msec</li>
+									</ul>
+									<p>BROWSER KPIs</p>
+									<ul>
+										<li>unloadEvent: ${(run.runReport.webTimings.unloadEventStart - run.runReport.webTimings.navigationStart)?c}-${(run.runReport.webTimings.unloadEventEnd - run.runReport.webTimings.navigationStart)?c} msec</li>
+										<li>domLoading: ${(run.runReport.webTimings.domLoading - run.runReport.webTimings.navigationStart)?c} msec</li>
+										<li>domInteractive: ${(run.runReport.webTimings.domInteractive - run.runReport.webTimings.navigationStart)?c} msec</li>
+										<li>domContentLoadedEvent: ${(run.runReport.webTimings.domContentLoadedEventStart - run.runReport.webTimings.navigationStart)?c}-${(run.runReport.webTimings.domContentLoadedEventEnd - run.runReport.webTimings.navigationStart)?c} msec</li>
+										<li>domComplete: ${(run.runReport.webTimings.domComplete - run.runReport.webTimings.navigationStart)?c} msec</li>
+										<li>loadEvent: ${(run.runReport.webTimings.loadEventStart - run.runReport.webTimings.navigationStart)?c}-${(run.runReport.webTimings.loadEventEnd - run.runReport.webTimings.navigationStart)?c} msec</li>
 									</ul>
 								</td>
 								<td>
 									<div class="canvas-holder">
-										<canvas id="chart-area-${run?counter}" width="1200" height="1200"/>
+										<canvas id="chart-area-${run?counter}" width="2500" height="2500"/>
 									</div>
 								</td>
 							</tr>
@@ -120,26 +139,29 @@
 			<#if webTimings>
 				<#list plan.runs as run>
 					<!--S perf charts -->
-					var doughnutData_${run?counter} = [
-						{
-							value: ${(run.runReport.webTimings.responseStart - run.runReport.webTimings.requestStart)?c},
-							color: "#CC2900",
-							highlight: "#FF3300",
-							label: "upload time"
-						},
-						{
-							value: ${(run.runReport.webTimings.responseEnd - run.runReport.webTimings.responseStart)?c},
-							color:"#009933",
-							highlight: "#00E64D",
-							label: "download time"
-						},
-						{
-							value: ${(run.runReport.webTimings.domContentLoadEventEnd - run.runReport.webTimings.responseEnd)?c},
-							color: "#0066FF",
-							highlight: "#66CCFF",
-							label: "browser processing time"
-						}
-					];
+					var radarChartData_${run?counter} = {
+						labels: ["Redirect", "DomainLookup", "Connect", "Response", "UnloadEvent", "DomContentLoadedEvent", "LoadEvent"],
+						datasets: [
+							{
+								label: "-",
+								fillColor: "rgba(215, 40, 40, 0.9)",
+								strokeColor: "rgba(215, 40, 40, 0.9)",
+								pointColor: "rgba(215, 40, 40, 0.9)",
+								pointStrokeColor: "#fff",
+								pointHighlightFill: "#fff",
+								pointHighlightStroke: "rgba(215, 40, 40, 0.9)",
+								data: [
+									${(run.runReport.webTimings.redirectEnd - run.runReport.webTimings.redirectStart)?c},
+									${(run.runReport.webTimings.domainLookupEnd - run.runReport.webTimings.domainLookupStart)?c},
+									${(run.runReport.webTimings.connectEnd - run.runReport.webTimings.connectStart)?c},
+									${(run.runReport.webTimings.responseEnd - run.runReport.webTimings.requestStart)?c},
+									${(run.runReport.webTimings.unloadEventEnd - run.runReport.webTimings.unloadEventStart)?c},
+									${(run.runReport.webTimings.domContentLoadedEventEnd - run.runReport.webTimings.domContentLoadedEventStart)?c},
+									${(run.runReport.webTimings.loadEventEnd - run.runReport.webTimings.loadEventStart)?c}
+								]
+							}
+						]
+					};
 					<!--E perf charts -->
 				</#list>
 			</#if>
@@ -150,8 +172,9 @@
 				
 				<#if webTimings>
 					<#list plan.runs as run>
-						var ctx_${run?counter} = document.getElementById("chart-area-${run?counter}").getContext("2d");
-						window.myDoughnut_${run?counter} = new Chart(ctx_${run?counter}).Doughnut(doughnutData_${run?counter}, {responsive : true});
+						window.myRadar = new Chart(document.getElementById("chart-area-${run?counter}").getContext("2d")).Radar(radarChartData_${run?counter}, {
+							responsive: true
+						});
 					</#list>
 				</#if>
 			};

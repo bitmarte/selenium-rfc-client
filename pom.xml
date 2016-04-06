@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.bitmarte.architecture.utils.testingframework</groupId>
 	<artifactId>selenium-rfc-client</artifactId>
-	<version>1.4</version>
+	<version>1.5</version>
 	<dependencies>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>2.48.2</version>
+			<version>2.53.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -36,15 +36,25 @@
 			<artifactId>freemarker</artifactId>
 			<version>2.3.23</version>
 		</dependency>
+		<dependency>
+			<groupId>net.lightbody.bmp</groupId>
+			<artifactId>browsermob-core-littleproxy</artifactId>
+			<version>2.1.0-beta-5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.3.2</version>
+		</dependency>
 	</dependencies>
 	<distributionManagement>
-                <repository>
+		<repository>
 			<id>releases.repo.url</id>
-                        <url>${releases.repo.url}</url>
-                </repository>
-              	<snapshotRepository>
+			<url>${releases.repo.url}</url>
+		</repository>
+		<snapshotRepository>
 			<id>snapshots.repo.url</id>
 			<url>${snapshots.repo.url}</url>
-                </snapshotRepository>
+		</snapshotRepository>
 	</distributionManagement>
 </project>

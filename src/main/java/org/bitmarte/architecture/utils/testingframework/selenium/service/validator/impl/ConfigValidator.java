@@ -66,6 +66,8 @@ public class ConfigValidator extends A_Validator {
 					"Property 'localWebDriverPath' for browserName '" + toValidate.getBrowserName() + "' is required!");
 		}
 
+		LOG.warn("setCloseBrowserOnFinish = " + toValidate.isCloseBrowserOnFinish());
+
 		// checking for webTimingsAPI
 		if (toValidate.getWebTimings() != null) {
 			if (E_BrowserName.valueOf(toValidate.getBrowserName()).equals(E_BrowserName.IEXPLORER)) {
@@ -85,10 +87,6 @@ public class ConfigValidator extends A_Validator {
 		if (toValidate.getMaxTimeOutPerErrorConditionInSec() <= 0) {
 			toValidate.setMaxTimeOutPerErrorConditionInSec(MAX_TIMEOUT_PER_ERROR_CONDITION_IN_SEC);
 			LOG.info("setMaxTimeOutPerErrorConditionInSec = " + MAX_TIMEOUT_PER_ERROR_CONDITION_IN_SEC);
-		}
-		if (!toValidate.isCloseBrowserOnFinish()) {
-			toValidate.setCloseBrowserOnFinish(true);
-			LOG.info("setCloseBrowserOnFinish = true");
 		}
 		if (!(StringUtils.endsWith(toValidate.getReportBaseDir(), "/")
 				|| StringUtils.endsWith(toValidate.getReportBaseDir(), "\\"))) {
