@@ -34,7 +34,12 @@ The artifact is a simple JAR file that you need to run directly from a shell; it
 			<li><a href="#kpi-interval-measure">KPI interval measure</a></li>
 		</ul>
 	</ul>
-	<li><a href="#browsermob-proxy-bandwidth-throttling-and-more">BrowserMob Proxy (bandwidth throttling)</a></li>
+	<ul>
+		<li><a href="#browsermob-proxy-bandwidth-throttling-and-more">BrowserMob Proxy (bandwidth throttling)</a></li>
+		<ul>
+			<li><a href="#generating-har-file">Generating HAR file</a></li>
+		</ul>
+	</ul>
 </ul>
 <hr/>
 
@@ -414,7 +419,7 @@ So you will have some features as configuration (config.xml), here in the table 
 	</code>
 </pre>
 
-### HAR file
+### Generating HAR file
 You can produce an HAR file (one file for each page) with a simple additional attribute, boolean value.
 
 <pre>
