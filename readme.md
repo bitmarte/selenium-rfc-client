@@ -413,6 +413,7 @@ So you will have some features as configuration (config.xml), here in the table 
 &lt;/config&gt;
 	</code>
 </pre>
+
 ### HAR file
 You can produce an HAR file (one file for each page) with a simple additional attribute, boolean value.
 
