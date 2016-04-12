@@ -92,6 +92,9 @@
 								</td>
 							</tr>
 						</table>
+						<#if run.runReport.harFilePath??>
+							<p><a href="${run.runReport.harFilePath}" download>Download HAR file</a></p>
+						</#if>
 					</td>
 					</#if>
 					<td>

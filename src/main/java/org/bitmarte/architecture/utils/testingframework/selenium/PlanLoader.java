@@ -28,6 +28,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.lightbody.bmp.BrowserMobProxy;
+
 /**
  * @author bitmarte
  *
@@ -37,7 +39,7 @@ public class PlanLoader {
 	private static final Logger LOG = LoggerFactory.getLogger(PlanLoader.class);
 
 	@SuppressWarnings("finally")
-	public static Plan load(WebDriver driver, File xmlPlan) throws Exception {
+	public static Plan load(WebDriver driver, File xmlPlan, BrowserMobProxy proxy) throws Exception {
 		Plan plan = null;
 		Run currentRun = null;
 		DriverUtils driverUtils = null;
@@ -74,6 +76,13 @@ public class PlanLoader {
 				currentRun = run;
 				currentRun.getRunReport().setTestResult(E_TestResult.ERROR.name());
 				LOG.info("Run name: " + currentRun.getRunName());
+
+				// enable HAR capture
+				if (DefaultSeleniumConfig.getConfig().getMobProxy().isEnableHarCapture()) {
+					LOG.info("HAR file capture enabled");
+					proxy.newHar(currentRun.getRunName());
+					proxy.newPage(currentRun.getRunName());
+				}
 
 				// browser action managing
 				if (currentRun.getBrowserAction() != null) {
@@ -218,6 +227,17 @@ public class PlanLoader {
 					// Web Timings API
 					if (DefaultSeleniumConfig.getConfig().getWebTimings() != null) {
 						timingUtils.calculateTimings(currentRun);
+					}
+
+					// enable HAR capture
+					if (DefaultSeleniumConfig.getConfig().getMobProxy().isEnableHarCapture()) {
+						String harFilePath = DefaultSeleniumConfig.getConfig().getReportBaseDir() + plan.getPlanName()
+								+ "/HarFiles/" + currentRun.getRunName() + ".har";
+						LOG.info("writing HAR file '" + harFilePath + "' ...");
+						File harFile = new File(harFilePath);
+						harFile.getParentFile().mkdirs();
+						proxy.getHar().writeTo(harFile);
+						currentRun.getRunReport().setHarFilePath(harFilePath);
 					}
 				}
 			}

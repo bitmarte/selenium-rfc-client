@@ -1,6 +1,9 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.beans;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamConverter;
+import com.thoughtworks.xstream.converters.basic.BooleanConverter;
 
 /**
  * @author bitmarte
@@ -23,6 +26,11 @@ public class MobProxyConfig {
 
 	@XStreamAlias("chainedProxy")
 	private String chainedProxy;
+
+	@XStreamAlias("enableHarCapture")
+	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = { "true", "false" })
+	@XStreamAsAttribute
+	private boolean enableHarCapture;
 
 	public int getPort() {
 		return port;
@@ -62,6 +70,14 @@ public class MobProxyConfig {
 
 	public void setChainedProxy(String chainedProxy) {
 		this.chainedProxy = chainedProxy;
+	}
+
+	public boolean isEnableHarCapture() {
+		return enableHarCapture;
+	}
+
+	public void setEnableHarCapture(boolean enableHarCapture) {
+		this.enableHarCapture = enableHarCapture;
 	}
 
 }
