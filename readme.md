@@ -413,3 +413,17 @@ So you will have some features as configuration (config.xml), here in the table 
 &lt;/config&gt;
 	</code>
 </pre>
+### HAR file
+You can produce an HAR file (one file for each page) with a simple additional attribute, boolean value.
+
+<pre>
+	<code>
+&lt;config&gt;
+	&lt;browserMode&gt;REMOTE&lt;/browserMode&gt;
+	&lt;browserName&gt;FIREFOX&lt;/browserName&gt;
+...
+&lt;mobProxy enableHarCapture="true"/&gt;
+...
+&lt;/config&gt;
+	</code>
+</pre>
