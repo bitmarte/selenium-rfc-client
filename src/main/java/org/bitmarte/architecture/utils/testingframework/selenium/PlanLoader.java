@@ -29,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.lightbody.bmp.BrowserMobProxy;
+import net.lightbody.bmp.proxy.CaptureType;
 
 /**
  * @author bitmarte
@@ -80,6 +81,7 @@ public class PlanLoader {
 				// enable HAR capture
 				if (DefaultSeleniumConfig.getConfig().getMobProxy().isEnableHarCapture()) {
 					LOG.info("HAR file capture enabled");
+					proxy.setHarCaptureTypes(CaptureType.getAllContentCaptureTypes());
 					proxy.newHar(currentRun.getRunName());
 					proxy.newPage(currentRun.getRunName());
 				}
