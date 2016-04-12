@@ -5,9 +5,6 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.lightbody.bmp.BrowserMobProxy;
-import net.lightbody.bmp.BrowserMobProxyServer;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +15,9 @@ import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSe
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.lightbody.bmp.BrowserMobProxy;
+import net.lightbody.bmp.BrowserMobProxyServer;
 
 /**
  * @author bitmarte
@@ -49,8 +49,8 @@ public class RunTestSuite {
 					return checker;
 				}
 			});
-			
-			if(DefaultSeleniumConfig.getConfig().getMobProxy() != null) {
+
+			if (DefaultSeleniumConfig.getConfig().getMobProxy() != null) {
 				proxy = new BrowserMobProxyServer();
 			}
 
@@ -59,7 +59,7 @@ public class RunTestSuite {
 
 			if (plans.length > 0) {
 				for (File file : plans) {
-					workedPlans.add(PlanLoader.load(driver, file));
+					workedPlans.add(PlanLoader.load(driver, file, proxy));
 				}
 			} else {
 				LOG.warn("No plans exist!");
@@ -72,7 +72,7 @@ public class RunTestSuite {
 
 			if (DefaultSeleniumConfig.getConfig().isCloseBrowserOnFinish()) {
 				try {
-					if(proxy != null) {
+					if (proxy != null) {
 						proxy.stop();
 					}
 					driver.close();

@@ -34,7 +34,12 @@ The artifact is a simple JAR file that you need to run directly from a shell; it
 			<li><a href="#kpi-interval-measure">KPI interval measure</a></li>
 		</ul>
 	</ul>
-	<li><a href="#browsermob-proxy-bandwidth-throttling-and-more">BrowserMob Proxy (bandwidth throttling)</a></li>
+	<ul>
+		<li><a href="#browsermob-proxy-bandwidth-throttling-and-more">BrowserMob Proxy (bandwidth throttling)</a></li>
+		<ul>
+			<li><a href="#generating-har-file">Generating HAR file</a></li>
+		</ul>
+	</ul>
 </ul>
 <hr/>
 
@@ -409,6 +414,21 @@ So you will have some features as configuration (config.xml), here in the table 
 	&lt;uploadBytePerSec&gt;1048576&lt;/uploadBytePerSec&gt;
 	&lt;downloadBytePerSec&gt;7340032&lt;/downloadBytePerSec&gt;
 &lt;/mobProxy&gt;
+...
+&lt;/config&gt;
+	</code>
+</pre>
+
+### Generating HAR file
+You can produce an HAR file (one file for each page) with a simple additional attribute, boolean value.
+
+<pre>
+	<code>
+&lt;config&gt;
+	&lt;browserMode&gt;REMOTE&lt;/browserMode&gt;
+	&lt;browserName&gt;FIREFOX&lt;/browserName&gt;
+...
+&lt;mobProxy enableHarCapture="true"/&gt;
 ...
 &lt;/config&gt;
 	</code>
