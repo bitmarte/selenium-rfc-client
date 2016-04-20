@@ -79,7 +79,8 @@ public class PlanLoader {
 				LOG.info("Run name: " + currentRun.getRunName());
 
 				// enable HAR capture
-				if (DefaultSeleniumConfig.getConfig().getMobProxy().isEnableHarCapture()) {
+				if (DefaultSeleniumConfig.getConfig().getMobProxy() != null
+						&& DefaultSeleniumConfig.getConfig().getMobProxy().isEnableHarCapture()) {
 					LOG.info("HAR file capture enabled");
 					proxy.setHarCaptureTypes(CaptureType.getAllContentCaptureTypes());
 					proxy.newHar(currentRun.getRunName());
@@ -232,7 +233,8 @@ public class PlanLoader {
 					}
 
 					// enable HAR capture
-					if (DefaultSeleniumConfig.getConfig().getMobProxy().isEnableHarCapture()) {
+					if (DefaultSeleniumConfig.getConfig().getMobProxy() != null
+							&& DefaultSeleniumConfig.getConfig().getMobProxy().isEnableHarCapture()) {
 						String harFilePath = DefaultSeleniumConfig.getConfig().getReportBaseDir() + plan.getPlanName()
 								+ "/HarFiles/" + currentRun.getRunName() + ".har";
 						LOG.info("writing HAR file '" + harFilePath + "' ...");
