@@ -84,11 +84,17 @@ public class DriverUtils {
 			testResult = E_TestResult.valueOf(run.getRunReport().getTestResult());
 		}
 
+		String screenshotFileName = run.getRunName() + "_" + testResult.toString();
+		if (run.getSuccessCondition().getScreenshotFileName() != null) {
+			screenshotFileName = run.getSuccessCondition().getScreenshotFileName();
+			LOG.info("using custom screenshot filename: " + screenshotFileName);
+		}
+
 		boolean hasError = false;
 		try {
 			String archivePath = DefaultSeleniumConfig.getConfig().getReportBaseDir() + this.planName + "/screenshots/";
 
-			LOG.debug("Take screenshot '" + archivePath + run.getRunName() + "_" + testResult.toString() + ".png'");
+			LOG.debug("Take screenshot '" + archivePath + screenshotFileName + ".png'");
 
 			if (run.getSuccessCondition().getWaitBeforeScreenshotInMilliSec() != 0) {
 				LOG.info("waiting before take screenshot ["
@@ -102,8 +108,7 @@ public class DriverUtils {
 			}
 			File scrFile = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
 
-			FileUtils.copyFile(scrFile,
-					new File(archivePath + run.getRunName() + "_" + testResult.toString() + ".png"));
+			FileUtils.copyFile(scrFile, new File(archivePath + screenshotFileName + ".png"));
 		} catch (Exception e) {
 			hasError = true;
 			LOG.error("Error takeScreenshot()!", e);

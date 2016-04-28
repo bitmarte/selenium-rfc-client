@@ -28,6 +28,10 @@ public class SuccessCondition {
 	@XStreamAsAttribute
 	private long waitBeforeScreenshotInMilliSec;
 
+	@XStreamAlias("screenshotFileName")
+	@XStreamAsAttribute
+	private String screenshotFileName;
+
 	public String getElement() {
 		return element;
 	}
@@ -66,6 +70,14 @@ public class SuccessCondition {
 
 	public void setWaitBeforeScreenshotInMilliSec(long waitBeforeScreenshotInMilliSec) {
 		this.waitBeforeScreenshotInMilliSec = waitBeforeScreenshotInMilliSec;
+	}
+
+	public String getScreenshotFileName() {
+		return screenshotFileName;
+	}
+
+	public void setScreenshotFileName(String screenshotFileName) {
+		this.screenshotFileName = screenshotFileName;
 	}
 
 }

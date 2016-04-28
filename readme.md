@@ -222,6 +222,19 @@ The default value is 5 sec.
 ## Advanced success condition usage
 You can use some advanced matchers at &lt;successCondition&gt; node in order to use make your test more powerful.
 
+### screenshotFileName
+You can specify a custom screenshot filename on success condition
+Here you can find an example:
+
+<pre>
+	<code>
+&lt;successCondition screenshotFileName="myScreenshotName"&gt;
+	&lt;element&gt;//h5&lt;/element&gt;
+	&lt;elementContent&gt;MyContent&lt;/elementContent&gt;
+&lt;/successCondition&gt;
+	</code>
+</pre>
+
 ### waitBeforeScreenshotInMilliSec
 You can specify a sleep time after success condition evaluator before take the screenshot.
 Here you can find an example:
