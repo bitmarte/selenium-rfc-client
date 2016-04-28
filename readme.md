@@ -222,6 +222,19 @@ The default value is 5 sec.
 ## Advanced success condition usage
 You can use some advanced matchers at &lt;successCondition&gt; node in order to use make your test more powerful.
 
+### waitBeforeScreenshotInMilliSec
+You can specify a sleep time after success condition evaluator before take the screenshot.
+Here you can find an example:
+
+<pre>
+	<code>
+&lt;successCondition waitBeforeScreenshotInMilliSec="1000"&gt;
+	&lt;element&gt;//h5&lt;/element&gt;
+	&lt;elementContent&gt;MyContent&lt;/elementContent&gt;
+&lt;/successCondition&gt;
+	</code>
+</pre>
+
 ### contentEvaluator
 You can see the allowed values for this attribute:
 

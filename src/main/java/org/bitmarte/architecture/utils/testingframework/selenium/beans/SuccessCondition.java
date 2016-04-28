@@ -24,6 +24,10 @@ public class SuccessCondition {
 	@XStreamAsAttribute
 	private String elementExtractor;
 
+	@XStreamAlias("waitBeforeScreenshotInMilliSec")
+	@XStreamAsAttribute
+	private long waitBeforeScreenshotInMilliSec;
+
 	public String getElement() {
 		return element;
 	}
@@ -54,6 +58,14 @@ public class SuccessCondition {
 
 	public void setElementExtractor(String elementExtractor) {
 		this.elementExtractor = elementExtractor;
+	}
+
+	public long getWaitBeforeScreenshotInMilliSec() {
+		return waitBeforeScreenshotInMilliSec;
+	}
+
+	public void setWaitBeforeScreenshotInMilliSec(long waitBeforeScreenshotInMilliSec) {
+		this.waitBeforeScreenshotInMilliSec = waitBeforeScreenshotInMilliSec;
 	}
 
 }
