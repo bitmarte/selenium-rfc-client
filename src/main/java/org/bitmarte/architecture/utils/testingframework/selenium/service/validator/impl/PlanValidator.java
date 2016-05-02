@@ -1,8 +1,10 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.service.validator.impl;
 
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.InputField;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserAction;
+import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_InputFieldType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.E_AuthType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.impl.NTLMAuthentication;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.A_Validator;
@@ -25,6 +27,18 @@ public class PlanValidator extends A_Validator {
 		for (Run run : toValidate.getRuns()) {
 			if (run.getRunName() == null) {
 				throw new ValidatorException("No runName has been specified for current run!");
+			}
+			if (run.getInputFields() != null) {
+				for (InputField field : run.getInputFields()) {
+					if (field.getType() != null) {
+						try {
+							E_InputFieldType.valueOf(field.getType());
+						} catch (Exception e) {
+							throw new ValidatorException("Type attribute (" + field.getType()
+									+ ") at InputFlield is not supported for run '" + run.getRunName() + "'!");
+						}
+					}
+				}
 			}
 			if (run.getSuccessCondition() == null) {
 				throw new ValidatorException(
@@ -87,6 +101,13 @@ public class PlanValidator extends A_Validator {
 						LOG.info(
 								"using default waitPromptInSec time: " + NTLMAuthentication.DEFAULT_WAIT_PROMPT_IN_SEC);
 						run.getAuthentication().setWaitPromptInSec(NTLMAuthentication.DEFAULT_WAIT_PROMPT_IN_SEC);
+					}
+				}
+			}
+			if (run.getInputFields() != null) {
+				for (InputField field : run.getInputFields()) {
+					if (field.getType() == null) {
+						field.setType(E_InputFieldType.TEXT.name());
 					}
 				}
 			}
