@@ -15,6 +15,8 @@ The artifact is a simple JAR file that you need to run directly from a shell; it
 	<li><a href="#ntlm-authentication">NTLM authentication</a></li>
 	<li><a href="#advanced-success-condition-usage">Advanced success condition usage</a></li>
 	<ul>
+		<li><a href="#screenshotfilename">screenshotFileName</a></li>
+		<li><a href="#waitbeforescreenshotinmillisec">waitBeforeScreenshotInMilliSec</a></li>
 		<li><a href="#contentevaluator">contentEvaluator</a></li>
 		<li><a href="#elementextractor">elementExtractor</a></li>
 	</ul>
@@ -296,6 +298,29 @@ Here you can find an example that you can use for matching all numbers inside an
 <br/><br/>
 ## Advanced input field usage
 You can use some advanced matchers at &lt;inputField&gt; node in order to use make your test more powerful.
+
+### type
+You can see the allowed values for this attribute:
+
+| Attribute value        		| Description																|
+| ----------------------------- | ------------------------------------------------------------------------- |
+| TEXT							| For input type text field													|
+| SELECT						| For select field (combo box), value based for setting						|
+| RADIO							| For input type radio field												|
+
+Here you can find an example that you can use for filling value "myValue" into an html element with "myName" ID value:
+
+<pre>
+	<code>
+&lt;inputField type="SELECT"&gt;
+	&lt;element&gt;myName&lt;/element&gt;
+	&lt;value&gt;myValue&lt;/value&gt;
+&lt;/inputField&gt;
+	</code>
+</pre>
+
+**Pay attention: when attribute is not present or an unknown value is used, the dafault content evaluator will be use: TEXT**
+<br/><br/>
 
 ### elementExtractor
 You can see the allowed values for this attribute:

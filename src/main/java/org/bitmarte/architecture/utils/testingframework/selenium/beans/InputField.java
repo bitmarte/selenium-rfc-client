@@ -17,6 +17,10 @@ public class InputField {
 	@XStreamAsAttribute
 	private String elementExtractor;
 
+	@XStreamAlias("type")
+	@XStreamAsAttribute
+	private String type;
+
 	@XStreamAlias("value")
 	private String value;
 
@@ -43,4 +47,13 @@ public class InputField {
 	public void setElementExtractor(String elementExtractor) {
 		this.elementExtractor = elementExtractor;
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 }

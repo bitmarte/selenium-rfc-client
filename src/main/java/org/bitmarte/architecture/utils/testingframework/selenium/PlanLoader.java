@@ -9,6 +9,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.InputFiel
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserAction;
+import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_InputFieldType;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.driver.DriverUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.reports.ReportProducer;
@@ -24,6 +25,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -131,8 +133,29 @@ public class PlanLoader {
 				if (currentRun.getInputFields() != null) {
 					LOG.info("Form filling...");
 					for (InputField field : currentRun.getInputFields()) {
-						ElementExtractorFactory.getInstance(field.getElementExtractor())
-								.getElements(driver, field.getElement()).get(0).sendKeys(field.getValue());
+						switch (E_InputFieldType.valueOf(field.getType())) {
+						case SELECT:
+							LOG.info("Input type SELECT");
+							Select select = new Select(ElementExtractorFactory.getInstance(field.getElementExtractor())
+									.getElements(driver, field.getElement()).get(0));
+							select.selectByValue(field.getValue());
+							break;
+						case RADIO:
+							LOG.info("Input type RADIO");
+							List<WebElement> radios = ElementExtractorFactory.getInstance(field.getElementExtractor())
+									.getElements(driver, field.getElement());
+							for (WebElement radio : radios) {
+								if (radio.getText().equals(field.getValue())) {
+									radio.click();
+								}
+							}
+							// default: type="TEXT"
+						default:
+							LOG.info("Input type TEXT");
+							ElementExtractorFactory.getInstance(field.getElementExtractor())
+									.getElements(driver, field.getElement()).get(0).sendKeys(field.getValue());
+							break;
+						}
 					}
 				}
 
