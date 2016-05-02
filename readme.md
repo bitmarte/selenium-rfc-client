@@ -15,6 +15,8 @@ The artifact is a simple JAR file that you need to run directly from a shell; it
 	<li><a href="#ntlm-authentication">NTLM authentication</a></li>
 	<li><a href="#advanced-success-condition-usage">Advanced success condition usage</a></li>
 	<ul>
+		<li><a href="#screenshotfilename">screenshotFileName</a></li>
+		<li><a href="#waitbeforescreenshotinmillisec">waitBeforeScreenshotInMilliSec</a></li>
 		<li><a href="#contentevaluator">contentEvaluator</a></li>
 		<li><a href="#elementextractor">elementExtractor</a></li>
 	</ul>
