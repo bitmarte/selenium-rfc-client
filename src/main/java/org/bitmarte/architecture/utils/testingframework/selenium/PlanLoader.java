@@ -224,8 +224,7 @@ public class PlanLoader {
 						LOG.debug("iframe used, switching to default content...");
 						driver.switchTo().defaultContent();
 					}
-					driverUtils.takeScreenshot(currentRun.getRunName(),
-							E_TestResult.valueOf(currentRun.getRunReport().getTestResult()));
+					driverUtils.takeScreenshot(currentRun, null);
 
 					// Web Timings API
 					if (DefaultSeleniumConfig.getConfig().getWebTimings() != null) {
@@ -258,7 +257,7 @@ public class PlanLoader {
 		} catch (Exception e) {
 			LOG.error("Error load()!", e);
 
-			driverUtils.takeScreenshot(currentRun.getRunName(), E_TestResult.ERROR);
+			driverUtils.takeScreenshot(currentRun, E_TestResult.ERROR);
 			throw e;
 		} finally {
 			// generating reports...

@@ -19,7 +19,7 @@ public class ContainsContentEvaluator extends A_ContentEvaluator {
 	public boolean evaluate(String str1, String str2) {
 		LOG.debug("using ContainsContentEvaluator...");
 		boolean result = false;
-		if (StringUtils.containsIgnoreCase(str1, str2)) {
+		if (StringUtils.containsIgnoreCase(str2, str1)) {
 			result = true;
 		}
 		return result;

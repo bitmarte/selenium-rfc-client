@@ -5,6 +5,7 @@ import java.util.StringTokenizer;
 
 import org.apache.commons.io.FileUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.BrowserAction;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
@@ -21,7 +22,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author bitmarte
- *
  */
 public class DriverUtils {
 
@@ -45,7 +45,7 @@ public class DriverUtils {
 
 	/**
 	 * It removes passed cookies, comma separated values
-	 * 
+	 *
 	 * @param cookiesCommaSeparatedValues
 	 */
 	public void removeCookies(String cookiesCommaSeparatedValues) {
@@ -59,7 +59,7 @@ public class DriverUtils {
 
 	/**
 	 * It resizes window's browser
-	 * 
+	 *
 	 * @param wPx
 	 * @param hPx
 	 */
@@ -71,18 +71,36 @@ public class DriverUtils {
 	}
 
 	/**
-	 * Take a screenshot and save it with a specified name
+	 * Take a screenshot
 	 * 
-	 * @param fileName
+	 * @param run
 	 * @param testResult
+	 * @return
+	 * @throws Exception
 	 */
 	@SuppressWarnings("finally")
-	public E_TestResult takeScreenshot(String fileName, E_TestResult testResult) {
+	public E_TestResult takeScreenshot(Run run, E_TestResult testResult) throws Exception {
+		if (testResult == null) {
+			testResult = E_TestResult.valueOf(run.getRunReport().getTestResult());
+		}
+
+		String screenshotFileName = run.getRunName() + "_" + testResult.toString();
+		if (run.getSuccessCondition().getScreenshotFileName() != null) {
+			screenshotFileName = run.getSuccessCondition().getScreenshotFileName();
+			LOG.info("using custom screenshot filename: " + screenshotFileName);
+		}
+
 		boolean hasError = false;
 		try {
 			String archivePath = DefaultSeleniumConfig.getConfig().getReportBaseDir() + this.planName + "/screenshots/";
 
-			LOG.debug("Take screenshot '" + archivePath + fileName + "_" + testResult.toString() + ".png'");
+			LOG.debug("Take screenshot '" + archivePath + screenshotFileName + ".png'");
+
+			if (run.getSuccessCondition().getWaitBeforeScreenshotInMilliSec() != 0) {
+				LOG.info("waiting before take screenshot ["
+						+ run.getSuccessCondition().getWaitBeforeScreenshotInMilliSec() + "ms] ...");
+				Thread.sleep(run.getSuccessCondition().getWaitBeforeScreenshotInMilliSec());
+			}
 
 			WebDriver augmentedDriver = this.driver;
 			if (DefaultSeleniumConfig.getConfig().getSeleniumRcURL() != null) {
@@ -90,7 +108,7 @@ public class DriverUtils {
 			}
 			File scrFile = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
 
-			FileUtils.copyFile(scrFile, new File(archivePath + fileName + "_" + testResult.toString() + ".png"));
+			FileUtils.copyFile(scrFile, new File(archivePath + screenshotFileName + ".png"));
 		} catch (Exception e) {
 			hasError = true;
 			LOG.error("Error takeScreenshot()!", e);
@@ -113,7 +131,7 @@ public class DriverUtils {
 
 	/**
 	 * Manage browser action
-	 * 
+	 *
 	 * @param browserAction
 	 */
 	public void makeBrowserAction(BrowserAction browserAction) throws Exception {
