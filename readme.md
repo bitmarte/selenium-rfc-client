@@ -22,7 +22,8 @@ The artifact is a simple JAR file that you need to run directly from a shell; it
 	</ul>
 	<li><a href="#advanced-input-field-usage">Advanced input field usage</a></li>
 	<ul>
-		<li><a href="#elementextractor-1">elementExtractor</a></li>
+		<li><a href="#type">type</a></li>
+		<li><a href="#elementextractor">elementExtractor</a></li>
 	</ul>
 	<li><a href="#advanced-run-tags">Advanced run tags</a></li>
 	<ul>
