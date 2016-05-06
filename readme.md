@@ -43,9 +43,7 @@ The artifact is a simple JAR file that you need to run directly from a shell; it
 			<li><a href="#generating-har-file">Generating HAR file</a></li>
 		</ul>
 	</ul>
-	<ul>
-		<li><a href="#concurrent-executors">Concurrent plan</a></li>
-	</ul>
+	<li><a href="#concurrent-executors">Concurrent plan</a></li>
 </ul>
 <hr/>
 
