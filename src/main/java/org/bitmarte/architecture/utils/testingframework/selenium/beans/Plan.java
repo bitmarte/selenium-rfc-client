@@ -23,6 +23,10 @@ public class Plan {
 
 	private static final Logger LOG = LoggerFactory.getLogger(Plan.class);
 
+	@XStreamAlias("concurrentExecutors")
+	@XStreamAsAttribute
+	private int concurrentExecutors;
+
 	@XStreamOmitField
 	private String planName;
 
@@ -30,8 +34,7 @@ public class Plan {
 	private PlanReport planReport;
 
 	@XStreamAlias("cookiesRemoveAll")
-	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = {
-			"true", "false" })
+	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = { "true", "false" })
 	@XStreamAsAttribute
 	private boolean cookiesRemoveAll;
 
@@ -40,13 +43,20 @@ public class Plan {
 	private String cookiesRemove;
 
 	@XStreamAlias("fullscreen")
-	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = {
-			"true", "false" })
+	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = { "true", "false" })
 	@XStreamAsAttribute
 	private boolean fullscreen;
 
 	@XStreamImplicit
 	private List<Run> runs;
+
+	public int getConcurrentExecutors() {
+		return concurrentExecutors;
+	}
+
+	public void setConcurrentExecutors(int concurrentExecutors) {
+		this.concurrentExecutors = concurrentExecutors;
+	}
 
 	public String getPlanName() {
 		return planName;
@@ -103,8 +113,7 @@ public class Plan {
 		int counter = 0;
 		for (Run run : this.runs) {
 			if (run.getRunReport().getTestResult() != null
-					&& run.getRunReport().getTestResult()
-							.equals(E_TestResult.SUCCESS.name())) {
+					&& run.getRunReport().getTestResult().equals(E_TestResult.SUCCESS.name())) {
 				counter++;
 			}
 		}
@@ -115,8 +124,7 @@ public class Plan {
 		int counter = 0;
 		for (Run run : this.runs) {
 			if (run.getRunReport().getTestResult() != null
-					&& run.getRunReport().getTestResult()
-							.equals(E_TestResult.ERROR.name())) {
+					&& run.getRunReport().getTestResult().equals(E_TestResult.ERROR.name())) {
 				counter++;
 			}
 		}

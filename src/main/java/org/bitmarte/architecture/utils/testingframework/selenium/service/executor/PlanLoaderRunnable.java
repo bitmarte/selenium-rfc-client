@@ -1,4 +1,4 @@
-package org.bitmarte.architecture.utils.testingframework.selenium;
+package org.bitmarte.architecture.utils.testingframework.selenium.service.executor;
 
 import java.io.File;
 import java.util.List;
@@ -18,7 +18,6 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.authent
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.impl.NTLMAuthentication;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.evaluator.ContentEvaluatorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.extractor.ElementExtractorFactory;
-import org.bitmarte.architecture.utils.testingframework.selenium.service.unmarshaller.UnmarshallerFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -37,24 +36,30 @@ import net.lightbody.bmp.proxy.CaptureType;
  * @author bitmarte
  *
  */
-public class PlanLoader {
+public class PlanLoaderRunnable implements Runnable {
 
-	private static final Logger LOG = LoggerFactory.getLogger(PlanLoader.class);
+	private static final Logger LOG = LoggerFactory.getLogger(PlanLoaderRunnable.class);
 
-	@SuppressWarnings("finally")
-	public static Plan load(WebDriver driver, File xmlPlan, BrowserMobProxy proxy) throws Exception {
-		Plan plan = null;
+	private WebDriver driver = null;
+	private Plan plan = null;
+	private BrowserMobProxy proxy = null;
+	private WorkingPlans workingPlans = null;
+
+	public PlanLoaderRunnable(WebDriver driver, Plan plan, BrowserMobProxy proxy, WorkingPlans workingPlans) {
+		this.driver = driver;
+		this.plan = plan;
+		this.proxy = proxy;
+		this.workingPlans = workingPlans;
+	}
+
+	public void run() {
+		LOG.info(Thread.currentThread().getName() + " running for plan " + plan.getPlanName());
+
 		Run currentRun = null;
 		DriverUtils driverUtils = null;
 		WebTimingUtils timingUtils = null;
 
-		try {
-			plan = (Plan) UnmarshallerFactory.getInstance(Plan.class).unmarshall(xmlPlan);
-
-			plan.getPlanReport().setTestResult(E_TestResult.ERROR.name());
-		} catch (Exception e) {
-			throw e;
-		}
+		plan.getPlanReport().setTestResult(E_TestResult.ERROR.name());
 
 		try {
 			driverUtils = new DriverUtils(driver, plan.getPlanName());
@@ -73,7 +78,7 @@ public class PlanLoader {
 				driverUtils.fullScreen();
 			}
 
-			LOG.info(plan.getRuns().size() + " runs in plan '" + xmlPlan.getName() + "'");
+			LOG.info(plan.getRuns().size() + " runs in plan '" + plan.getPlanName() + "'");
 
 			for (Run run : plan.getRuns()) {
 				currentRun = run;
@@ -270,22 +275,38 @@ public class PlanLoader {
 
 			switch (E_TestResult.valueOf(plan.getPlanReport().getTestResult())) {
 			case SUCCESS:
-				LOG.info("Plan '" + xmlPlan.getName() + "' completed!");
+				LOG.info("Plan '" + plan.getPlanName() + "' completed!");
 				break;
 			default:
-				LOG.error("Plan '" + xmlPlan.getName() + "' terminated with some error!");
+				LOG.error("Plan '" + plan.getPlanName() + "' terminated with some error!");
 				break;
 			}
 
 		} catch (Exception e) {
-			LOG.error("Error load()!", e);
+			LOG.error("Error run()!", e);
 
-			driverUtils.takeScreenshot(currentRun, E_TestResult.ERROR);
-			throw e;
+			try {
+				driverUtils.takeScreenshot(currentRun, E_TestResult.ERROR);
+			} catch (Exception e1) {
+				LOG.error("Error run()!", e1);
+			}
 		} finally {
 			// generating reports...
-			ReportProducer.generatePlanReport(plan);
-			return plan;
+			try {
+				ReportProducer.generatePlanReport(plan);
+				this.workingPlans.regWorkedPlan(plan);
+
+				if (DefaultSeleniumConfig.getConfig().isCloseBrowserOnFinish()) {
+					try {
+						this.driver.quit();
+					} catch (Throwable t) {
+						LOG.error("Driver does not close correctly!", t);
+					}
+				}
+
+			} catch (Exception e) {
+				LOG.error("Error run()!", e);
+			}
 		}
 	}
 
