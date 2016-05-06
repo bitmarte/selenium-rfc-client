@@ -43,6 +43,9 @@ The artifact is a simple JAR file that you need to run directly from a shell; it
 			<li><a href="#generating-har-file">Generating HAR file</a></li>
 		</ul>
 	</ul>
+	<ul>
+		<li><a href="#concurrent-executors">Concurrent plan</a></li>
+	</ul>
 </ul>
 <hr/>
 
@@ -483,5 +486,16 @@ You can produce an HAR file (one file for each page) with a simple additional at
 &lt;mobProxy enableHarCapture="true"/&gt;
 ...
 &lt;/config&gt;
+	</code>
+</pre>
+
+## Concurrent Executors
+You can use this attribute in order to execute the same plan in different instances, in parallel.
+
+<pre>
+	<code>
+&lt;plan concurrentExecutors="5"&gt;
+...
+&lt;/plan&gt;
 	</code>
 </pre>

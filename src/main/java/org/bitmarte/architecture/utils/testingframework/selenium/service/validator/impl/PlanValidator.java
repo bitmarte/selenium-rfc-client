@@ -24,6 +24,10 @@ public class PlanValidator extends A_Validator {
 	public void validate() throws Exception {
 		Plan toValidate = (Plan) this.inValidation;
 
+		if (toValidate.getConcurrentExecutors() == 1) {
+			throw new ValidatorException("Attribute 'concurrentExecutors' must be grater than 1!");
+		}
+
 		for (Run run : toValidate.getRuns()) {
 			if (run.getRunName() == null) {
 				throw new ValidatorException("No runName has been specified for current run!");
