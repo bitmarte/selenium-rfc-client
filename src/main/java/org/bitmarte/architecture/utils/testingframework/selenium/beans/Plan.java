@@ -23,9 +23,9 @@ public class Plan {
 
 	private static final Logger LOG = LoggerFactory.getLogger(Plan.class);
 
-	@XStreamAlias("concurrentExecutors")
+	@XStreamAlias("executions")
 	@XStreamAsAttribute
-	private int concurrentExecutors;
+	private int executions;
 
 	@XStreamOmitField
 	private String planName;
@@ -50,12 +50,12 @@ public class Plan {
 	@XStreamImplicit
 	private List<Run> runs;
 
-	public int getConcurrentExecutors() {
-		return concurrentExecutors;
+	public int getExecutions() {
+		return executions;
 	}
 
-	public void setConcurrentExecutors(int concurrentExecutors) {
-		this.concurrentExecutors = concurrentExecutors;
+	public void setExecutions(int executions) {
+		this.executions = executions;
 	}
 
 	public String getPlanName() {

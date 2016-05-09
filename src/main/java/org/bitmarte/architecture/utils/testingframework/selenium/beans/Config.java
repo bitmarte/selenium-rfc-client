@@ -47,9 +47,13 @@ public class Config {
 
 	@XStreamAlias("webTimings")
 	private WebTimingsConfig webTimings;
-	
+
 	@XStreamAlias("mobProxy")
 	private MobProxyConfig mobProxy;
+
+	@XStreamAlias("concurrentPlans")
+	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = { "true", "false" })
+	private boolean concurrentPlans;
 
 	public String getSeleniumRcURL() {
 		return seleniumRcURL;
@@ -145,6 +149,14 @@ public class Config {
 
 	public void setMobProxy(MobProxyConfig mobProxy) {
 		this.mobProxy = mobProxy;
+	}
+
+	public boolean isConcurrentPlans() {
+		return concurrentPlans;
+	}
+
+	public void setConcurrentPlans(boolean concurrentPlans) {
+		this.concurrentPlans = concurrentPlans;
 	}
 
 }

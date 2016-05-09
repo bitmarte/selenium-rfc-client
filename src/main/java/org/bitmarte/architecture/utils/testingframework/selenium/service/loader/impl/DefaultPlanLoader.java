@@ -52,9 +52,9 @@ public class DefaultPlanLoader extends A_PlanLoader {
 				Cloner cloner = null;
 				for (File file : plans) {
 					plan = (Plan) UnmarshallerFactory.getInstance(Plan.class).unmarshall(file);
-					if (plan.getConcurrentExecutors() > 1) {
+					if (plan.getExecutions() > 1) {
 						cloner = new Cloner();
-						for (int i = 1; i <= plan.getConcurrentExecutors(); i++) {
+						for (int i = 1; i <= plan.getExecutions(); i++) {
 							Plan pl = cloner.deepClone(plan);
 							pl.setPlanName(pl.getPlanName() + "_" + i);
 							workingPlans.pushWorkingPlan(pl);
