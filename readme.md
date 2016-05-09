@@ -487,13 +487,27 @@ You can produce an HAR file (one file for each page) with a simple additional at
 	</code>
 </pre>
 
-## Concurrent Executors
-You can use this attribute in order to execute the same plan in different instances, in parallel.
+## Advanced plan execution
+
+### Run a plan more times
+You can use this attribute in order to execute the same plan more times.
 
 <pre>
 	<code>
-&lt;plan concurrentExecutors="5"&gt;
+&lt;plan executions="5"&gt;
 ...
 &lt;/plan&gt;
+	</code>
+</pre>
+
+### Concurrent execution
+You can use this node in order to execute plans in parallel.
+
+<pre>
+	<code>
+&lt;config&gt;
+	...
+	&lt;concurrentPlans&gt;true&lt;/concurrentPlans&gt;
+&lt;/config&gt;
 	</code>
 </pre>

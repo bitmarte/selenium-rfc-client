@@ -24,7 +24,7 @@ public class PlanValidator extends A_Validator {
 	public void validate() throws Exception {
 		Plan toValidate = (Plan) this.inValidation;
 
-		if (toValidate.getConcurrentExecutors() == 1) {
+		if (toValidate.getExecutions() == 1) {
 			throw new ValidatorException("Attribute 'concurrentExecutors' must be grater than 1!");
 		}
 

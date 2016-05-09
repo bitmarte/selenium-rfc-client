@@ -49,6 +49,11 @@ public class RunTestSuite {
 										DefaultSeleniumConfig.getConfig().getBrowserName(), proxy),
 								pl, proxy, workingPlans));
 				t.start();
+
+				// If concurrentPlans flag is enabled don't wait thread
+				if (!DefaultSeleniumConfig.getConfig().isConcurrentPlans()) {
+					t.join();
+				}
 			}
 
 		} catch (Exception e) {
