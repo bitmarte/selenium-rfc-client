@@ -4,22 +4,21 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.ErrorCondition;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.InputField;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Run;
-import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserAction;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.BrowserAction;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.ErrorCondition;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.InputField;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_InputFieldType;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.driver.DriverUtils;
-import org.bitmarte.architecture.utils.testingframework.selenium.reports.ReportProducer;
+import org.bitmarte.architecture.utils.testingframework.selenium.reports.ReportGenerator;
 import org.bitmarte.architecture.utils.testingframework.selenium.reports.WebTimingUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.E_AuthType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.impl.NTLMAuthentication;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.evaluator.ContentEvaluatorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.extractor.ElementExtractorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
-import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -94,9 +93,13 @@ public class PlanLoaderRunnable implements Runnable {
 					proxy.newPage(currentRun.getRunName());
 				}
 
-				// browser action managing
-				if (currentRun.getBrowserAction() != null) {
-					driverUtils.makeBrowserAction(currentRun.getBrowserAction());
+				// browser action managing if firstAction flag is enabled
+				if (currentRun.getBrowserActions() != null) {
+					for (BrowserAction browserAction : currentRun.getBrowserActions()) {
+						if (browserAction.isFirstAction()) {
+							driverUtils.makeBrowserAction(browserAction);
+						}
+					}
 				}
 
 				// cookies managing
@@ -164,9 +167,13 @@ public class PlanLoaderRunnable implements Runnable {
 					}
 				}
 
-				if (currentRun.getClickByXPATH() != null) {
-					LOG.info("Make a click on '" + currentRun.getClickByXPATH() + "'");
-					driver.findElement(By.xpath(currentRun.getClickByXPATH())).click();
+				// browser action managing if firstAction flag is not setted
+				if (currentRun.getBrowserActions() != null) {
+					for (BrowserAction browserAction : currentRun.getBrowserActions()) {
+						if (!browserAction.isFirstAction()) {
+							driverUtils.makeBrowserAction(browserAction);
+						}
+					}
 				}
 
 				LOG.info("Test result checking...");
@@ -246,12 +253,6 @@ public class PlanLoaderRunnable implements Runnable {
 					}
 					break;
 				} finally {
-					if (currentRun.getBrowserAction() != null
-							&& E_BrowserAction.IFRAME_SWITCH.name().equals(currentRun.getBrowserAction().getAction())
-							&& currentRun.getBrowserAction().getElementByXPath() == null) {
-						LOG.debug("iframe used, switching to default content...");
-						driver.switchTo().defaultContent();
-					}
 					driverUtils.takeScreenshot(currentRun, null);
 
 					// Web Timings API
@@ -293,7 +294,7 @@ public class PlanLoaderRunnable implements Runnable {
 		} finally {
 			// generating reports...
 			try {
-				ReportProducer.generatePlanReport(plan);
+				ReportGenerator.generatePlanReport(plan);
 				this.workingPlans.regWorkedPlan(plan);
 
 				if (DefaultSeleniumConfig.getConfig().isCloseBrowserOnFinish()) {

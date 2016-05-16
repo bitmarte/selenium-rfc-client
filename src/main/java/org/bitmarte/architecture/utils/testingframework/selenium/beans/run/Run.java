@@ -1,4 +1,4 @@
-package org.bitmarte.architecture.utils.testingframework.selenium.beans;
+package org.bitmarte.architecture.utils.testingframework.selenium.beans.run;
 
 import java.util.List;
 
@@ -32,17 +32,14 @@ public class Run {
 	@XStreamAlias("runName")
 	private String runName;
 
-	@XStreamAlias("browserAction")
-	private BrowserAction browserAction;
+	@XStreamAlias("browserActions")
+	private List<BrowserAction> browserActions;
 
 	@XStreamAlias("authentication")
 	private Authentication authentication;
 
 	@XStreamAlias("url")
 	private String url;
-
-	@XStreamAlias("clickByXPATH")
-	private String clickByXPATH;
 
 	@XStreamAlias("inputFields")
 	private List<InputField> inputFields;
@@ -85,14 +82,6 @@ public class Run {
 
 	public void setUrl(String url) {
 		this.url = url;
-	}
-
-	public String getClickByXPATH() {
-		return clickByXPATH;
-	}
-
-	public void setClickByXPATH(String clickByXPATH) {
-		this.clickByXPATH = clickByXPATH;
 	}
 
 	public List<InputField> getInputFields() {
@@ -151,12 +140,12 @@ public class Run {
 		this.fullscreen = fullscreen;
 	}
 
-	public BrowserAction getBrowserAction() {
-		return browserAction;
+	public List<BrowserAction> getBrowserActions() {
+		return browserActions;
 	}
 
-	public void setBrowserAction(BrowserAction browserAction) {
-		this.browserAction = browserAction;
+	public void setBrowserActions(List<BrowserAction> browserActions) {
+		this.browserActions = browserActions;
 	}
 
 	public RunReport getRunReport() {

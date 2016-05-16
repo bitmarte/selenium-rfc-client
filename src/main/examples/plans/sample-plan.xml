@@ -23,7 +23,12 @@
 				<value>webdriver</value>
 			</inputField>
 		</inputFields>
-		<clickByXPATH>//input[@value="Go"]</clickByXPATH>
+		<browserActions>
+			<browserAction>
+				<action>CLICK</action>
+				<elementByXPath>//input[@value="Go"]</elementByXPath>
+			</browserAction>
+		</browserActions>
 		<successCondition elementExtractor="BY_ID" contentEvaluator="CONTAINS">
 			<element>cse-footer</element>
 			<elementContent>Google</elementContent>

@@ -1,7 +1,9 @@
-package org.bitmarte.architecture.utils.testingframework.selenium.beans;
+package org.bitmarte.architecture.utils.testingframework.selenium.beans.run;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamConverter;
+import com.thoughtworks.xstream.converters.basic.BooleanConverter;
 
 /**
  * @author bitmarte
@@ -11,12 +13,15 @@ import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 public class BrowserAction {
 
 	@XStreamAlias("action")
-	@XStreamAsAttribute
 	private String action;
 
 	@XStreamAlias("elementByXPath")
-	@XStreamAsAttribute
 	private String elementByXPath;
+
+	@XStreamAlias("firstAction")
+	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = { "true", "false" })
+	@XStreamAsAttribute
+	private boolean firstAction;
 
 	public String getAction() {
 		return action;
@@ -32,6 +37,14 @@ public class BrowserAction {
 
 	public void setElementByXPath(String elementByXPath) {
 		this.elementByXPath = elementByXPath;
+	}
+
+	public boolean isFirstAction() {
+		return firstAction;
+	}
+
+	public void setFirstAction(boolean firstAction) {
+		this.firstAction = firstAction;
 	}
 
 }

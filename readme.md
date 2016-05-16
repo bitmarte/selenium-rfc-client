@@ -153,7 +153,12 @@ Pay attention that all IExplorer security zone must be the same and the zoom mus
 				&lt;value&gt;webdriver&lt;/value&gt;
 			&lt;/inputField&gt;
 		&lt;/inputFields&gt;
-		&lt;clickByXPATH&gt;//input[@value="Go"]&lt;/clickByXPATH&gt;
+		&lt;browserActions&gt;
+			&lt;browserAction&gt;
+				&lt;action&gt;CLICK&lt;/action&gt;
+				&lt;elementByXPath&gt;//input[@value="Go"]&lt;/elementByXPath&gt;
+			&lt;/browserAction&gt;
+		&lt;/browserActions&gt;
 		&lt;successCondition elementExtractor="BY_ID" contentEvaluator="CONTAINS"&gt;
 			&lt;element&gt;cse-footer&lt;/element&gt;
 			&lt;elementContent&gt;Google&lt;/elementContent&gt;
@@ -171,7 +176,7 @@ Pay attention that all IExplorer security zone must be the same and the zoom mus
 			<li>&lt;runName&gt; is a **require** node where you put the name (unique at all plan) and it used for screenshot naming</li>
 			<li>&lt;url&gt; is an **optional** node where you put the "goToURL". **Remove this if it is not necessary for your run**</li>
 			<li>&lt;inputFields&gt; is an **optional** list where you put your form filler. You must to use XPath for searching element and fill it with a value</li>
-			<li>&lt;clickByXPATH&gt; is an **optional** node where you put your preferred action (click action)</li>
+			<li>&lt;browserActions&gt; is an **optional** node where you put your actions (eg. click, refresh, etc...)</li>
 			<li>&lt;successCondition&gt; is a **require** node where you put the element selection and the value to be checked</li>
 		</ul>
 	</li>

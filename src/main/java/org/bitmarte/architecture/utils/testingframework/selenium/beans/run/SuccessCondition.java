@@ -1,4 +1,4 @@
-package org.bitmarte.architecture.utils.testingframework.selenium.beans;
+package org.bitmarte.architecture.utils.testingframework.selenium.beans.run;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
@@ -7,8 +7,8 @@ import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
  * @author bitmarte
  *
  */
-@XStreamAlias("errorCondition")
-public class ErrorCondition {
+@XStreamAlias("successCondition")
+public class SuccessCondition {
 
 	@XStreamAlias("element")
 	private String element;
@@ -23,6 +23,14 @@ public class ErrorCondition {
 	@XStreamAlias("elementExtractor")
 	@XStreamAsAttribute
 	private String elementExtractor;
+
+	@XStreamAlias("waitBeforeScreenshotInMilliSec")
+	@XStreamAsAttribute
+	private long waitBeforeScreenshotInMilliSec;
+
+	@XStreamAlias("screenshotFileName")
+	@XStreamAsAttribute
+	private String screenshotFileName;
 
 	public String getElement() {
 		return element;
@@ -54,6 +62,22 @@ public class ErrorCondition {
 
 	public void setElementExtractor(String elementExtractor) {
 		this.elementExtractor = elementExtractor;
+	}
+
+	public long getWaitBeforeScreenshotInMilliSec() {
+		return waitBeforeScreenshotInMilliSec;
+	}
+
+	public void setWaitBeforeScreenshotInMilliSec(long waitBeforeScreenshotInMilliSec) {
+		this.waitBeforeScreenshotInMilliSec = waitBeforeScreenshotInMilliSec;
+	}
+
+	public String getScreenshotFileName() {
+		return screenshotFileName;
+	}
+
+	public void setScreenshotFileName(String screenshotFileName) {
+		this.screenshotFileName = screenshotFileName;
 	}
 
 }

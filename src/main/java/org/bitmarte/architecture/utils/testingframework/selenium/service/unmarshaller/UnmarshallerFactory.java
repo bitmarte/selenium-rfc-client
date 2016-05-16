@@ -2,8 +2,8 @@ package org.bitmarte.architecture.utils.testingframework.selenium.service.unmars
 
 import java.rmi.UnmarshalException;
 
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Config;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.config.Config;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.unmarshaller.impl.ConfigUnmarshaller;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.unmarshaller.impl.PlanUnmarshaller;
 

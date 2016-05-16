@@ -7,7 +7,7 @@ import javax.naming.ConfigurationException;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.WorkingPlans;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.A_PlanLoader;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.unmarshaller.UnmarshallerFactory;
