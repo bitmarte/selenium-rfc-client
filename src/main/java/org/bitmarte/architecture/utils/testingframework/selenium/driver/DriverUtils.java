@@ -3,9 +3,11 @@ package org.bitmarte.architecture.utils.testingframework.selenium.driver;
 import java.io.File;
 import java.util.StringTokenizer;
 
+import javax.naming.ConfigurationException;
+
 import org.apache.commons.io.FileUtils;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.BrowserAction;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Run;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.BrowserAction;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
@@ -135,6 +137,9 @@ public class DriverUtils {
 	 * @param browserAction
 	 */
 	public void makeBrowserAction(BrowserAction browserAction) throws Exception {
+		if (browserAction.getWaitBeforeActionInMillis() >= 1) {
+			this.driver.wait(browserAction.getWaitBeforeActionInMillis());
+		}
 		try {
 			switch (E_BrowserAction.valueOf(browserAction.getAction())) {
 			case REFRESH:
@@ -150,14 +155,17 @@ public class DriverUtils {
 				this.driver.navigate().forward();
 				break;
 			case IFRAME_SWITCH:
+				LOG.info("Switch to iframe '" + browserAction.getElementByXPath() + "'");
 				this.driver.switchTo()
 						.frame(this.driver.findElements(By.xpath(browserAction.getElementByXPath())).get(0));
 				break;
+			case CLICK:
+				LOG.info("Make a click on '" + browserAction.getElementByXPath() + "'");
+				this.driver.findElements(By.xpath(browserAction.getElementByXPath())).get(0).click();
+				break;
 
 			default:
-				LOG.info("using default action: window refreshing...");
-				this.driver.navigate().refresh();
-				break;
+				throw new ConfigurationException("No browserAction configured!");
 			}
 		} catch (Exception e) {
 			LOG.error("Error on makeBrowserAction '" + browserAction.getAction() + "' !", e);

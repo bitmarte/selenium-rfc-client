@@ -1,8 +1,9 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.service.validator.impl;
 
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.InputField;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Run;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.BrowserAction;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.InputField;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_InputFieldType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.E_AuthType;
@@ -55,19 +56,28 @@ public class PlanValidator extends A_Validator {
 									+ "'!");
 				}
 			}
-			if (run.getBrowserAction() != null) {
-				if (run.getUrl() != null) {
-					throw new ValidatorException(
-							"Browser action setted, no url tag is allowed for run '" + run.getRunName() + "'!");
-				}
-				if (run.getInputFields() != null) {
-					throw new ValidatorException("Browser action setted, no input filling tag is allowed for run '"
-							+ run.getRunName() + "'!");
-				}
-				if (run.getBrowserAction().getAction().equals(E_BrowserAction.IFRAME_SWITCH.name())) {
-					if (run.getBrowserAction().getElementByXPath() == null) {
-						throw new ValidatorException("Browser action '" + E_BrowserAction.IFRAME_SWITCH.name()
-								+ "' setted, please give me its level property for run '" + run.getRunName() + "'!");
+			if (run.getBrowserActions() != null) {
+				for (BrowserAction browserAction : run.getBrowserActions()) {
+					if (browserAction.getAction() == null) {
+						throw new ValidatorException("No BrowserAction setted for run '" + run.getRunName() + "'!");
+					} else {
+						try {
+							switch (E_BrowserAction.valueOf(browserAction.getAction())) {
+							case IFRAME_SWITCH:
+							case CLICK:
+								if (browserAction.getElementByXPath() == null) {
+									throw new ValidatorException(
+											"Attribute 'elementByXPath' is required for Action 'IFRAME_SWITCH' and 'CLICK'!");
+								}
+								break;
+
+							default:
+								break;
+							}
+						} catch (Exception e) {
+							throw new ValidatorException(
+									"BrowserAction allowed values: '" + E_BrowserAction.values() + "'", e);
+						}
 					}
 				}
 			}

@@ -5,7 +5,7 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Run;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

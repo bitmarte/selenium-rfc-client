@@ -1,8 +1,9 @@
-package org.bitmarte.architecture.utils.testingframework.selenium.beans;
+package org.bitmarte.architecture.utils.testingframework.selenium.beans.plan;
 
 import java.util.List;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.reports.PlanReport;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

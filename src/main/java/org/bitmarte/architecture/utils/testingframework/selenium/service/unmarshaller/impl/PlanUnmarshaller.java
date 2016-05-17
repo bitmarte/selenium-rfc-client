@@ -3,13 +3,13 @@ package org.bitmarte.architecture.utils.testingframework.selenium.service.unmars
 import java.io.File;
 
 import org.apache.commons.lang3.StringUtils;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Authentication;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.BrowserAction;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.ErrorCondition;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.InputField;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Run;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.SuccessCondition;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Authentication;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.BrowserAction;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.ErrorCondition;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.InputField;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.SuccessCondition;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.unmarshaller.A_Unmarshaller;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.I_Validator;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.ValidatorFactory;

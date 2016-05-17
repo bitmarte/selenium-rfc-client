@@ -1,7 +1,7 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.service.validator;
 
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Config;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.config.Config;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.exceptions.ValidatorException;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.impl.ConfigValidator;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.impl.PlanValidator;

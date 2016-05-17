@@ -1,4 +1,4 @@
-package org.bitmarte.architecture.utils.testingframework.selenium.beans;
+package org.bitmarte.architecture.utils.testingframework.selenium.beans.config;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 

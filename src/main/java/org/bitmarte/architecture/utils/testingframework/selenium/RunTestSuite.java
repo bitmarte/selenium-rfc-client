@@ -4,9 +4,9 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.driver.WebDriverFactory;
-import org.bitmarte.architecture.utils.testingframework.selenium.reports.ReportProducer;
+import org.bitmarte.architecture.utils.testingframework.selenium.reports.ReportGenerator;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.PlanLoaderRunnable;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.WorkingPlans;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.PlanLoaderFactory;
@@ -61,7 +61,7 @@ public class RunTestSuite {
 		} finally {
 			while (true) {
 				if (workingPlans.isFinish()) {
-					ReportProducer.generateIndex(workingPlans.getPlans());
+					ReportGenerator.generateIndex(workingPlans.getPlans());
 					if (DefaultSeleniumConfig.getConfig().isCloseBrowserOnFinish()) {
 						try {
 							if (proxy != null) {

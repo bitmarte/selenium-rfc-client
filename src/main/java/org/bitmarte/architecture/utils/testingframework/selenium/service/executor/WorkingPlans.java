@@ -3,7 +3,7 @@ package org.bitmarte.architecture.utils.testingframework.selenium.service.execut
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

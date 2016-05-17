@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Plan;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,12 +13,12 @@ import org.slf4j.LoggerFactory;
  * @author bitmarte
  *
  */
-public class ReportProducer {
+public class ReportGenerator {
 
-	private static final Logger LOG = LoggerFactory.getLogger(ReportProducer.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ReportGenerator.class);
 
 	public static void generatePlanReport(Plan plan) throws Exception {
-		ReportsUtils reportsUtils = new ReportsUtils();
+		ReportsProducer reportsUtils = new ReportsProducer(ReportsProducer.HTML_TEMPLATE_FOLDER);
 
 		Map<String, Object> root = getCommonRootData();
 		root.put("plan", plan);
@@ -28,7 +28,7 @@ public class ReportProducer {
 	}
 
 	public static void generateIndex(List<Plan> plans) throws Exception {
-		ReportsUtils reportsUtils = new ReportsUtils();
+		ReportsProducer reportsUtils = new ReportsProducer(ReportsProducer.HTML_TEMPLATE_FOLDER);
 
 		Map<String, Object> root = getCommonRootData();
 		root.put("plans", plans);
@@ -49,7 +49,7 @@ public class ReportProducer {
 		/*
 		 * Add here common static data
 		 */
-		if(DefaultSeleniumConfig.getConfig().getWebTimings() != null) {
+		if (DefaultSeleniumConfig.getConfig().getWebTimings() != null) {
 			root.put("webTimings", true);
 		} else {
 			root.put("webTimings", false);

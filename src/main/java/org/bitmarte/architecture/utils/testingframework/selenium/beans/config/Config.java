@@ -1,6 +1,8 @@
-package org.bitmarte.architecture.utils.testingframework.selenium.beans;
+package org.bitmarte.architecture.utils.testingframework.selenium.beans.config;
 
 import java.util.List;
+
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.ErrorCondition;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;

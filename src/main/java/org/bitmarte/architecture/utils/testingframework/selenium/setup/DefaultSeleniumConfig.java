@@ -2,7 +2,7 @@ package org.bitmarte.architecture.utils.testingframework.selenium.setup;
 
 import java.io.File;
 
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Config;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.config.Config;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.unmarshaller.UnmarshallerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

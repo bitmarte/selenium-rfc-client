@@ -1,7 +1,7 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.service.validator.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.Config;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.config.Config;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserMode;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserName;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.A_Validator;
