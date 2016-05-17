@@ -66,7 +66,9 @@ In this case the client execute tests on remote machine.<br/>
 	<li>Copy to your preferred path all "src/main/examples/" content (config.xml and plans folder with its content)</li>
 	<li>
 		Open "config.xml" (eg. /var/selenium/my-cfg/config.xml) and apply your configuration, as the example below:
-		
+	</li>
+</ol>
+	
 	<config>
 		<browserMode>REMOTE</browserMode>
 		<browserName>FIREFOX</browserName>
@@ -82,20 +84,18 @@ In this case the client execute tests on remote machine.<br/>
 		<closeBrowserOnFinish>false</closeBrowserOnFinish>
 	</config>
 
-		<ul>
-			<li><browserMode> is **require** node where you put the test approach. **Take as look below for supported browsers**</li>
-			<li><browserName> is a **require** node where you put the browser that you want to run tests on. **Take as look below for supported browsers**</li>
-			<li><localWebDriverPath> is an **optional** node where you put the webdriver path, only if you are not using Firefox</li>
-			<li><seleniumRcURL> is an **optional** node where you put the SeleniumRC URL connection. **Remove this node for LOCAL approach**</li>
-			<li><maxTimeOutPerSuccessConditionInSec> is an **optional** node where you put your waiting timeout in second that it used for checking your success condition. The default value is 10 sec.</li>
-			<li><maxTimeOutPerErrorConditionInSec> is an "optional" node where you put your waiting timeout in second that it used for checking yours error condition. The default value is 2 sec.</li>
-			<li><reportBaseDir> is a **require** node where you put your preferred location where Selenium save reports</li>
-			<li><cleanReportBaseDirOnStart> is an **optional** node used to clean the location where Selenium save reports before run. The default value is false</li>
-			<li><errorConditions> is an **optional** node where you put your generic error conditions. The elementContent node is an **optional** one</li>
-			<li><closeBrowserOnFinish> is an **optional** node used to close browser at the end of your test, boolean value. The default value is false</li>
-		</ul>
-	</li>
-</ol>
+<ul>
+	<li>'browserMode' is **require** node where you put the test approach. **Take as look below for supported browsers**</li>
+	<li>'browserName' is a **require** node where you put the browser that you want to run tests on. **Take as look below for supported browsers**</li>
+	<li>'localWebDriverPath' is an **optional** node where you put the webdriver path, only if you are not using Firefox</li>
+	<li>'seleniumRcURL' is an **optional** node where you put the SeleniumRC URL connection. **Remove this node for LOCAL approach**</li>
+	<li>'maxTimeOutPerSuccessConditionInSec' is an **optional** node where you put your waiting timeout in second that it used for checking your success condition. The default value is 10 sec.</li>
+	<li>'maxTimeOutPerErrorConditionInSec' is an "optional" node where you put your waiting timeout in second that it used for checking yours error condition. The default value is 2 sec.</li>
+	<li>'reportBaseDir' is a **require** node where you put your preferred location where Selenium save reports</li>
+	<li>'cleanReportBaseDirOnStart' is an **optional** node used to clean the location where Selenium save reports before run. The default value is false</li>
+	<li>'errorConditions' is an **optional** node where you put your generic error conditions. The elementContent node is an **optional** one</li>
+	<li>'closeBrowserOnFinish' is an **optional** node used to close browser at the end of your test, boolean value. The default value is false</li>
+</ul>
 
 You can see the allowed values for <browserMode> attribute:
 
@@ -166,16 +166,16 @@ Pay attention that all IExplorer security zone must be the same and the zoom mus
 	</plan>
 			
 <ul>
-	<li>''cookiesRemoveAll'' is an **optional** attribute for plan and runs which removes all cookies</li>
-	<li>''cookiesRemove'' is an **optional** attribute for plan and runs which removes all passed cookies, comma separated values</li>
-	<li>''fullscreen'' is an **optional** attribute for plan and runs which maximize the window</li>
-	<li>''windowWidthPx'' is an **optional** attribute for runs where you put window width size in pixel. This attribute is not allowed if you are using fullscreen attribute in your plan</li>
-	<li>''windowHeightPx'' is an **optional** attribute for runs where you put window height size in pixel. This attribute is not allowed if you are using fullscreen attribute in your plan</li>
-	<li>''runName'' is a **require** node where you put the name (unique at all plan) and it used for screenshot naming</li>
-	<li>''url'' is an **optional** node where you put the "goToURL". **Remove this if it is not necessary for your run**</li>
-	<li>''inputFields'' is an **optional** list where you put your form filler. You must to use XPath for searching element and fill it with a value</li>
-	<li>''browserActions'' is an **optional** node where you put your actions (eg. click, refresh, etc...)</li>
-	<li>''successCondition'' is a **require** node where you put the element selection and the value to be checked</li>
+	<li>'cookiesRemoveAll' is an **optional** attribute for plan and runs which removes all cookies</li>
+	<li>'cookiesRemove' is an **optional** attribute for plan and runs which removes all passed cookies, comma separated values</li>
+	<li>'fullscreen' is an **optional** attribute for plan and runs which maximize the window</li>
+	<li>'windowWidthPx' is an **optional** attribute for runs where you put window width size in pixel. This attribute is not allowed if you are using fullscreen attribute in your plan</li>
+	<li>'windowHeightPx' is an **optional** attribute for runs where you put window height size in pixel. This attribute is not allowed if you are using fullscreen attribute in your plan</li>
+	<li>'runName' is a **require** node where you put the name (unique at all plan) and it used for screenshot naming</li>
+	<li>'url' is an **optional** node where you put the "goToURL". **Remove this if it is not necessary for your run**</li>
+	<li>'inputFields' is an **optional** list where you put your form filler. You must to use XPath for searching element and fill it with a value</li>
+	<li>'browserActions' is an **optional** node where you put your actions (eg. click, refresh, etc...)</li>
+	<li>'successCondition' is a **require** node where you put the element selection and the value to be checked</li>
 </ul>
 
 ## Execute your plan/plans and enjoy it :)
