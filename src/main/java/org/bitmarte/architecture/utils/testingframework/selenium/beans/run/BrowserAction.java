@@ -23,6 +23,10 @@ public class BrowserAction {
 	@XStreamAsAttribute
 	private boolean firstAction;
 
+	@XStreamAlias("waitBeforeActionInMillis")
+	@XStreamAsAttribute
+	private long waitBeforeActionInMillis;
+
 	public String getAction() {
 		return action;
 	}
@@ -45,6 +49,14 @@ public class BrowserAction {
 
 	public void setFirstAction(boolean firstAction) {
 		this.firstAction = firstAction;
+	}
+
+	public long getWaitBeforeActionInMillis() {
+		return waitBeforeActionInMillis;
+	}
+
+	public void setWaitBeforeActionInMillis(long waitBeforeActionInMillis) {
+		this.waitBeforeActionInMillis = waitBeforeActionInMillis;
 	}
 
 }

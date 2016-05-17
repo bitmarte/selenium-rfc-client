@@ -321,15 +321,17 @@ Here you can find an example that you can use for filling value "myValue" into a
 There are some run tags (optionals) that you can use for advanced behaviors in your tests.
 
 ### BrowserActions
-You can use <browserActions> tag for simulating action with top browser bar:
+You can use <browserActions> tag for simulating a user action. The node contains a list of actions it will be executed in the specified order that you append its children.
+By default browserActions will be excetuted as last task, before successCondition's evaluate, but you can force its excecution as first operation on a run with a specific attribute 'firstAction', boolean value (default value is false).
+With 'waitBeforeActionInMillis' attribute you can configure a wait time for the action (time in ms).
 
-| Attribute value        		| Description																				|
+| Action value     		   		| Description																				|
 | ----------------------------- | ----------------------------------------------------------------------------------------- |
 | REFRESH						| Refresh current page (reload)																|
 | BACK							| Go back to previous page																	|
 | FORWARD						| Go ahead 																					|
-| CLICK							| Make a click on an html element (elementByXPath attribute)								|
-| IFRAME_SWITCH					| Switch to iframe at a given XPath, the first one (elementByXPath attribute)				|
+| CLICK							| Make a click on an html element (elementByXPath attribute is required)					|
+| IFRAME_SWITCH					| Switch to iframe at a given XPath, the first one (elementByXPath attribute is required)	|
 
 	<run>
 		<runName>001_refreshPage&lt/runName>
@@ -341,8 +343,17 @@ You can use <browserActions> tag for simulating action with top browser bar:
 	</run>
 	...
 	<run>
-		<runName>001_refreshPage&lt/runName>
-		<browserAction action="IFRAME_SWITCH" elementByXPath="//iframe"/>
+		<runName>002_clickThere&lt/runName>
+		<browserActions>
+			<browserAction firstAction="true" waitBeforeActionInMillis="200">
+				<action>CLICK</action>
+				<elementByXPath>//input[@value="Go"]</elementByXPath>
+			</browserAction>
+			<browserAction>
+				<action>CLICK</action>
+				<elementByXPath>//input[@value="There"]</elementByXPath>
+			</browserAction>
+		</browserActions>
 		<successCondition>
 			<element>//h2</element>
 			<elementContent>What is Selenium?</elementContent>

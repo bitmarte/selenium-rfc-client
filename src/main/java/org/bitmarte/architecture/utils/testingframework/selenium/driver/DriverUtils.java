@@ -137,6 +137,9 @@ public class DriverUtils {
 	 * @param browserAction
 	 */
 	public void makeBrowserAction(BrowserAction browserAction) throws Exception {
+		if (browserAction.getWaitBeforeActionInMillis() >= 1) {
+			this.driver.wait(browserAction.getWaitBeforeActionInMillis());
+		}
 		try {
 			switch (E_BrowserAction.valueOf(browserAction.getAction())) {
 			case REFRESH:
