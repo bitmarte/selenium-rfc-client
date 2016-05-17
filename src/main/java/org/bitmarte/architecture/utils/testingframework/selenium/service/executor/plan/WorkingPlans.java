@@ -1,4 +1,4 @@
-package org.bitmarte.architecture.utils.testingframework.selenium.service.executor;
+package org.bitmarte.architecture.utils.testingframework.selenium.service.executor.plan;
 
 import java.util.ArrayList;
 import java.util.List;

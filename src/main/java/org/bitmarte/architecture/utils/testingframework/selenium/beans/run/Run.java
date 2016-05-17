@@ -3,6 +3,7 @@ package org.bitmarte.architecture.utils.testingframework.selenium.beans.run;
 import java.util.List;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.reports.RunReport;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.A_BrowserAction;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
@@ -59,6 +60,9 @@ public class Run {
 	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = { "true", "false" })
 	@XStreamAsAttribute
 	private boolean fullscreen;
+
+	@XStreamAlias("myActions")
+	private List<A_BrowserAction> myActions;
 
 	public String getRunName() {
 		return runName;
@@ -146,6 +150,14 @@ public class Run {
 
 	public void setBrowserActions(List<BrowserAction> browserActions) {
 		this.browserActions = browserActions;
+	}
+
+	public List<A_BrowserAction> getMyActions() {
+		return myActions;
+	}
+
+	public void setMyActions(List<A_BrowserAction> myActions) {
+		this.myActions = myActions;
 	}
 
 	public RunReport getRunReport() {

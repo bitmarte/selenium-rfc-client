@@ -1,14 +1,14 @@
-package org.bitmarte.architecture.utils.testingframework.selenium.service.executor;
+package org.bitmarte.architecture.utils.testingframework.selenium.service.executor.plan;
 
 import java.io.File;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.ErrorCondition;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.InputField;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.A_BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_InputFieldType;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.driver.DriverUtils;
@@ -17,6 +17,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.reports.WebTimi
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.E_AuthType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.impl.NTLMAuthentication;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.evaluator.ContentEvaluatorFactory;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.BrowserActionExecutorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.extractor.ElementExtractorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
 import org.openqa.selenium.TimeoutException;
@@ -93,12 +94,10 @@ public class PlanLoaderRunnable implements Runnable {
 					proxy.newPage(currentRun.getRunName());
 				}
 
-				// browser action managing if firstAction flag is enabled
-				if (currentRun.getBrowserActions() != null) {
-					for (BrowserAction browserAction : currentRun.getBrowserActions()) {
-						if (browserAction.isFirstAction()) {
-							driverUtils.makeBrowserAction(browserAction);
-						}
+				// HERE Mauro
+				if (currentRun.getMyActions() != null) {
+					for (A_BrowserAction browserAction : currentRun.getMyActions()) {
+						BrowserActionExecutorFactory.getInstance(driver, browserAction).execute();
 					}
 				}
 
@@ -163,15 +162,6 @@ public class PlanLoaderRunnable implements Runnable {
 							ElementExtractorFactory.getInstance(field.getElementExtractor())
 									.getElements(driver, field.getElement()).get(0).sendKeys(field.getValue());
 							break;
-						}
-					}
-				}
-
-				// browser action managing if firstAction flag is not setted
-				if (currentRun.getBrowserActions() != null) {
-					for (BrowserAction browserAction : currentRun.getBrowserActions()) {
-						if (!browserAction.isFirstAction()) {
-							driverUtils.makeBrowserAction(browserAction);
 						}
 					}
 				}
