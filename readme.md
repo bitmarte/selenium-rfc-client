@@ -166,16 +166,16 @@ Pay attention that all IExplorer security zone must be the same and the zoom mus
 	</plan>
 			
 <ul>
-	<li><cookiesRemoveAll> is an **optional** attribute for plan and runs which removes all cookies</li>
-	<li><cookiesRemove> is an **optional** attribute for plan and runs which removes all passed cookies, comma separated values</li>
-	<li><fullscreen> is an **optional** attribute for plan and runs which maximize the window</li>
-	<li><windowWidthPx> is an **optional** attribute for runs where you put window width size in pixel. This attribute is not allowed if you are using fullscreen attribute in your plan</li>
-	<li><windowHeightPx> is an **optional** attribute for runs where you put window height size in pixel. This attribute is not allowed if you are using fullscreen attribute in your plan</li>
-	<li><runName> is a **require** node where you put the name (unique at all plan) and it used for screenshot naming</li>
-	<li><url> is an **optional** node where you put the "goToURL". **Remove this if it is not necessary for your run**</li>
-	<li><inputFields> is an **optional** list where you put your form filler. You must to use XPath for searching element and fill it with a value</li>
-	<li><browserActions> is an **optional** node where you put your actions (eg. click, refresh, etc...)</li>
-	<li><successCondition> is a **require** node where you put the element selection and the value to be checked</li>
+	<li>''cookiesRemoveAll'' is an **optional** attribute for plan and runs which removes all cookies</li>
+	<li>''cookiesRemove'' is an **optional** attribute for plan and runs which removes all passed cookies, comma separated values</li>
+	<li>''fullscreen'' is an **optional** attribute for plan and runs which maximize the window</li>
+	<li>''windowWidthPx'' is an **optional** attribute for runs where you put window width size in pixel. This attribute is not allowed if you are using fullscreen attribute in your plan</li>
+	<li>''windowHeightPx'' is an **optional** attribute for runs where you put window height size in pixel. This attribute is not allowed if you are using fullscreen attribute in your plan</li>
+	<li>''runName'' is a **require** node where you put the name (unique at all plan) and it used for screenshot naming</li>
+	<li>''url'' is an **optional** node where you put the "goToURL". **Remove this if it is not necessary for your run**</li>
+	<li>''inputFields'' is an **optional** list where you put your form filler. You must to use XPath for searching element and fill it with a value</li>
+	<li>''browserActions'' is an **optional** node where you put your actions (eg. click, refresh, etc...)</li>
+	<li>''successCondition'' is a **require** node where you put the element selection and the value to be checked</li>
 </ul>
 
 ## Execute your plan/plans and enjoy it :)
