@@ -16,6 +16,9 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.actio
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.GoToUrlAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.IFrameSwitchAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.RefreshAction;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.RemoveAllCookiesAction;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.RemoveCookiesAction;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.WindowResizeAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.unmarshaller.A_Unmarshaller;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.I_Validator;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.ValidatorFactory;
@@ -46,6 +49,9 @@ public class PlanUnmarshaller extends A_Unmarshaller {
 			xStream.processAnnotations(GoToUrlAction.class);
 			xStream.processAnnotations(IFrameSwitchAction.class);
 			xStream.processAnnotations(RefreshAction.class);
+			xStream.processAnnotations(RemoveAllCookiesAction.class);
+			xStream.processAnnotations(RemoveCookiesAction.class);
+			xStream.processAnnotations(WindowResizeAction.class);
 
 			Plan plan = (Plan) xStream.fromXML(xmlFileInput);
 
