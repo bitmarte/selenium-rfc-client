@@ -16,8 +16,8 @@ public class ForwardActionExecutor extends A_BrowserActionExecutor {
 	}
 
 	public void execute() throws Exception {
-		super.waitBefore();
 		try {
+			super.waitBefore();
 			this.driver.navigate().forward();
 		} catch (Exception e) {
 			throw e;

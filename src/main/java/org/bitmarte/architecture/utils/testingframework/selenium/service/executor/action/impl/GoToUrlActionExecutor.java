@@ -17,8 +17,8 @@ public class GoToUrlActionExecutor extends A_BrowserActionExecutor {
 	}
 
 	public void execute() throws Exception {
-		super.waitBefore();
 		try {
+			super.waitBefore();
 			this.driver.navigate().to(((GoToUrlAction) this.action).getUrl());
 		} catch (Exception e) {
 			throw e;

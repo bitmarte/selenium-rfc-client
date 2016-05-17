@@ -8,9 +8,9 @@ import org.openqa.selenium.WebDriver;
  * @author bitmarte
  *
  */
-public class RefreshActionExecutor extends A_BrowserActionExecutor {
+public class RemoveAllCookiesExecutor extends A_BrowserActionExecutor {
 
-	public RefreshActionExecutor(WebDriver driver, A_BrowserAction browserAction) {
+	public RemoveAllCookiesExecutor(WebDriver driver, A_BrowserAction browserAction) {
 		super(driver, browserAction);
 		// TODO Auto-generated constructor stub
 	}
@@ -18,7 +18,7 @@ public class RefreshActionExecutor extends A_BrowserActionExecutor {
 	public void execute() throws Exception {
 		try {
 			super.waitBefore();
-			this.driver.navigate().refresh();
+			this.driver.manage().deleteAllCookies();
 		} catch (Exception e) {
 			throw e;
 		}

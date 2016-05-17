@@ -18,8 +18,8 @@ public class IFrameSwitchActionExecutor extends A_BrowserActionExecutor {
 	}
 
 	public void execute() throws Exception {
-		super.waitBefore();
 		try {
+			super.waitBefore();
 			this.driver.switchTo()
 					.frame(ElementExtractorFactory.getInstance(((IFrameSwitchAction) this.action).getElementExtractor())
 							.getElements(this.driver, ((IFrameSwitchAction) this.action).getElement()).get(0));
