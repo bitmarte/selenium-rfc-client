@@ -4,7 +4,7 @@ The artifact is a simple JAR file that you need to run directly from a shell; it
 
 <hr/>
 <ul>
-	<li>[Two different approaches (local vs. remote)](docs/1.md)</li>
+	<li>[Two different approaches (local vs. remote)](docs/approaches.md)</li>
 	<ul>
 		<li><a href="#local-approach">Local approach</a></li>
 		<li><a href="#remote-approach">Remote approach</a></li>
