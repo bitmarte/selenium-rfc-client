@@ -2,9 +2,11 @@ package org.bitmarte.architecture.utils.testingframework.selenium.service.valida
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.A_BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.E_AuthType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.impl.NTLMAuthentication;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.A_Validator;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.ValidatorHandler;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.exceptions.ValidatorException;
 
 /**
@@ -26,6 +28,13 @@ public class PlanValidator extends A_Validator {
 		}
 
 		for (Run run : toValidate.getRuns()) {
+			if (run.getBrowserActions() == null) {
+				throw new ValidatorException("No browserActions has been specified for current run!");
+			} else {
+				if (run.getBrowserActions().isEmpty()) {
+					throw new ValidatorException("No browserActions has been specified for current run!");
+				}
+			}
 			if (run.getRunName() == null) {
 				throw new ValidatorException("No runName has been specified for current run!");
 			}
@@ -53,6 +62,11 @@ public class PlanValidator extends A_Validator {
 								+ run.getAuthentication().getAuthType() + "' for run '" + run.getRunName() + "'!");
 					}
 				}
+			}
+
+			// validate BrowserActions
+			for (A_BrowserAction browserAction : run.getBrowserActions()) {
+				ValidatorHandler.execute(browserAction);
 			}
 		}
 	}

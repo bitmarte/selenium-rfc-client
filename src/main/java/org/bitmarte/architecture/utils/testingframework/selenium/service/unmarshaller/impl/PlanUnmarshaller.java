@@ -21,8 +21,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.actio
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.RemoveCookiesAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.WindowResizeAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.unmarshaller.A_Unmarshaller;
-import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.I_Validator;
-import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.ValidatorFactory;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.ValidatorHandler;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -57,9 +56,7 @@ public class PlanUnmarshaller extends A_Unmarshaller {
 
 			Plan plan = (Plan) xStream.fromXML(xmlFileInput);
 
-			I_Validator v = ValidatorFactory.getInstance(plan);
-			v.validate();
-			v.setDefaultValue();
+			ValidatorHandler.execute(plan);
 
 			String planFileName = StringUtils.substring(xmlFileInput.getName(), 0,
 					xmlFileInput.getName().lastIndexOf("."));

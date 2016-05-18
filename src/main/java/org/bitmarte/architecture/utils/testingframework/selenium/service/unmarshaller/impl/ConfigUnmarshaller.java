@@ -5,8 +5,7 @@ import java.io.File;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.config.Config;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.ErrorCondition;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.unmarshaller.A_Unmarshaller;
-import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.I_Validator;
-import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.ValidatorFactory;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.ValidatorHandler;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -25,9 +24,7 @@ public class ConfigUnmarshaller extends A_Unmarshaller {
 
 			Config config = (Config) xStream.fromXML(xmlFileInput);
 
-			I_Validator v = ValidatorFactory.getInstance(config);
-			v.validate();
-			v.setDefaultValue();
+			ValidatorHandler.execute(config);
 
 			return config;
 		} catch (Exception e) {
