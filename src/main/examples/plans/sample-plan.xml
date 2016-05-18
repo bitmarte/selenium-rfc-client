@@ -1,7 +1,15 @@
 <plan>
-	<run windowWidthPx="1440" windowHeightPx="900">
+	<run>
 		<runName>001_gotoSeleniumHQ</runName>
-		<url>http://www.seleniumhq.org/</url>
+		<browserActions>
+			<windowResize>	
+				<widthPx>1440</widthPx>
+				<heightPx>900</heightPx>
+			</windowResize>
+			<goTo>
+				<url>http://www.seleniumhq.org/</url>
+			</goTo>
+		</browserActions>
 		<successCondition contentEvaluator="CONTAINS">
 			<element>//h2</element>
 			<elementContent>What is Selenium</elementContent>
@@ -9,7 +17,11 @@
 	</run>
 	<run>
 		<runName>002_gotoDownload</runName>
-		<url>http://www.seleniumhq.org/download/</url>
+		<browserActions>
+			<goTo>
+				<url>http://www.seleniumhq.org/download/</url>
+			</goTo>
+		</browserActions>
 		<successCondition>
 			<element>//h2</element>
 			<elementContent>Downloads</elementContent>
@@ -17,17 +29,14 @@
 	</run>
 	<run>
 		<runName>003_search</runName>
-		<inputFields>
-			<inputField>
+		<browserActions>
+			<inputFill>
 				<element>//input[@name="q"]</element>
 				<value>webdriver</value>
-			</inputField>
-		</inputFields>
-		<browserActions>
-			<browserAction>
-				<action>CLICK</action>
-				<elementByXPath>//input[@value="Go"]</elementByXPath>
-			</browserAction>
+			</inputFill>
+			<click>
+				<element>//input[@value="Go"]</element>
+			</click>
 		</browserActions>
 		<successCondition elementExtractor="BY_ID" contentEvaluator="CONTAINS">
 			<element>cse-footer</element>

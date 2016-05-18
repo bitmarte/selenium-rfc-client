@@ -3,21 +3,15 @@ package org.bitmarte.architecture.utils.testingframework.selenium.driver;
 import java.io.File;
 import java.util.StringTokenizer;
 
-import javax.naming.ConfigurationException;
-
 import org.apache.commons.io.FileUtils;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
-import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.remote.Augmenter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -131,46 +125,4 @@ public class DriverUtils {
 		this.driver.manage().window().maximize();
 	}
 
-	/**
-	 * Manage browser action
-	 *
-	 * @param browserAction
-	 */
-	public void makeBrowserAction(BrowserAction browserAction) throws Exception {
-		if (browserAction.getWaitBeforeActionInMillis() >= 1) {
-			this.driver.wait(browserAction.getWaitBeforeActionInMillis());
-		}
-		try {
-			switch (E_BrowserAction.valueOf(browserAction.getAction())) {
-			case REFRESH:
-				LOG.info("window refreshing...");
-				this.driver.navigate().refresh();
-				break;
-			case BACK:
-				LOG.info("window back...");
-				this.driver.navigate().back();
-				break;
-			case FORWARD:
-				LOG.info("window forward...");
-				this.driver.navigate().forward();
-				break;
-			case IFRAME_SWITCH:
-				LOG.info("Switch to iframe '" + browserAction.getElementByXPath() + "'");
-				this.driver.switchTo()
-						.frame(this.driver.findElements(By.xpath(browserAction.getElementByXPath())).get(0));
-				break;
-			case CLICK:
-				LOG.info("Make a click on '" + browserAction.getElementByXPath() + "'");
-				this.driver.findElements(By.xpath(browserAction.getElementByXPath())).get(0).click();
-				break;
-
-			default:
-				throw new ConfigurationException("No browserAction configured!");
-			}
-		} catch (Exception e) {
-			LOG.error("Error on makeBrowserAction '" + browserAction.getAction() + "' !", e);
-			throw new WebDriverException("Error on browserAction '" + browserAction.getAction() + "'!");
-		}
-
-	}
 }

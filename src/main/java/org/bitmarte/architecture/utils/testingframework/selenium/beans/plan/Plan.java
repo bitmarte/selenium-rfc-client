@@ -10,10 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
-import com.thoughtworks.xstream.annotations.XStreamConverter;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
-import com.thoughtworks.xstream.converters.basic.BooleanConverter;
 
 /**
  * @author bitmarte
@@ -33,20 +31,6 @@ public class Plan {
 
 	@XStreamOmitField
 	private PlanReport planReport;
-
-	@XStreamAlias("cookiesRemoveAll")
-	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = { "true", "false" })
-	@XStreamAsAttribute
-	private boolean cookiesRemoveAll;
-
-	@XStreamAlias("cookiesRemove")
-	@XStreamAsAttribute
-	private String cookiesRemove;
-
-	@XStreamAlias("fullscreen")
-	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = { "true", "false" })
-	@XStreamAsAttribute
-	private boolean fullscreen;
 
 	@XStreamImplicit
 	private List<Run> runs;
@@ -73,30 +57,6 @@ public class Plan {
 
 	public void setRuns(List<Run> runs) {
 		this.runs = runs;
-	}
-
-	public String getCookiesRemove() {
-		return cookiesRemove;
-	}
-
-	public void setCookiesRemove(String cookiesRemove) {
-		this.cookiesRemove = cookiesRemove;
-	}
-
-	public boolean isCookiesRemoveAll() {
-		return cookiesRemoveAll;
-	}
-
-	public void setCookiesRemoveAll(boolean cookiesRemoveAll) {
-		this.cookiesRemoveAll = cookiesRemoveAll;
-	}
-
-	public boolean isFullscreen() {
-		return fullscreen;
-	}
-
-	public void setFullscreen(boolean fullscreen) {
-		this.fullscreen = fullscreen;
 	}
 
 	public PlanReport getPlanReport() {

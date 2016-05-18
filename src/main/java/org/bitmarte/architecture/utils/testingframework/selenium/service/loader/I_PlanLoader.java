@@ -1,6 +1,6 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.service.loader;
 
-import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.WorkingPlans;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.plan.WorkingPlans;
 
 /**
  * @author bitmarte
