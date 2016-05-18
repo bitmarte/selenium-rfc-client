@@ -1,18 +1,18 @@
 # BrowserActions
 Here you can find the lists of allowed actions:
 <hr/>
-* [BackAction](docs/browser-actions.md#backaction)
-* [ClickAction](docs/browser-actions.md#clickaction)
-* [ComboFillAction](docs/browser-actions.md#combofillaction)
-* [ForwardAction](docs/browser-actions.md#forwardaction)
-* [GoToUrlAction](docs/browser-actions.md#gotourlaction)
-* [IFrameSwitchAction](docs/browser-actions.md#iframeswitchaction)
-* [InputFillAction](docs/browser-actions.md#inputfillaction)
-* [RadioFillAction](docs/browser-actions.md#radiofillaction)
-* [RefreshAction](docs/browser-actions.md#refreshaction)
-* [RemoveAllCookiesAction](docs/browser-actions.md#removeallcookiesaction)
-* [RemoveCookiesAction](docs/browser-actions.md#removecookiesaction)
-* [WindowResizeAction](docs/browser-actions.md#windowresizeaction)
+* [BackAction](#backaction)
+* [ClickAction](#clickaction)
+* [ComboFillAction](#combofillaction)
+* [ForwardAction](#forwardaction)
+* [GoToUrlAction](#gotourlaction)
+* [IFrameSwitchAction](#iframeswitchaction)
+* [InputFillAction](#inputfillaction)
+* [RadioFillAction](#radiofillaction)
+* [RefreshAction](#refreshaction)
+* [RemoveAllCookiesAction](#removeallcookiesaction)
+* [RemoveCookiesAction](#removecookiesaction)
+* [WindowResizeAction](#windowresizeaction)
 <hr/>
 
 ## BackAction
