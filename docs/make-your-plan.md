@@ -7,36 +7,45 @@
 	</li>
 </ol>	
 
-	<plan cookiesRemoveAll="true">
-		<run windowWidthPx="1440" windowHeightPx="900">
+	<plan>
+		<run>
 			<runName>001_gotoSeleniumHQ</runName>
-			<url>http://www.seleniumhq.org/</url>
-			<successCondition>
+			<browserActions>
+				<windowResize>	
+					<widthPx>1440</widthPx>
+					<heightPx>900</heightPx>
+				</windowResize>
+				<goTo>
+					<url>http://www.seleniumhq.org/</url>
+				</goTo>
+			</browserActions>
+			<successCondition contentEvaluator="CONTAINS">
 				<element>//h2</element>
-				<elementContent>What is Selenium?</elementContent>
+				<elementContent>What is Selenium</elementContent>
 			</successCondition>
 		</run>
-		<run cookiesRemove="COOKIE_1,COOKIE_2">
+		<run>
 			<runName>002_gotoDownload</runName>
-			<url>http://www.seleniumhq.org/download/</url>
+			<browserActions>
+				<goTo>
+					<url>http://www.seleniumhq.org/download/</url>
+				</goTo>
+			</browserActions>
 			<successCondition>
 				<element>//h2</element>
 				<elementContent>Downloads</elementContent>
 			</successCondition>
 		</run>
-		<run cookiesRemoveAll="true" fullscreen="true">
+		<run>
 			<runName>003_search</runName>
-			<inputFields>
-				<inputField>
+			<browserActions>
+				<inputFill>
 					<element>//input[@name="q"]</element>
 					<value>webdriver</value>
-				</inputField>
-			</inputFields>
-			<browserActions>
-				<browserAction>
-					<action>CLICK</action>
-					<elementByXPath>//input[@value="Go"]</elementByXPath>
-				</browserAction>
+				</inputFill>
+				<click>
+					<element>//input[@value="Go"]</element>
+				</click>
 			</browserActions>
 			<successCondition elementExtractor="BY_ID" contentEvaluator="CONTAINS">
 				<element>cse-footer</element>
@@ -46,14 +55,7 @@
 	</plan>
 			
 <ul>
-	<li>'cookiesRemoveAll' is an **optional** attribute for plan and runs which removes all cookies</li>
-	<li>'cookiesRemove' is an **optional** attribute for plan and runs which removes all passed cookies, comma separated values</li>
-	<li>'fullscreen' is an **optional** attribute for plan and runs which maximize the window</li>
-	<li>'windowWidthPx' is an **optional** attribute for runs where you put window width size in pixel. This attribute is not allowed if you are using fullscreen attribute in your plan</li>
-	<li>'windowHeightPx' is an **optional** attribute for runs where you put window height size in pixel. This attribute is not allowed if you are using fullscreen attribute in your plan</li>
 	<li>'runName' is a **require** node where you put the name (unique at all plan) and it used for screenshot naming</li>
-	<li>'url' is an **optional** node where you put the "goToURL". **Remove this if it is not necessary for your run**</li>
-	<li>'inputFields' is an **optional** list where you put your form filler. You must to use XPath for searching element and fill it with a value</li>
-	<li>'browserActions' is an **optional** node where you put your actions (eg. click, refresh, etc...)</li>
+	<li>'browserActions' is a **require** node where you put your actions</li>
 	<li>'successCondition' is a **require** node where you put the element selection and the value to be checked</li>
 </ul>
