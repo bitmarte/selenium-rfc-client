@@ -1,4 +1,4 @@
-package org.bitmarte.architecture.utils.testingframework.selenium.beans.run;
+package org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
@@ -7,8 +7,8 @@ import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
  * @author bitmarte
  *
  */
-@XStreamAlias("inputField")
-public class InputField {
+@XStreamAlias("inputFill")
+public class InputFillAction extends A_BrowserAction {
 
 	@XStreamAlias("element")
 	private String element;
@@ -16,10 +16,6 @@ public class InputField {
 	@XStreamAlias("elementExtractor")
 	@XStreamAsAttribute
 	private String elementExtractor;
-
-	@XStreamAlias("type")
-	@XStreamAsAttribute
-	private String type;
 
 	@XStreamAlias("value")
 	private String value;
@@ -32,14 +28,6 @@ public class InputField {
 		this.element = element;
 	}
 
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
 	public String getElementExtractor() {
 		return elementExtractor;
 	}
@@ -48,12 +36,12 @@ public class InputField {
 		this.elementExtractor = elementExtractor;
 	}
 
-	public String getType() {
-		return type;
+	public String getValue() {
+		return value;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 }

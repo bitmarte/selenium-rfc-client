@@ -3,13 +3,10 @@ package org.bitmarte.architecture.utils.testingframework.selenium.service.execut
 import java.io.File;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.ErrorCondition;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.InputField;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.A_BrowserAction;
-import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_InputFieldType;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.driver.DriverUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.reports.ReportGenerator;
@@ -24,7 +21,6 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,19 +61,6 @@ public class PlanLoaderRunnable implements Runnable {
 			driverUtils = new DriverUtils(driver, plan.getPlanName());
 			timingUtils = new WebTimingUtils(driver);
 
-			// cookies managing
-			if (plan.isCookiesRemoveAll()) {
-				driverUtils.removeAllCookies();
-			}
-			if (!StringUtils.isEmpty(plan.getCookiesRemove())) {
-				driverUtils.removeCookies(plan.getCookiesRemove());
-			}
-
-			// window size managing
-			if (plan.isFullscreen()) {
-				driverUtils.fullScreen();
-			}
-
 			LOG.info(plan.getRuns().size() + " runs in plan '" + plan.getPlanName() + "'");
 
 			for (Run run : plan.getRuns()) {
@@ -94,37 +77,6 @@ public class PlanLoaderRunnable implements Runnable {
 					proxy.newPage(currentRun.getRunName());
 				}
 
-				// HERE Mauro
-				if (currentRun.getMyActions() != null) {
-					for (A_BrowserAction browserAction : currentRun.getMyActions()) {
-						BrowserActionExecutorFactory.getInstance(driver, browserAction).execute();
-					}
-				}
-
-				// cookies managing
-				if (currentRun.isCookiesRemoveAll()) {
-					driverUtils.removeAllCookies();
-				}
-				if (!StringUtils.isEmpty(plan.getCookiesRemove())) {
-					driverUtils.removeCookies(plan.getCookiesRemove());
-				}
-
-				// window size managing
-				if (currentRun.isFullscreen()) {
-					driverUtils.fullScreen();
-				} else {
-					if (currentRun.getWindowWidthPx() > 0 && currentRun.getWindowHeightPx() > 0) {
-						driverUtils.resizeWindow(currentRun.getWindowWidthPx(), currentRun.getWindowHeightPx());
-					}
-				}
-
-				WebDriverWait wait = null;
-
-				if (currentRun.getUrl() != null) {
-					LOG.info("Go to URL '" + currentRun.getUrl() + "'");
-					driver.get(currentRun.getUrl());
-				}
-
 				// manage authentication
 				if (currentRun.getAuthentication() != null) {
 					switch (E_AuthType.valueOf(currentRun.getAuthentication().getAuthType())) {
@@ -137,36 +89,16 @@ public class PlanLoaderRunnable implements Runnable {
 					}
 				}
 
-				if (currentRun.getInputFields() != null) {
-					LOG.info("Form filling...");
-					for (InputField field : currentRun.getInputFields()) {
-						switch (E_InputFieldType.valueOf(field.getType())) {
-						case SELECT:
-							LOG.info("Input type SELECT");
-							Select select = new Select(ElementExtractorFactory.getInstance(field.getElementExtractor())
-									.getElements(driver, field.getElement()).get(0));
-							select.selectByValue(field.getValue());
-							break;
-						case RADIO:
-							LOG.info("Input type RADIO");
-							List<WebElement> radios = ElementExtractorFactory.getInstance(field.getElementExtractor())
-									.getElements(driver, field.getElement());
-							for (WebElement radio : radios) {
-								if (radio.getText().equals(field.getValue())) {
-									radio.click();
-								}
-							}
-							// default: type="TEXT"
-						default:
-							LOG.info("Input type TEXT");
-							ElementExtractorFactory.getInstance(field.getElementExtractor())
-									.getElements(driver, field.getElement()).get(0).sendKeys(field.getValue());
-							break;
-						}
+				// manage browser actions
+				if (currentRun.getBrowserActions() != null) {
+					for (A_BrowserAction browserAction : currentRun.getBrowserActions()) {
+						BrowserActionExecutorFactory.getInstance(driver, browserAction).execute();
 					}
 				}
 
+				// checking successCondition
 				LOG.info("Test result checking...");
+				WebDriverWait wait = null;
 				final Run finalRun = currentRun;
 				try {
 					wait = new WebDriverWait(driver,
@@ -250,7 +182,7 @@ public class PlanLoaderRunnable implements Runnable {
 						timingUtils.calculateTimings(currentRun);
 					}
 
-					// enable HAR capture
+					// HAR capture
 					if (DefaultSeleniumConfig.getConfig().getMobProxy() != null
 							&& DefaultSeleniumConfig.getConfig().getMobProxy().isEnableHarCapture()) {
 						String harFilePath = DefaultSeleniumConfig.getConfig().getReportBaseDir() + plan.getPlanName()

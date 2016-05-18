@@ -1,11 +1,7 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.service.validator.impl;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.BrowserAction;
-import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.InputField;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
-import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserAction;
-import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_InputFieldType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.E_AuthType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.impl.NTLMAuthentication;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.A_Validator;
@@ -33,53 +29,9 @@ public class PlanValidator extends A_Validator {
 			if (run.getRunName() == null) {
 				throw new ValidatorException("No runName has been specified for current run!");
 			}
-			if (run.getInputFields() != null) {
-				for (InputField field : run.getInputFields()) {
-					if (field.getType() != null) {
-						try {
-							E_InputFieldType.valueOf(field.getType());
-						} catch (Exception e) {
-							throw new ValidatorException("Type attribute (" + field.getType()
-									+ ") at InputFlield is not supported for run '" + run.getRunName() + "'!");
-						}
-					}
-				}
-			}
 			if (run.getSuccessCondition() == null) {
 				throw new ValidatorException(
 						"No successCondition has been specified for run '" + run.getRunName() + "'!");
-			}
-			if (toValidate.isFullscreen()) {
-				if (run.getWindowHeightPx() > 0 || run.getWindowHeightPx() > 0) {
-					throw new ValidatorException(
-							"Fullscreen setup in your plan, no custom window size allowed for run '" + run.getRunName()
-									+ "'!");
-				}
-			}
-			if (run.getBrowserActions() != null) {
-				for (BrowserAction browserAction : run.getBrowserActions()) {
-					if (browserAction.getAction() == null) {
-						throw new ValidatorException("No BrowserAction setted for run '" + run.getRunName() + "'!");
-					} else {
-						try {
-							switch (E_BrowserAction.valueOf(browserAction.getAction())) {
-							case IFRAME_SWITCH:
-							case CLICK:
-								if (browserAction.getElementByXPath() == null) {
-									throw new ValidatorException(
-											"Attribute 'elementByXPath' is required for Action 'IFRAME_SWITCH' and 'CLICK'!");
-								}
-								break;
-
-							default:
-								break;
-							}
-						} catch (Exception e) {
-							throw new ValidatorException(
-									"BrowserAction allowed values: '" + E_BrowserAction.values() + "'", e);
-						}
-					}
-				}
 			}
 			if (run.getAuthentication() != null) {
 				if (run.getAuthentication().getAuthType() == null) {
@@ -115,13 +67,6 @@ public class PlanValidator extends A_Validator {
 						LOG.info(
 								"using default waitPromptInSec time: " + NTLMAuthentication.DEFAULT_WAIT_PROMPT_IN_SEC);
 						run.getAuthentication().setWaitPromptInSec(NTLMAuthentication.DEFAULT_WAIT_PROMPT_IN_SEC);
-					}
-				}
-			}
-			if (run.getInputFields() != null) {
-				for (InputField field : run.getInputFields()) {
-					if (field.getType() == null) {
-						field.setType(E_InputFieldType.TEXT.name());
 					}
 				}
 			}
