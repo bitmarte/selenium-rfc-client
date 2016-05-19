@@ -1,4 +1,4 @@
-package org.bitmarte.architecture.utils.testingframework.selenium.driver;
+package org.bitmarte.architecture.utils.testingframework.selenium.utils;
 
 import java.io.File;
 

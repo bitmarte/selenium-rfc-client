@@ -1,4 +1,4 @@
-package org.bitmarte.architecture.utils.testingframework.selenium.reports;
+package org.bitmarte.architecture.utils.testingframework.selenium.utils;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.reports.WebTimingsReport;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;

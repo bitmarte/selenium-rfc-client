@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
-import org.bitmarte.architecture.utils.testingframework.selenium.driver.WebDriverFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.driver.WebDriverFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.plan.PlanLoaderRunnable;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.plan.WorkingPlans;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.PlanLoaderFactory;

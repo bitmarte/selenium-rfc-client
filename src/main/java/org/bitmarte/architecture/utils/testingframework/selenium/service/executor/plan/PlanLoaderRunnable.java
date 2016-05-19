@@ -9,8 +9,6 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Error
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.A_BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
-import org.bitmarte.architecture.utils.testingframework.selenium.driver.DriverUtils;
-import org.bitmarte.architecture.utils.testingframework.selenium.reports.WebTimingUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.E_AuthType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.impl.NTLMAuthentication;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
@@ -19,6 +17,8 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.executo
 import org.bitmarte.architecture.utils.testingframework.selenium.service.extractor.ElementExtractorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.report.E_ReportType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.report.ReportProducerFactory;
+import org.bitmarte.architecture.utils.testingframework.selenium.utils.DriverUtils;
+import org.bitmarte.architecture.utils.testingframework.selenium.utils.WebTimingUtils;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

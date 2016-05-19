@@ -1,4 +1,4 @@
-package org.bitmarte.architecture.utils.testingframework.selenium.driver;
+package org.bitmarte.architecture.utils.testingframework.selenium.service.driver;
 
 import java.net.InetSocketAddress;
 import java.net.URL;
