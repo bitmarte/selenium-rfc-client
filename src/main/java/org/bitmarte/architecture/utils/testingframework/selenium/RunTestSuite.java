@@ -6,11 +6,12 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.driver.WebDriverFactory;
-import org.bitmarte.architecture.utils.testingframework.selenium.reports.ReportGenerator;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.plan.PlanLoaderRunnable;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.plan.WorkingPlans;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.PlanLoaderFactory;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.report.E_ReportType;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.report.ReportProducerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,7 +62,7 @@ public class RunTestSuite {
 		} finally {
 			while (true) {
 				if (workingPlans.isFinish()) {
-					ReportGenerator.generateIndex(workingPlans.getPlans());
+					ReportProducerFactory.getInstance(E_ReportType.HTML_INDEX, workingPlans.getPlans()).produce();
 					if (SeleniumConfigProvider.getConfig().isCloseBrowserOnFinish()) {
 						try {
 							if (proxy != null) {

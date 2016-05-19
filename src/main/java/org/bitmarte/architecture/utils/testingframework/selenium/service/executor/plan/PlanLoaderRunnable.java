@@ -1,6 +1,7 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.service.executor.plan;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
@@ -9,7 +10,6 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.A_BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.driver.DriverUtils;
-import org.bitmarte.architecture.utils.testingframework.selenium.reports.ReportGenerator;
 import org.bitmarte.architecture.utils.testingframework.selenium.reports.WebTimingUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.E_AuthType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.impl.NTLMAuthentication;
@@ -17,6 +17,8 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.configu
 import org.bitmarte.architecture.utils.testingframework.selenium.service.evaluator.ContentEvaluatorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.BrowserActionExecutorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.extractor.ElementExtractorFactory;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.report.E_ReportType;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.report.ReportProducerFactory;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -216,7 +218,9 @@ public class PlanLoaderRunnable implements Runnable {
 		} finally {
 			// generating reports...
 			try {
-				ReportGenerator.generatePlanReport(plan);
+				List<Plan> plans = new ArrayList<Plan>();
+				plans.add(plan);
+				ReportProducerFactory.getInstance(E_ReportType.HTML_PLAN, plans).produce();
 				this.workingPlans.regWorkedPlan(plan);
 
 				if (SeleniumConfigProvider.getConfig().isCloseBrowserOnFinish()) {
