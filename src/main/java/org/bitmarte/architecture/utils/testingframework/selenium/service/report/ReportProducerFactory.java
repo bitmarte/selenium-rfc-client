@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.report.exceptions.ReportProducerException;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.report.impl.CsvPlanWebTimingsReportProducer;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.report.impl.HtmlPlanIndexReportProducer;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.report.impl.HtmlPlanReportProducer;
 import org.slf4j.Logger;
@@ -25,6 +26,8 @@ public class ReportProducerFactory {
 				return new HtmlPlanReportProducer(plans);
 			case HTML_INDEX:
 				return new HtmlPlanIndexReportProducer(plans);
+			case CSV_WEBTIMINGS:
+				return new CsvPlanWebTimingsReportProducer(plans);
 
 			default:
 				throw new ReportProducerException(

@@ -221,6 +221,7 @@ public class PlanLoaderRunnable implements Runnable {
 				List<Plan> plans = new ArrayList<Plan>();
 				plans.add(plan);
 				ReportProducerFactory.getInstance(E_ReportType.HTML_PLAN, plans).produce();
+
 				this.workingPlans.regWorkedPlan(plan);
 
 				if (SeleniumConfigProvider.getConfig().isCloseBrowserOnFinish()) {

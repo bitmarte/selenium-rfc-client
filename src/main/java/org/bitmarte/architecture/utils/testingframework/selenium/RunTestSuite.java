@@ -63,6 +63,13 @@ public class RunTestSuite {
 			while (true) {
 				if (workingPlans.isFinish()) {
 					ReportProducerFactory.getInstance(E_ReportType.HTML_INDEX, workingPlans.getPlans()).produce();
+
+					// WebTimings report CSV
+					if (SeleniumConfigProvider.getConfig().getWebTimings() != null) {
+						ReportProducerFactory.getInstance(E_ReportType.CSV_WEBTIMINGS, workingPlans.getPlans())
+								.produce();
+					}
+
 					if (SeleniumConfigProvider.getConfig().isCloseBrowserOnFinish()) {
 						try {
 							if (proxy != null) {

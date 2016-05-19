@@ -6,7 +6,7 @@ package org.bitmarte.architecture.utils.testingframework.selenium.service.report
  */
 public enum E_ReportType {
 
-	DATA("data"), HTML_PLAN("html"), HTML_INDEX("html");
+	CSV_WEBTIMINGS("data"), HTML_PLAN("html"), HTML_INDEX("html");
 
 	private final String templateRootName;
 
