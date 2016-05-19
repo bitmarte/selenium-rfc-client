@@ -1,4 +1,4 @@
-package org.bitmarte.architecture.utils.testingframework.selenium.setup;
+package org.bitmarte.architecture.utils.testingframework.selenium.service.configuration;
 
 import java.io.File;
 
@@ -11,9 +11,9 @@ import org.slf4j.LoggerFactory;
  * @author bitmarte
  *
  */
-public class DefaultSeleniumConfig {
+public class SeleniumConfigProvider {
 
-	private static final Logger LOG = LoggerFactory.getLogger(DefaultSeleniumConfig.class);
+	private static final Logger LOG = LoggerFactory.getLogger(SeleniumConfigProvider.class);
 
 	private static Config configuration = null;
 

@@ -2,7 +2,7 @@ package org.bitmarte.architecture.utils.testingframework.selenium.reports;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.reports.WebTimingsReport;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
-import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -28,16 +28,16 @@ public class WebTimingUtils {
 		final String myKpi = kpi;
 		final JavascriptExecutor js = (JavascriptExecutor) this.driver;
 		WebDriverWait wait = new WebDriverWait(driver,
-				DefaultSeleniumConfig.getConfig().getWebTimings().getMaxTimeoutPerMeasureInSec());
+				SeleniumConfigProvider.getConfig().getWebTimings().getMaxTimeoutPerMeasureInSec());
 		wait.until(new ExpectedCondition<Boolean>() {
 			long value = -1;
 
 			public Boolean apply(WebDriver d) {
-				if (DefaultSeleniumConfig.getConfig().getWebTimings().getKpiIntervalMeasureInSec() > 0) {
+				if (SeleniumConfigProvider.getConfig().getWebTimings().getKpiIntervalMeasureInSec() > 0) {
 					try {
 						Thread.currentThread();
 						Thread.sleep(
-								DefaultSeleniumConfig.getConfig().getWebTimings().getKpiIntervalMeasureInSec() * 1000);
+								SeleniumConfigProvider.getConfig().getWebTimings().getKpiIntervalMeasureInSec() * 1000);
 					} catch (Exception e) {
 						// TODO: handle exception
 					}
@@ -59,9 +59,9 @@ public class WebTimingUtils {
 		if (run.getRunReport().getWebTimings() == null) {
 			run.getRunReport().setWebTimings(new WebTimingsReport());
 		}
-		if (DefaultSeleniumConfig.getConfig().getWebTimings().getKpiIntervalMeasureInSec() > 0) {
+		if (SeleniumConfigProvider.getConfig().getWebTimings().getKpiIntervalMeasureInSec() > 0) {
 			LOG.debug("using KpiIntervalMeasureInSec '"
-					+ DefaultSeleniumConfig.getConfig().getWebTimings().getKpiIntervalMeasureInSec() + "s'...");
+					+ SeleniumConfigProvider.getConfig().getWebTimings().getKpiIntervalMeasureInSec() + "s'...");
 		}
 
 		// Total request

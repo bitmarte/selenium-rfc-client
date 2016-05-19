@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
-import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ public class ReportGenerator {
 		root.put("plan", plan);
 
 		reportsUtils.produce("plan-report.html",
-				DefaultSeleniumConfig.getConfig().getReportBaseDir() + plan.getPlanName(), root);
+				SeleniumConfigProvider.getConfig().getReportBaseDir() + plan.getPlanName(), root);
 	}
 
 	public static void generateIndex(List<Plan> plans) throws Exception {
@@ -33,7 +33,7 @@ public class ReportGenerator {
 		Map<String, Object> root = getCommonRootData();
 		root.put("plans", plans);
 
-		reportsUtils.produce("index.html", DefaultSeleniumConfig.getConfig().getReportBaseDir(), root);
+		reportsUtils.produce("index.html", SeleniumConfigProvider.getConfig().getReportBaseDir(), root);
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class ReportGenerator {
 		/*
 		 * Add here common static data
 		 */
-		if (DefaultSeleniumConfig.getConfig().getWebTimings() != null) {
+		if (SeleniumConfigProvider.getConfig().getWebTimings() != null) {
 			root.put("webTimings", true);
 		} else {
 			root.put("webTimings", false);

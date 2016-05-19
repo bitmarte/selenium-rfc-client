@@ -5,7 +5,7 @@ import java.io.File;
 import org.apache.commons.io.FileUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
-import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -50,7 +50,7 @@ public class DriverUtils {
 
 		boolean hasError = false;
 		try {
-			String archivePath = DefaultSeleniumConfig.getConfig().getReportBaseDir() + this.planName + "/screenshots/";
+			String archivePath = SeleniumConfigProvider.getConfig().getReportBaseDir() + this.planName + "/screenshots/";
 
 			LOG.debug("Take screenshot '" + archivePath + screenshotFileName + ".png'");
 
@@ -61,7 +61,7 @@ public class DriverUtils {
 			}
 
 			WebDriver augmentedDriver = this.driver;
-			if (DefaultSeleniumConfig.getConfig().getSeleniumRcURL() != null) {
+			if (SeleniumConfigProvider.getConfig().getSeleniumRcURL() != null) {
 				augmentedDriver = new Augmenter().augment(this.driver);
 			}
 			File scrFile = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);

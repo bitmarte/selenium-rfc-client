@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserMode;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserName;
-import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -56,19 +56,19 @@ public class WebDriverFactory {
 			switch (e_BrowserName) {
 			case CHROME:
 				LOG.info("using remote chrome browser on server '"
-						+ DefaultSeleniumConfig.getConfig().getSeleniumRcURL() + "'");
+						+ SeleniumConfigProvider.getConfig().getSeleniumRcURL() + "'");
 				capabilities.setBrowserName("chrome");
-				return new RemoteWebDriver(new URL(DefaultSeleniumConfig.getConfig().getSeleniumRcURL()), capabilities);
+				return new RemoteWebDriver(new URL(SeleniumConfigProvider.getConfig().getSeleniumRcURL()), capabilities);
 			case IEXPLORER:
 				LOG.info("using remote iexplorer browser on server '"
-						+ DefaultSeleniumConfig.getConfig().getSeleniumRcURL() + "'");
+						+ SeleniumConfigProvider.getConfig().getSeleniumRcURL() + "'");
 				capabilities.setBrowserName("internet explorer");
-				return new RemoteWebDriver(new URL(DefaultSeleniumConfig.getConfig().getSeleniumRcURL()), capabilities);
+				return new RemoteWebDriver(new URL(SeleniumConfigProvider.getConfig().getSeleniumRcURL()), capabilities);
 			case FIREFOX:
 				LOG.info("using remote firefox browser on server '"
-						+ DefaultSeleniumConfig.getConfig().getSeleniumRcURL() + "'");
+						+ SeleniumConfigProvider.getConfig().getSeleniumRcURL() + "'");
 				capabilities.setBrowserName("firefox");
-				return new RemoteWebDriver(new URL(DefaultSeleniumConfig.getConfig().getSeleniumRcURL()), capabilities);
+				return new RemoteWebDriver(new URL(SeleniumConfigProvider.getConfig().getSeleniumRcURL()), capabilities);
 
 			default:
 				throw new WebDriverException("Unknown case on E_BrowserName enum!");
@@ -79,7 +79,7 @@ public class WebDriverFactory {
 			case CHROME:
 				LOG.info("using local chrome browser");
 				System.setProperty("webdriver.chrome.driver",
-						DefaultSeleniumConfig.getConfig().getLocalWebDriverPath());
+						SeleniumConfigProvider.getConfig().getLocalWebDriverPath());
 				return new ChromeDriver(capabilities);
 			case IEXPLORER:
 				throw new WebDriverException("IExplorer browser in remote mode is not supported!");
@@ -102,11 +102,11 @@ public class WebDriverFactory {
 	private static void browserMobConfigure(BrowserMobProxy proxy) {
 
 		// ChainedProxy
-		if (DefaultSeleniumConfig.getConfig().getMobProxy().getChainedProxy() != null) {
+		if (SeleniumConfigProvider.getConfig().getMobProxy().getChainedProxy() != null) {
 			String host = null;
 			int port = -1;
 			StringTokenizer stringTokenizer = new StringTokenizer(
-					DefaultSeleniumConfig.getConfig().getMobProxy().getChainedProxy(), ":");
+					SeleniumConfigProvider.getConfig().getMobProxy().getChainedProxy(), ":");
 			while (stringTokenizer.hasMoreTokens()) {
 				host = stringTokenizer.nextToken();
 				port = Integer.parseInt(stringTokenizer.nextToken());
@@ -115,27 +115,27 @@ public class WebDriverFactory {
 		}
 
 		// port
-		proxy.start(DefaultSeleniumConfig.getConfig().getMobProxy().getPort());
+		proxy.start(SeleniumConfigProvider.getConfig().getMobProxy().getPort());
 
 		// DownloadBytePerSec
-		if (DefaultSeleniumConfig.getConfig().getMobProxy().getDownloadBytePerSec() > 0) {
+		if (SeleniumConfigProvider.getConfig().getMobProxy().getDownloadBytePerSec() > 0) {
 			LOG.info("setting DownloadBytePerSec: "
-					+ DefaultSeleniumConfig.getConfig().getMobProxy().getDownloadBytePerSec() + " bps");
-			proxy.setReadBandwidthLimit(DefaultSeleniumConfig.getConfig().getMobProxy().getDownloadBytePerSec());
+					+ SeleniumConfigProvider.getConfig().getMobProxy().getDownloadBytePerSec() + " bps");
+			proxy.setReadBandwidthLimit(SeleniumConfigProvider.getConfig().getMobProxy().getDownloadBytePerSec());
 		}
 
 		// UploadBytePerSec
-		if (DefaultSeleniumConfig.getConfig().getMobProxy().getUploadBytePerSec() > 0) {
+		if (SeleniumConfigProvider.getConfig().getMobProxy().getUploadBytePerSec() > 0) {
 			LOG.info("setting UploadBytePerSec: "
-					+ DefaultSeleniumConfig.getConfig().getMobProxy().getUploadBytePerSec() + " bps");
-			proxy.setWriteBandwidthLimit(DefaultSeleniumConfig.getConfig().getMobProxy().getUploadBytePerSec());
+					+ SeleniumConfigProvider.getConfig().getMobProxy().getUploadBytePerSec() + " bps");
+			proxy.setWriteBandwidthLimit(SeleniumConfigProvider.getConfig().getMobProxy().getUploadBytePerSec());
 		}
 
 		// Latency
-		if (DefaultSeleniumConfig.getConfig().getMobProxy().getLatencyInMillisec() > 0) {
+		if (SeleniumConfigProvider.getConfig().getMobProxy().getLatencyInMillisec() > 0) {
 			LOG.info("setting LatencyInMillisec: "
-					+ DefaultSeleniumConfig.getConfig().getMobProxy().getLatencyInMillisec() + " msec");
-			proxy.setLatency(DefaultSeleniumConfig.getConfig().getMobProxy().getLatencyInMillisec(),
+					+ SeleniumConfigProvider.getConfig().getMobProxy().getLatencyInMillisec() + " msec");
+			proxy.setLatency(SeleniumConfigProvider.getConfig().getMobProxy().getLatencyInMillisec(),
 					TimeUnit.MILLISECONDS);
 		}
 	}
