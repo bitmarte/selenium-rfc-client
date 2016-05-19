@@ -6,15 +6,15 @@ package org.bitmarte.architecture.utils.testingframework.selenium.beans.reports;
  */
 public class RunReport extends A_Report {
 
-	private WebTimings webTimings;
+	private WebTimingsReport webTimings;
 
 	private String harFilePath;
 
-	public WebTimings getWebTimings() {
+	public WebTimingsReport getWebTimings() {
 		return webTimings;
 	}
 
-	public void setWebTimings(WebTimings webTimings) {
+	public void setWebTimings(WebTimingsReport webTimings) {
 		this.webTimings = webTimings;
 	}
 

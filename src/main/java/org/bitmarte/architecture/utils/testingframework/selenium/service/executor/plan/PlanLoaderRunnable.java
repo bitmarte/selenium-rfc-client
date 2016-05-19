@@ -1,6 +1,7 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.service.executor.plan;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
@@ -8,15 +9,16 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Error
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.A_BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
-import org.bitmarte.architecture.utils.testingframework.selenium.driver.DriverUtils;
-import org.bitmarte.architecture.utils.testingframework.selenium.reports.ReportGenerator;
-import org.bitmarte.architecture.utils.testingframework.selenium.reports.WebTimingUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.E_AuthType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.impl.NTLMAuthentication;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.evaluator.ContentEvaluatorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.BrowserActionExecutorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.extractor.ElementExtractorFactory;
-import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.report.E_ReportType;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.report.ReportProducerFactory;
+import org.bitmarte.architecture.utils.testingframework.selenium.utils.DriverUtils;
+import org.bitmarte.architecture.utils.testingframework.selenium.utils.WebTimingUtils;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -69,8 +71,8 @@ public class PlanLoaderRunnable implements Runnable {
 				LOG.info("Run name: " + currentRun.getRunName());
 
 				// enable HAR capture
-				if (DefaultSeleniumConfig.getConfig().getMobProxy() != null
-						&& DefaultSeleniumConfig.getConfig().getMobProxy().isEnableHarCapture()) {
+				if (SeleniumConfigProvider.getConfig().getMobProxy() != null
+						&& SeleniumConfigProvider.getConfig().getMobProxy().isEnableHarCapture()) {
 					LOG.info("HAR file capture enabled");
 					proxy.setHarCaptureTypes(CaptureType.getAllContentCaptureTypes());
 					proxy.newHar(currentRun.getRunName());
@@ -102,9 +104,9 @@ public class PlanLoaderRunnable implements Runnable {
 				final Run finalRun = currentRun;
 				try {
 					wait = new WebDriverWait(driver,
-							DefaultSeleniumConfig.getConfig().getMaxTimeOutPerSuccessConditionInSec());
+							SeleniumConfigProvider.getConfig().getMaxTimeOutPerSuccessConditionInSec());
 					LOG.debug("Serching success condition unit "
-							+ DefaultSeleniumConfig.getConfig().getMaxTimeOutPerSuccessConditionInSec() + " sec...");
+							+ SeleniumConfigProvider.getConfig().getMaxTimeOutPerSuccessConditionInSec() + " sec...");
 
 					wait.until(new ExpectedCondition<Boolean>() {
 						public Boolean apply(WebDriver d) {
@@ -132,11 +134,11 @@ public class PlanLoaderRunnable implements Runnable {
 					LOG.info("Success on run '" + currentRun.getRunName() + "'");
 				} catch (TimeoutException te1) {
 					wait = new WebDriverWait(driver,
-							DefaultSeleniumConfig.getConfig().getMaxTimeOutPerErrorConditionInSec());
+							SeleniumConfigProvider.getConfig().getMaxTimeOutPerErrorConditionInSec());
 					LOG.debug("Searching error condition unit "
-							+ DefaultSeleniumConfig.getConfig().getMaxTimeOutPerErrorConditionInSec() + " sec...");
-					if (DefaultSeleniumConfig.getConfig().getErrorConditions() != null) {
-						for (final ErrorCondition errorCondition : DefaultSeleniumConfig.getConfig()
+							+ SeleniumConfigProvider.getConfig().getMaxTimeOutPerErrorConditionInSec() + " sec...");
+					if (SeleniumConfigProvider.getConfig().getErrorConditions() != null) {
+						for (final ErrorCondition errorCondition : SeleniumConfigProvider.getConfig()
 								.getErrorConditions()) {
 							try {
 								wait.until(new ExpectedCondition<Boolean>() {
@@ -178,14 +180,14 @@ public class PlanLoaderRunnable implements Runnable {
 					driverUtils.takeScreenshot(currentRun, null);
 
 					// Web Timings API
-					if (DefaultSeleniumConfig.getConfig().getWebTimings() != null) {
+					if (SeleniumConfigProvider.getConfig().getWebTimings() != null) {
 						timingUtils.calculateTimings(currentRun);
 					}
 
 					// HAR capture
-					if (DefaultSeleniumConfig.getConfig().getMobProxy() != null
-							&& DefaultSeleniumConfig.getConfig().getMobProxy().isEnableHarCapture()) {
-						String harFilePath = DefaultSeleniumConfig.getConfig().getReportBaseDir() + plan.getPlanName()
+					if (SeleniumConfigProvider.getConfig().getMobProxy() != null
+							&& SeleniumConfigProvider.getConfig().getMobProxy().isEnableHarCapture()) {
+						String harFilePath = SeleniumConfigProvider.getConfig().getReportBaseDir() + plan.getPlanName()
 								+ "/HarFiles/" + currentRun.getRunName() + ".har";
 						LOG.info("writing HAR file '" + harFilePath + "' ...");
 						File harFile = new File(harFilePath);
@@ -216,10 +218,13 @@ public class PlanLoaderRunnable implements Runnable {
 		} finally {
 			// generating reports...
 			try {
-				ReportGenerator.generatePlanReport(plan);
+				List<Plan> plans = new ArrayList<Plan>();
+				plans.add(plan);
+				ReportProducerFactory.getInstance(E_ReportType.HTML_PLAN, plans).produce();
+
 				this.workingPlans.regWorkedPlan(plan);
 
-				if (DefaultSeleniumConfig.getConfig().isCloseBrowserOnFinish()) {
+				if (SeleniumConfigProvider.getConfig().isCloseBrowserOnFinish()) {
 					try {
 						this.driver.quit();
 					} catch (Throwable t) {

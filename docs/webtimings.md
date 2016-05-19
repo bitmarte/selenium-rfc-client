@@ -18,6 +18,8 @@ Here the KPIs that you can check:
 	...
 	</config>
 
+When you activate 'webTimings' a CSV report will be created on your 'reportBaseDir' folder, called 'web-timings.csv'.
+
 **Pay attention: WebTimings API can not be activate on Internet Explorer browser**
 
 There are some advanced settings for KPIs performance monitoring

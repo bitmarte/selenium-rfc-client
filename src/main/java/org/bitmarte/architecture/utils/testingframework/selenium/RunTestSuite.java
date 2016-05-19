@@ -5,12 +5,13 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
-import org.bitmarte.architecture.utils.testingframework.selenium.driver.WebDriverFactory;
-import org.bitmarte.architecture.utils.testingframework.selenium.reports.ReportGenerator;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.driver.WebDriverFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.plan.PlanLoaderRunnable;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.plan.WorkingPlans;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.PlanLoaderFactory;
-import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.report.E_ReportType;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.report.ReportProducerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,15 +30,15 @@ public class RunTestSuite {
 		WorkingPlans workingPlans = null;
 		BrowserMobProxy proxy = null;
 		try {
-			DefaultSeleniumConfig.loadConfiguration(args);
+			SeleniumConfigProvider.loadConfiguration(args);
 
-			if (DefaultSeleniumConfig.getConfig().isCleanReportBaseDirOnStart()) {
+			if (SeleniumConfigProvider.getConfig().isCleanReportBaseDirOnStart()) {
 				cleanReportFolder();
 			}
 
 			workingPlans = PlanLoaderFactory.getInstance(args[0]).loadWorkingPlans();
 
-			if (DefaultSeleniumConfig.getConfig().getMobProxy() != null) {
+			if (SeleniumConfigProvider.getConfig().getMobProxy() != null) {
 				proxy = new BrowserMobProxyServer();
 			}
 
@@ -45,13 +46,13 @@ public class RunTestSuite {
 			for (Plan pl : plan) {
 				Thread t = new Thread(
 						new PlanLoaderRunnable(
-								WebDriverFactory.getInstance(DefaultSeleniumConfig.getConfig().getBrowserMode(),
-										DefaultSeleniumConfig.getConfig().getBrowserName(), proxy),
+								WebDriverFactory.getInstance(SeleniumConfigProvider.getConfig().getBrowserMode(),
+										SeleniumConfigProvider.getConfig().getBrowserName(), proxy),
 								pl, proxy, workingPlans));
 				t.start();
 
 				// If concurrentPlans flag is enabled don't wait thread
-				if (!DefaultSeleniumConfig.getConfig().isConcurrentPlans()) {
+				if (!SeleniumConfigProvider.getConfig().isConcurrentPlans()) {
 					t.join();
 				}
 			}
@@ -61,8 +62,15 @@ public class RunTestSuite {
 		} finally {
 			while (true) {
 				if (workingPlans.isFinish()) {
-					ReportGenerator.generateIndex(workingPlans.getPlans());
-					if (DefaultSeleniumConfig.getConfig().isCloseBrowserOnFinish()) {
+					ReportProducerFactory.getInstance(E_ReportType.HTML_INDEX, workingPlans.getPlans()).produce();
+
+					// WebTimings report CSV
+					if (SeleniumConfigProvider.getConfig().getWebTimings() != null) {
+						ReportProducerFactory.getInstance(E_ReportType.CSV_WEBTIMINGS, workingPlans.getPlans())
+								.produce();
+					}
+
+					if (SeleniumConfigProvider.getConfig().isCloseBrowserOnFinish()) {
 						try {
 							if (proxy != null) {
 								proxy.stop();
@@ -82,7 +90,7 @@ public class RunTestSuite {
 	 * Clean report folder
 	 */
 	private static void cleanReportFolder() {
-		File reportFolder = new File(DefaultSeleniumConfig.getConfig().getReportBaseDir());
+		File reportFolder = new File(SeleniumConfigProvider.getConfig().getReportBaseDir());
 		try {
 			for (File file : reportFolder.listFiles()) {
 				LOG.debug("removing file: " + file.getAbsolutePath());

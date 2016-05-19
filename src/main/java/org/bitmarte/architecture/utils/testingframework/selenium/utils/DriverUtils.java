@@ -1,15 +1,12 @@
-package org.bitmarte.architecture.utils.testingframework.selenium.driver;
+package org.bitmarte.architecture.utils.testingframework.selenium.utils;
 
 import java.io.File;
-import java.util.StringTokenizer;
 
 import org.apache.commons.io.FileUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
-import org.bitmarte.architecture.utils.testingframework.selenium.setup.DefaultSeleniumConfig;
-import org.openqa.selenium.Dimension;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
 import org.openqa.selenium.OutputType;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.Augmenter;
@@ -29,41 +26,6 @@ public class DriverUtils {
 	public DriverUtils(WebDriver driver, String planName) {
 		this.driver = driver;
 		this.planName = planName;
-	}
-
-	/**
-	 * It removes all browser cookies
-	 */
-	public void removeAllCookies() {
-		LOG.info("Removing all cookies...");
-		this.driver.manage().deleteAllCookies();
-	}
-
-	/**
-	 * It removes passed cookies, comma separated values
-	 *
-	 * @param cookiesCommaSeparatedValues
-	 */
-	public void removeCookies(String cookiesCommaSeparatedValues) {
-		StringTokenizer stringTokenizer = new StringTokenizer(cookiesCommaSeparatedValues, ",");
-		while (stringTokenizer.hasMoreTokens()) {
-			String cookieName = stringTokenizer.nextToken();
-			LOG.info("Removing cookie '" + cookieName + "'...");
-			this.driver.manage().deleteCookieNamed(cookieName);
-		}
-	}
-
-	/**
-	 * It resizes window's browser
-	 *
-	 * @param wPx
-	 * @param hPx
-	 */
-	public void resizeWindow(int wPx, int hPx) {
-		LOG.info("Setting custom window size: " + wPx + "px x " + hPx + "px");
-		this.driver.manage().window().setPosition(new Point(0, 0));
-		Dimension d = new Dimension(wPx, hPx);
-		this.driver.manage().window().setSize(d);
 	}
 
 	/**
@@ -88,7 +50,7 @@ public class DriverUtils {
 
 		boolean hasError = false;
 		try {
-			String archivePath = DefaultSeleniumConfig.getConfig().getReportBaseDir() + this.planName + "/screenshots/";
+			String archivePath = SeleniumConfigProvider.getConfig().getReportBaseDir() + this.planName + "/screenshots/";
 
 			LOG.debug("Take screenshot '" + archivePath + screenshotFileName + ".png'");
 
@@ -99,7 +61,7 @@ public class DriverUtils {
 			}
 
 			WebDriver augmentedDriver = this.driver;
-			if (DefaultSeleniumConfig.getConfig().getSeleniumRcURL() != null) {
+			if (SeleniumConfigProvider.getConfig().getSeleniumRcURL() != null) {
 				augmentedDriver = new Augmenter().augment(this.driver);
 			}
 			File scrFile = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
@@ -115,14 +77,6 @@ public class DriverUtils {
 				return testResult;
 			}
 		}
-	}
-
-	/**
-	 * Setup full screen window
-	 */
-	public void fullScreen() {
-		LOG.info("Setup full screen window size...");
-		this.driver.manage().window().maximize();
 	}
 
 }

@@ -4,7 +4,7 @@ package org.bitmarte.architecture.utils.testingframework.selenium.beans.reports;
  * @author bitmarte
  *
  */
-public class WebTimings {
+public class WebTimingsReport {
 
 	public static final String TOTAL_REQUESTS = "return window.performance.getEntries().length;";
 	public static final String NAVIGATION_START = "return window.performance.timing.navigationStart;";
