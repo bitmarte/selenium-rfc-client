@@ -58,17 +58,20 @@ public class WebDriverFactory {
 				LOG.info("using remote chrome browser on server '"
 						+ SeleniumConfigProvider.getConfig().getSeleniumRcURL() + "'");
 				capabilities.setBrowserName("chrome");
-				return new RemoteWebDriver(new URL(SeleniumConfigProvider.getConfig().getSeleniumRcURL()), capabilities);
+				return new RemoteWebDriver(new URL(SeleniumConfigProvider.getConfig().getSeleniumRcURL()),
+						capabilities);
 			case IEXPLORER:
 				LOG.info("using remote iexplorer browser on server '"
 						+ SeleniumConfigProvider.getConfig().getSeleniumRcURL() + "'");
 				capabilities.setBrowserName("internet explorer");
-				return new RemoteWebDriver(new URL(SeleniumConfigProvider.getConfig().getSeleniumRcURL()), capabilities);
+				return new RemoteWebDriver(new URL(SeleniumConfigProvider.getConfig().getSeleniumRcURL()),
+						capabilities);
 			case FIREFOX:
 				LOG.info("using remote firefox browser on server '"
 						+ SeleniumConfigProvider.getConfig().getSeleniumRcURL() + "'");
 				capabilities.setBrowserName("firefox");
-				return new RemoteWebDriver(new URL(SeleniumConfigProvider.getConfig().getSeleniumRcURL()), capabilities);
+				return new RemoteWebDriver(new URL(SeleniumConfigProvider.getConfig().getSeleniumRcURL()),
+						capabilities);
 
 			default:
 				throw new WebDriverException("Unknown case on E_BrowserName enum!");
@@ -100,6 +103,9 @@ public class WebDriverFactory {
 	 * @param proxy
 	 */
 	private static void browserMobConfigure(BrowserMobProxy proxy) {
+
+		// Trust all certificates
+		proxy.setMitmDisabled(true);
 
 		// ChainedProxy
 		if (SeleniumConfigProvider.getConfig().getMobProxy().getChainedProxy() != null) {

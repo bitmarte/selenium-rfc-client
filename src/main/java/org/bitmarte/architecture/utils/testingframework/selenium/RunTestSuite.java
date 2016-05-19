@@ -39,13 +39,7 @@ public class RunTestSuite {
 			workingPlans = PlanLoaderFactory.getInstance(args[0]).loadWorkingPlans();
 
 			if (SeleniumConfigProvider.getConfig().getMobProxy() != null) {
-				if (SeleniumConfigProvider.getConfig().getMobProxy().getPort() != 0) {
-					proxy = new BrowserMobProxyServer(SeleniumConfigProvider.getConfig().getMobProxy().getPort());
-				} else {
-					proxy = new BrowserMobProxyServer();
-				}
-				// Trust all certificates
-				proxy.setMitmDisabled(true);
+				proxy = new BrowserMobProxyServer();
 			}
 
 			List<Plan> plan = workingPlans.getPlans();
