@@ -2,6 +2,7 @@ package org.bitmarte.architecture.utils.testingframework.selenium.service.execut
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.A_BrowserAction;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,10 +12,13 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class A_BrowserActionExecutor implements I_BrowserActionExecutor {
 
+	private static final long WAIT_BEFORE_ACTION_DEFAULT = 100;
+
 	protected static Logger LOG = LoggerFactory.getLogger(A_BrowserActionExecutor.class);
 
 	protected WebDriver driver;
 	protected A_BrowserAction action;
+	protected WebDriverWait wait;
 
 	public A_BrowserActionExecutor(WebDriver driver, A_BrowserAction browserAction) {
 		this.driver = driver;
@@ -22,8 +26,10 @@ public abstract class A_BrowserActionExecutor implements I_BrowserActionExecutor
 	}
 
 	protected void waitBefore() throws Exception {
-		if (this.action.getWaitBeforeActionInMillis() >= 1) {
-			this.driver.wait(this.action.getWaitBeforeActionInMillis());
+		if (this.action.getWaitBeforeActionInMillis() > WAIT_BEFORE_ACTION_DEFAULT) {
+			Thread.sleep(this.action.getWaitBeforeActionInMillis());
+		} else {
+			Thread.sleep(WAIT_BEFORE_ACTION_DEFAULT);
 		}
 	}
 
