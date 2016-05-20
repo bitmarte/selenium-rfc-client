@@ -22,7 +22,7 @@ public class WindowResizeActionExecutor extends A_BrowserActionExecutor {
 		try {
 			super.waitBefore();
 			if (((WindowResizeAction) this.action).isFullScreen()) {
-				this.driver.manage().window().fullscreen();
+				this.driver.manage().window().maximize();
 			} else {
 				this.driver.manage().window().setPosition(new Point(0, 0));
 				Dimension d = new Dimension(((WindowResizeAction) this.action).getWidthPx(),
