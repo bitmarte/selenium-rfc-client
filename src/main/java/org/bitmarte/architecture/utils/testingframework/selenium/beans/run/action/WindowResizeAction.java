@@ -1,7 +1,6 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import com.thoughtworks.xstream.converters.basic.BooleanConverter;
 
@@ -20,7 +19,6 @@ public class WindowResizeAction extends A_BrowserAction {
 
 	@XStreamAlias("fullScreen")
 	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = { "true", "false" })
-	@XStreamAsAttribute
 	private boolean fullScreen;
 
 	public int getWidthPx() {
