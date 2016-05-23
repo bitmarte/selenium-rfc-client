@@ -103,10 +103,12 @@ public class PlanLoaderRunnable implements Runnable {
 				WebDriverWait wait = null;
 				final Run finalRun = currentRun;
 				try {
-					wait = new WebDriverWait(driver,
-							SeleniumConfigProvider.getConfig().getMaxTimeOutPerSuccessConditionInSec());
-					LOG.debug("Serching success condition unit "
-							+ SeleniumConfigProvider.getConfig().getMaxTimeOutPerSuccessConditionInSec() + " sec...");
+					int waitInSec = SeleniumConfigProvider.getConfig().getMaxTimeOutPerSuccessConditionInSec();
+					if (currentRun.getSuccessCondition().getMaxTimeOutPerSuccessConditionInSec() > 0) {
+						waitInSec = currentRun.getSuccessCondition().getMaxTimeOutPerSuccessConditionInSec();
+					}
+					wait = new WebDriverWait(driver, waitInSec);
+					LOG.debug("Serching success condition unit " + waitInSec + " sec...");
 
 					wait.until(new ExpectedCondition<Boolean>() {
 						public Boolean apply(WebDriver d) {

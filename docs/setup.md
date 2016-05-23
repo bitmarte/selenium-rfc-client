@@ -28,8 +28,8 @@
 	<li>'browserName' is a **require** node where you put the browser that you want to run tests on. **Take as look below for supported browsers**</li>
 	<li>'localWebDriverPath' is an **optional** node where you put the webdriver path, only if you are not using Firefox</li>
 	<li>'seleniumRcURL' is an **optional** node where you put the SeleniumRC URL connection. **Remove this node for LOCAL approach**</li>
-	<li>'maxTimeOutPerSuccessConditionInSec' is an **optional** node where you put your waiting timeout in second that it used for checking your success condition. The default value is 10 sec.</li>
-	<li>'maxTimeOutPerErrorConditionInSec' is an "optional" node where you put your waiting timeout in second that it used for checking yours error condition. The default value is 2 sec.</li>
+	<li>'maxTimeOutPerSuccessConditionInSec' is an **optional** node where you put your waiting timeout in second that it used for checking your success condition. The default value is 10 sec. You can override it for each run into your successCondition</li>
+	<li>'maxTimeOutPerErrorConditionInSec' is an "optional" node where you put your waiting timeout in second that it used for checking yours error condition. The default value is 2 sec</li>
 	<li>'reportBaseDir' is a **require** node where you put your preferred location where Selenium save reports</li>
 	<li>'cleanReportBaseDirOnStart' is an **optional** node used to clean the location where Selenium save reports before run. The default value is false</li>
 	<li>'errorConditions' is an **optional** node where you put your generic error conditions. The elementContent node is an **optional** one</li>

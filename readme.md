@@ -14,10 +14,12 @@ The artifact is a simple JAR file that you need to run directly from a shell; it
 * [Advanced success condition usage](docs/success-condition.md)
  * [screenshotFileName](docs/success-condition.md#screenshotfilename)
  * [waitBeforeScreenshotInMilliSec](docs/success-condition.md#waitbeforescreenshotinmillisec)
+ * [maxTimeOutPerSuccessConditionInSec](docs/success-condition.md#maxTimeOutPerSuccessConditionInSec)
  * [contentEvaluator](docs/success-condition.md#contentevaluator)
  * [elementExtractor](docs/success-condition.md#elementextractor)
 * [WebTimings performance monitoring](docs/webtimings.md)
- * [Timeout per KPI measure](docs/webtimings.md#kpi-interval-measure)* * [KPI interval measure](docs/webtimings.md#kpi-interval-measure)
+ * [Timeout per KPI measure](docs/webtimings.md#kpi-interval-measure)*
+ * [KPI interval measure](docs/webtimings.md#kpi-interval-measure)
 * [BrowserMob Proxy (for bandwidth throttling and more)](docs/browsermob.md)
  * [Generating HAR file](docs/browsermob.md#generating-har-file)
 * [Concurrent plan](docs/concurrent-plan.md)
