@@ -27,5 +27,5 @@ You can override this property directly in your successCondition tag for each ru
 		<elementContent>MyContent</elementContent>
 	</successCondition>
 
-* [Evaluator](docs/evaluator.md)
-* [Extractor](docs/extractor.md)
+* [Evaluator](evaluator.md)
+* [Extractor](extractor.md)
