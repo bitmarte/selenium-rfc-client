@@ -17,6 +17,10 @@ The artifact is a simple JAR file that you need to run directly from a shell; it
  * [maxTimeOutPerSuccessConditionInSec](docs/success-condition.md#maxTimeOutPerSuccessConditionInSec)
  * [contentEvaluator](docs/success-condition.md#contentevaluator)
  * [elementExtractor](docs/success-condition.md#elementextractor)
+* [Advanced error condition usage](docs/error-condition.md)
+ * [maxTimeOutPerErrorConditionInSec](docs/error-condition.md#maxTimeOutPerErrorConditionInSec)
+ * [contentEvaluator](docs/error-condition.md#contentevaluator)
+ * [elementExtractor](docs/error-condition.md#elementextractor)
 * [WebTimings performance monitoring](docs/webtimings.md)
  * [Timeout per KPI measure](docs/webtimings.md#kpi-interval-measure)*
  * [KPI interval measure](docs/webtimings.md#kpi-interval-measure)

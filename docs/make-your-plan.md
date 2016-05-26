@@ -51,6 +51,12 @@
 				<element>cse-footer</element>
 				<elementContent>Google</elementContent>
 			</successCondition>
+			<errorConditions>
+				<errorCondition elementExtractor="BY_CLASSNAME" contentEvaluator="CONTAINS">
+					<element>error-msg-container</element>
+					<elementContent>error-msg-content</elementContent>
+				</errorCondition>
+			</errorConditions>
 		</run>
 	</plan>
 			
@@ -58,4 +64,5 @@
 	<li>'runName' is a **require** node where you put the name (unique at all plan) and it used for screenshot naming</li>
 	<li>'browserActions' is a **require** node where you put your actions</li>
 	<li>'successCondition' is a **require** node where you put the element selection and the value to be checked</li>
+	<li>'errorConditions' is an **optional** node list where you can override your default config for each run. For more detail [click here](error-condition.md).</li>
 </ul>

@@ -32,7 +32,7 @@
 	<li>'maxTimeOutPerErrorConditionInSec' is an "optional" node where you put your waiting timeout in second that it used for checking yours error condition. The default value is 2 sec</li>
 	<li>'reportBaseDir' is a **require** node where you put your preferred location where Selenium save reports</li>
 	<li>'cleanReportBaseDirOnStart' is an **optional** node used to clean the location where Selenium save reports before run. The default value is false</li>
-	<li>'errorConditions' is an **optional** node where you put your generic error conditions. The elementContent node is an **optional** one</li>
+	<li>'errorConditions' is a **require** node where you put your generic error conditions</li>
 	<li>'closeBrowserOnFinish' is an **optional** node used to close browser at the end of your test, boolean value. The default value is false</li>
 </ul>
 

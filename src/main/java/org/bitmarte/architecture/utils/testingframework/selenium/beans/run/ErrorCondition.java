@@ -24,6 +24,9 @@ public class ErrorCondition {
 	@XStreamAsAttribute
 	private String elementExtractor;
 
+	@XStreamAlias("maxTimeOutPerErrorConditionInSec")
+	private int maxTimeOutPerErrorConditionInSec;
+
 	public String getElement() {
 		return element;
 	}
@@ -54,6 +57,14 @@ public class ErrorCondition {
 
 	public void setElementExtractor(String elementExtractor) {
 		this.elementExtractor = elementExtractor;
+	}
+
+	public int getMaxTimeOutPerErrorConditionInSec() {
+		return maxTimeOutPerErrorConditionInSec;
+	}
+
+	public void setMaxTimeOutPerErrorConditionInSec(int maxTimeOutPerErrorConditionInSec) {
+		this.maxTimeOutPerErrorConditionInSec = maxTimeOutPerErrorConditionInSec;
 	}
 
 }
