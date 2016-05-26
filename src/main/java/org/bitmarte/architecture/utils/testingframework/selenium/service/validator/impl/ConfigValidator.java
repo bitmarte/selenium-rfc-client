@@ -66,6 +66,13 @@ public class ConfigValidator extends A_Validator {
 					"Property 'localWebDriverPath' for browserName '" + toValidate.getBrowserName() + "' is required!");
 		}
 
+		// checking errorConditions
+		if (toValidate.getErrorConditions() == null) {
+			throw new ValidatorException("ErrorConditions must not be empty!");
+		} else if (toValidate.getErrorConditions().isEmpty()) {
+			throw new ValidatorException("ErrorConditions must not be empty!");
+		}
+
 		LOG.warn("setCloseBrowserOnFinish = " + toValidate.isCloseBrowserOnFinish());
 
 		// checking for webTimingsAPI

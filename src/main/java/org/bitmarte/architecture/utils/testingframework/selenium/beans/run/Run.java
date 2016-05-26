@@ -30,6 +30,9 @@ public class Run {
 	@XStreamAlias("browserActions")
 	private List<A_BrowserAction> browserActions;
 
+	@XStreamAlias("errorConditions")
+	private List<ErrorCondition> errorConditions;
+
 	public String getRunName() {
 		return runName;
 	}
@@ -60,6 +63,14 @@ public class Run {
 
 	public void setBrowserActions(List<A_BrowserAction> browserActions) {
 		this.browserActions = browserActions;
+	}
+
+	public List<ErrorCondition> getErrorConditions() {
+		return errorConditions;
+	}
+
+	public void setErrorConditions(List<ErrorCondition> errorConditions) {
+		this.errorConditions = errorConditions;
 	}
 
 	public RunReport getRunReport() {

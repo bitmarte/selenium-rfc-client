@@ -103,12 +103,14 @@ public class PlanLoaderRunnable implements Runnable {
 				WebDriverWait wait = null;
 				final Run finalRun = currentRun;
 				try {
-					int waitInSec = SeleniumConfigProvider.getConfig().getMaxTimeOutPerSuccessConditionInSec();
+					int waitPerSuccessConditionInSec = SeleniumConfigProvider.getConfig()
+							.getMaxTimeOutPerSuccessConditionInSec();
 					if (currentRun.getSuccessCondition().getMaxTimeOutPerSuccessConditionInSec() > 0) {
-						waitInSec = currentRun.getSuccessCondition().getMaxTimeOutPerSuccessConditionInSec();
+						waitPerSuccessConditionInSec = currentRun.getSuccessCondition()
+								.getMaxTimeOutPerSuccessConditionInSec();
 					}
-					wait = new WebDriverWait(driver, waitInSec);
-					LOG.debug("Serching success condition unit " + waitInSec + " sec...");
+					wait = new WebDriverWait(driver, waitPerSuccessConditionInSec);
+					LOG.debug("Serching success condition unit " + waitPerSuccessConditionInSec + " sec...");
 
 					wait.until(new ExpectedCondition<Boolean>() {
 						public Boolean apply(WebDriver d) {
@@ -135,48 +137,51 @@ public class PlanLoaderRunnable implements Runnable {
 					currentRun.getRunReport().setTestResult(E_TestResult.SUCCESS.name());
 					LOG.info("Success on run '" + currentRun.getRunName() + "'");
 				} catch (TimeoutException te1) {
-					wait = new WebDriverWait(driver,
-							SeleniumConfigProvider.getConfig().getMaxTimeOutPerErrorConditionInSec());
-					LOG.debug("Searching error condition unit "
-							+ SeleniumConfigProvider.getConfig().getMaxTimeOutPerErrorConditionInSec() + " sec...");
-					if (SeleniumConfigProvider.getConfig().getErrorConditions() != null) {
-						for (final ErrorCondition errorCondition : SeleniumConfigProvider.getConfig()
-								.getErrorConditions()) {
-							try {
-								wait.until(new ExpectedCondition<Boolean>() {
-									public Boolean apply(WebDriver d) {
-										List<WebElement> elements = ElementExtractorFactory
-												.getInstance(errorCondition.getElementExtractor())
-												.getElements(d, errorCondition.getElement());
-										if (!elements.isEmpty()) {
-											if (errorCondition.getElementContent() != null) {
-												for (WebElement webElement : elements) {
-													return ContentEvaluatorFactory
-															.getInstance(errorCondition.getContentEvaluator())
-															.evaluate(errorCondition.getElementContent(),
-																	webElement.getText());
-												}
-											} else {
-												return true;
-											}
-										}
-										return false;
-									}
-								});
-								LOG.error("Error on run '" + currentRun.getRunName() + "'");
-
-								break;
-							} catch (Exception e) {
-								currentRun.getRunReport().setTestResult(E_TestResult.TIMEOUT.name());
-								plan.getPlanReport().setTestResult(E_TestResult.ERROR.name());
-								LOG.error("Timeout on run '" + currentRun.getRunName() + "'");
-							}
-						}
-					} else {
-						currentRun.getRunReport().setTestResult(E_TestResult.TIMEOUT.name());
-						plan.getPlanReport().setTestResult(E_TestResult.ERROR.name());
-						LOG.error("Timeout on run '" + currentRun.getRunName() + "'");
+					List<ErrorCondition> errorConditions = SeleniumConfigProvider.getConfig().getErrorConditions();
+					if (currentRun.getErrorConditions() != null) {
+						errorConditions = currentRun.getErrorConditions();
+						LOG.info("Using ErrorConditions specified in current run...");
 					}
+
+					for (final ErrorCondition errorCondition : errorConditions) {
+						try {
+							int waitPerErrorConditionInSec = SeleniumConfigProvider.getConfig()
+									.getMaxTimeOutPerErrorConditionInSec();
+							if (errorCondition.getMaxTimeOutPerErrorConditionInSec() > 0) {
+								waitPerErrorConditionInSec = errorCondition.getMaxTimeOutPerErrorConditionInSec();
+							}
+							wait = new WebDriverWait(driver, waitPerErrorConditionInSec);
+							LOG.debug("Serching error condition unit " + waitPerErrorConditionInSec + " sec...");
+							wait.until(new ExpectedCondition<Boolean>() {
+								public Boolean apply(WebDriver d) {
+									List<WebElement> elements = ElementExtractorFactory
+											.getInstance(errorCondition.getElementExtractor())
+											.getElements(d, errorCondition.getElement());
+									if (!elements.isEmpty()) {
+										if (errorCondition.getElementContent() != null) {
+											for (WebElement webElement : elements) {
+												return ContentEvaluatorFactory
+														.getInstance(errorCondition.getContentEvaluator())
+														.evaluate(errorCondition.getElementContent(),
+																webElement.getText());
+											}
+										} else {
+											return true;
+										}
+									}
+									return false;
+								}
+							});
+							LOG.error("Error on run '" + currentRun.getRunName() + "'");
+
+							break;
+						} catch (Exception e) {
+							currentRun.getRunReport().setTestResult(E_TestResult.TIMEOUT.name());
+							plan.getPlanReport().setTestResult(E_TestResult.ERROR.name());
+							LOG.error("Timeout on run '" + currentRun.getRunName() + "'");
+						}
+					}
+
 					break;
 				} finally {
 					driverUtils.takeScreenshot(currentRun, null);
