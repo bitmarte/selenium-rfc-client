@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.bitmarte.architecture.utils.testingframework</groupId>
 	<artifactId>selenium-rfc-client</artifactId>
-	<version>3.3</version>
+	<version>3.4</version>
 	<dependencies>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
@@ -50,6 +50,11 @@
 			<groupId>uk.com.robust-it</groupId>
 			<artifactId>cloning</artifactId>
 			<version>1.9.2</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.relevantcodes</groupId>
+		    <artifactId>extentreports</artifactId>
+		    <version>2.41.0</version>
 		</dependency>
 	</dependencies>
 	<distributionManagement>
