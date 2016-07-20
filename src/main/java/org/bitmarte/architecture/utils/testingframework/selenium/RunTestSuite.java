@@ -44,11 +44,10 @@ public class RunTestSuite {
 
 			List<Plan> plan = workingPlans.getPlans();
 			for (Plan pl : plan) {
-				Thread t = new Thread(
-						new PlanLoaderRunnable(
-								WebDriverFactory.getInstance(SeleniumConfigProvider.getConfig().getBrowserMode(),
-										SeleniumConfigProvider.getConfig().getBrowserName(), proxy),
-								pl, proxy, workingPlans));
+				Thread t = new Thread(new PlanLoaderRunnable(
+						WebDriverFactory.getInstance(SeleniumConfigProvider.getConfig().getBrowser().getMode(),
+								SeleniumConfigProvider.getConfig().getBrowser().getName(), proxy),
+						pl, proxy, workingPlans));
 				t.start();
 
 				// If concurrentPlans flag is enabled don't wait thread

@@ -5,8 +5,6 @@ import java.util.List;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.reports.PlanReport;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
@@ -19,8 +17,6 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  */
 @XStreamAlias("plan")
 public class Plan {
-
-	private static final Logger LOG = LoggerFactory.getLogger(Plan.class);
 
 	@XStreamAlias("executions")
 	@XStreamAsAttribute

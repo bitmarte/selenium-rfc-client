@@ -18,11 +18,8 @@ public class Config {
 	@XStreamAlias("seleniumRcURL")
 	private String seleniumRcURL;
 
-	@XStreamAlias("browserMode")
-	private String browserMode;
-
-	@XStreamAlias("browserName")
-	private String browserName;
+	@XStreamAlias("browser")
+	private BrowserConfig browser;
 
 	@XStreamAlias("localWebDriverPath")
 	private String localWebDriverPath;
@@ -89,20 +86,12 @@ public class Config {
 		this.reportBaseDir = reportBaseDir;
 	}
 
-	public String getBrowserMode() {
-		return browserMode;
+	public BrowserConfig getBrowser() {
+		return browser;
 	}
 
-	public void setBrowserMode(String browserMode) {
-		this.browserMode = browserMode;
-	}
-
-	public String getBrowserName() {
-		return browserName;
-	}
-
-	public void setBrowserName(String browserName) {
-		this.browserName = browserName;
+	public void setBrowser(BrowserConfig browser) {
+		this.browser = browser;
 	}
 
 	public String getLocalWebDriverPath() {
