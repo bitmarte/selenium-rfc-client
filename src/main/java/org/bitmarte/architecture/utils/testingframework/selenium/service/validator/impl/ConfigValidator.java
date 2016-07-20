@@ -26,44 +26,54 @@ public class ConfigValidator extends A_Validator {
 		Config toValidate = (Config) this.inValidation;
 
 		// checking for required configuration
-		if (toValidate.getBrowserName() == null) {
-			throw new ValidatorException("Property 'browserName' is missing!");
+		if (toValidate.getBrowser() == null) {
+			throw new ValidatorException("Property 'browser' is missing!");
+		} else {
+			if (toValidate.getBrowser().getName() == null) {
+				throw new ValidatorException("Property 'name' is missing for browser!");
+			}
+			if (toValidate.getBrowser().getMode() == null) {
+				throw new ValidatorException("Property 'mode' is missing for browser!");
+			}
 		}
-		if (toValidate.getBrowserMode() == null) {
-			throw new ValidatorException("Property 'browserMode' is missing!");
-		}
+
 		if (toValidate.getReportBaseDir() == null) {
 			throw new ValidatorException("Property 'reportBaseDir' is missing!");
 		}
 
 		// checking for allowed values
 		try {
-			E_BrowserName.valueOf(toValidate.getBrowserName());
+			E_BrowserName.valueOf(toValidate.getBrowser().getName());
 		} catch (Exception e) {
-			throw new ValidatorException(
-					"Value '" + toValidate.getBrowserName() + "' for property 'browserName' is not allowed!");
+			throw new ValidatorException("Value '" + toValidate.getBrowser().getName()
+					+ "' for property 'name' is not allowed for browser!");
 		}
 		try {
-			E_BrowserMode.valueOf(toValidate.getBrowserMode());
+			E_BrowserMode.valueOf(toValidate.getBrowser().getMode());
 		} catch (Exception e) {
-			throw new ValidatorException(
-					"Value '" + toValidate.getBrowserMode() + "' for property 'browserMode' is not allowed!");
+			throw new ValidatorException("Value '" + toValidate.getBrowser().getMode()
+					+ "' for property 'mode' is not allowed for browser!");
 		}
 
 		// checking for restrictions
-		if (E_BrowserMode.valueOf(toValidate.getBrowserMode()).equals(E_BrowserMode.LOCAL)
-				&& E_BrowserName.valueOf(toValidate.getBrowserName()).equals(E_BrowserName.IEXPLORER)) {
-			throw new ValidatorException("BrowserName 'IEXPLORER' for browserMode 'LOCAL' is not allowed!");
+		if (E_BrowserMode.valueOf(toValidate.getBrowser().getMode()).equals(E_BrowserMode.LOCAL)
+				&& E_BrowserName.valueOf(toValidate.getBrowser().getName()).equals(E_BrowserName.IEXPLORER)) {
+			throw new ValidatorException("BrowserName 'IEXPLORER' for mode 'LOCAL' is not allowed!");
 		}
-		if (E_BrowserMode.valueOf(toValidate.getBrowserMode()).equals(E_BrowserMode.REMOTE)
+		if (E_BrowserMode.valueOf(toValidate.getBrowser().getMode()).equals(E_BrowserMode.REMOTE)
 				&& toValidate.getSeleniumRcURL() == null) {
-			throw new ValidatorException("Property 'seleniumRcURL' for browserMode 'REMOTE' is required!");
+			throw new ValidatorException("Property 'seleniumRcURL' for mode 'REMOTE' is required!");
 		}
-		if (E_BrowserMode.valueOf(toValidate.getBrowserMode()).equals(E_BrowserMode.LOCAL)
-				&& !E_BrowserName.valueOf(toValidate.getBrowserName()).equals(E_BrowserName.FIREFOX)
+		if (E_BrowserMode.valueOf(toValidate.getBrowser().getMode()).equals(E_BrowserMode.LOCAL)
+				&& !E_BrowserName.valueOf(toValidate.getBrowser().getName()).equals(E_BrowserName.FIREFOX)
 				&& toValidate.getLocalWebDriverPath() == null) {
 			throw new ValidatorException(
-					"Property 'localWebDriverPath' for browserName '" + toValidate.getBrowserName() + "' is required!");
+					"Property 'localWebDriverPath' for name '" + toValidate.getBrowser().getName() + "' is required!");
+		}
+		// arguments allowed just for ChromeDriver
+		if (toValidate.getBrowser().getArguments() != null
+				&& !E_BrowserName.valueOf(toValidate.getBrowser().getName()).equals(E_BrowserName.CHROME)) {
+			throw new ValidatorException("Property 'arguments' is supported just for browser " + E_BrowserName.CHROME);
 		}
 
 		// checking errorConditions
@@ -77,9 +87,9 @@ public class ConfigValidator extends A_Validator {
 
 		// checking for webTimingsAPI
 		if (toValidate.getWebTimings() != null) {
-			if (E_BrowserName.valueOf(toValidate.getBrowserName()).equals(E_BrowserName.IEXPLORER)) {
+			if (E_BrowserName.valueOf(toValidate.getBrowser().getName()).equals(E_BrowserName.IEXPLORER)) {
 				throw new ValidatorException(
-						"Property 'webTimings' for browserName '" + toValidate.getBrowserName() + "' is not allowed!");
+						"Property 'webTimings' for name '" + toValidate.getBrowser().getName() + "' is not allowed!");
 			}
 		}
 	}

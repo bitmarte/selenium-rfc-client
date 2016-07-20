@@ -4,16 +4,12 @@ import java.io.File;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.config.Config;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.unmarshaller.UnmarshallerFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author bitmarte
  *
  */
 public class SeleniumConfigProvider {
-
-	private static final Logger LOG = LoggerFactory.getLogger(SeleniumConfigProvider.class);
 
 	private static Config configuration = null;
 

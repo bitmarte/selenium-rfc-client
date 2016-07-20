@@ -12,6 +12,7 @@ import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -51,6 +52,10 @@ public class WebDriverFactory {
 			capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
 		}
 
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--disable-http2");
+		capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+
 		switch (e_BrowserMode) {
 		case REMOTE:
 			switch (e_BrowserName) {
@@ -58,18 +63,24 @@ public class WebDriverFactory {
 				LOG.info("using remote chrome browser on server '"
 						+ SeleniumConfigProvider.getConfig().getSeleniumRcURL() + "'");
 				capabilities.setBrowserName("chrome");
+				// settings arguments
+				browserArgumentsConfig(capabilities);
 				return new RemoteWebDriver(new URL(SeleniumConfigProvider.getConfig().getSeleniumRcURL()),
 						capabilities);
 			case IEXPLORER:
 				LOG.info("using remote iexplorer browser on server '"
 						+ SeleniumConfigProvider.getConfig().getSeleniumRcURL() + "'");
 				capabilities.setBrowserName("internet explorer");
+				// settings arguments
+				browserArgumentsConfig(capabilities);
 				return new RemoteWebDriver(new URL(SeleniumConfigProvider.getConfig().getSeleniumRcURL()),
 						capabilities);
 			case FIREFOX:
 				LOG.info("using remote firefox browser on server '"
 						+ SeleniumConfigProvider.getConfig().getSeleniumRcURL() + "'");
 				capabilities.setBrowserName("firefox");
+				// settings arguments
+				browserArgumentsConfig(capabilities);
 				return new RemoteWebDriver(new URL(SeleniumConfigProvider.getConfig().getSeleniumRcURL()),
 						capabilities);
 
@@ -83,17 +94,40 @@ public class WebDriverFactory {
 				LOG.info("using local chrome browser");
 				System.setProperty("webdriver.chrome.driver",
 						SeleniumConfigProvider.getConfig().getLocalWebDriverPath());
+				// settings arguments
+				browserArgumentsConfig(capabilities);
 				return new ChromeDriver(capabilities);
 			case IEXPLORER:
 				throw new WebDriverException("IExplorer browser in remote mode is not supported!");
 			default:
 				// Using Firefox as default local browser
 				LOG.info("using local firefox browser");
+				// settings arguments
+				browserArgumentsConfig(capabilities);
 				return new FirefoxDriver(capabilities);
 			}
 
 		default:
 			throw new WebDriverException("Unknown case on E_BrowserMode enum!");
+		}
+	}
+
+	/**
+	 * Configure arguments for WebDriver
+	 * 
+	 * @param capabilities
+	 */
+	private static void browserArgumentsConfig(DesiredCapabilities capabilities) {
+		if (SeleniumConfigProvider.getConfig().getBrowser().getArguments() != null) {
+			StringTokenizer args = new StringTokenizer(SeleniumConfigProvider.getConfig().getBrowser().getArguments(),
+					",");
+			ChromeOptions options = new ChromeOptions();
+			while (args.hasMoreTokens()) {
+				String arg = args.nextToken();
+				LOG.info("Setting argument for WebDriver: " + arg);
+				options.addArguments(arg);
+			}
+			capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 		}
 	}
 
