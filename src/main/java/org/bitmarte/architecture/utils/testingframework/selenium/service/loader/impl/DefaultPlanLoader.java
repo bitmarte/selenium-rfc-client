@@ -23,6 +23,7 @@ public class DefaultPlanLoader extends A_PlanLoader {
 	public DefaultPlanLoader(String basePath) {
 		super(basePath);
 		// TODO Auto-generated constructor stub
+		LOG.info("using DefaultPlanLoader...");
 	}
 
 	/*

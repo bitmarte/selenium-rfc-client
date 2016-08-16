@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.config.Config;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserMode;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserName;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.E_PlanLoader;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.A_Validator;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.exceptions.ValidatorException;
 
@@ -116,6 +117,11 @@ public class ConfigValidator extends A_Validator {
 				toValidate.getWebTimings().setMaxTimeoutPerMeasureInSec(MAX_TIMEOUT_PER_MEASURE_IN_SEC);
 				LOG.info("setMaxTimeoutPerMeasureInSec = " + MAX_TIMEOUT_PER_MEASURE_IN_SEC);
 			}
+		}
+
+		if (toValidate.getCustomPlanLoader() == null) {
+			toValidate.setCustomPlanLoader(E_PlanLoader.DEFAULT_XML.name());
+			LOG.info("PlanLoader impl: " + E_PlanLoader.DEFAULT_XML.name());
 		}
 	}
 
