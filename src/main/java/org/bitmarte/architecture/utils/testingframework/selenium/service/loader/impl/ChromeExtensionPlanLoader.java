@@ -5,8 +5,6 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.ConfigurationException;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -19,8 +17,8 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.actio
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.InputFillAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.WindowResizeAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.evaluator.E_ContentEvaluator;
-import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.plan.WorkingPlans;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.A_PlanLoader;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.E_PlanLoader;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.ValidatorHandler;
 
 import com.eclipsesource.json.Json;
@@ -49,8 +47,8 @@ public class ChromeExtensionPlanLoader extends A_PlanLoader {
 	 * org.bitmarte.architecture.utils.testingframework.selenium.service.loader.
 	 * I_PlanLoader#loadWorkingPlans()
 	 */
-	public WorkingPlans loadWorkingPlans() throws Exception {
-		WorkingPlans workingPlans = new WorkingPlans();
+	public List<Plan> loadPlans() throws Exception {
+		List<Plan> planList = new ArrayList<Plan>();
 		try {
 			File configFolder = new File(this.basePath + "/plans");
 			File[] plans = configFolder.listFiles(new FileFilter() {
@@ -139,13 +137,13 @@ public class ChromeExtensionPlanLoader extends A_PlanLoader {
 					String planFileName = StringUtils.substring(file.getName(), 0, file.getName().lastIndexOf("."));
 					plan.setPlanName(planFileName);
 
-					workingPlans.pushWorkingPlan(plan);
+					planList.add(plan);
 				}
 			} else {
-				throw new ConfigurationException("No plans exist!");
+				LOG.warn("No plans loaded for PlanLoader '" + E_PlanLoader.CHROME_EXTESION_JSON + "'!");
 			}
 
-			return workingPlans;
+			return planList;
 		} catch (Exception e) {
 			throw e;
 		}

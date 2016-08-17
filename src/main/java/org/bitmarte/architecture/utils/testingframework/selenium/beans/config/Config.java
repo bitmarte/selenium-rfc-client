@@ -33,8 +33,8 @@ public class Config {
 	@XStreamAlias("reportBaseDir")
 	private String reportBaseDir;
 
-	@XStreamAlias("customPlanLoader")
-	private String customPlanLoader;
+	@XStreamAlias("customPlanLoaders")
+	private List<String> customPlanLoaders;
 
 	@XStreamAlias("errorConditions")
 	private List<ErrorCondition> errorConditions;
@@ -89,12 +89,12 @@ public class Config {
 		this.reportBaseDir = reportBaseDir;
 	}
 
-	public String getCustomPlanLoader() {
-		return customPlanLoader;
+	public List<String> getCustomPlanLoaders() {
+		return customPlanLoaders;
 	}
 
-	public void setCustomPlanLoader(String customPlanLoader) {
-		this.customPlanLoader = customPlanLoader;
+	public void setCustomPlanLoaders(List<String> customPlanLoaders) {
+		this.customPlanLoaders = customPlanLoaders;
 	}
 
 	public BrowserConfig getBrowser() {

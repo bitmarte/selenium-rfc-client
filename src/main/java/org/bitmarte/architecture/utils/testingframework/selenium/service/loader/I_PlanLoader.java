@@ -1,6 +1,8 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.service.loader;
 
-import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.plan.WorkingPlans;
+import java.util.List;
+
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
 
 /**
  * @author bitmarte
@@ -8,5 +10,5 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.executo
  */
 public interface I_PlanLoader {
 
-	public WorkingPlans loadWorkingPlans() throws Exception;
+	public List<Plan> loadPlans() throws Exception;
 }

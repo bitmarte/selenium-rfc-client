@@ -1,5 +1,7 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.service.validator.impl;
 
+import java.util.ArrayList;
+
 import org.apache.commons.lang3.StringUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.config.Config;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserMode;
@@ -93,6 +95,25 @@ public class ConfigValidator extends A_Validator {
 						"Property 'webTimings' for name '" + toValidate.getBrowser().getName() + "' is not allowed!");
 			}
 		}
+
+		// checking for customPlanLoader
+		if (toValidate.getCustomPlanLoaders() != null && !toValidate.getCustomPlanLoaders().isEmpty()) {
+			for (String customPlanLoader : toValidate.getCustomPlanLoaders()) {
+				try {
+					switch (E_PlanLoader.valueOf(customPlanLoader)) {
+					case DEFAULT_XML:
+						throw new ValidatorException(
+								"Property 'customPlanLoader' for name '" + customPlanLoader + "' is not allowed!");
+					default:
+						LOG.debug("allowed customPlanLoader: " + customPlanLoader);
+						break;
+					}
+				} catch (Exception e) {
+					throw new ValidatorException("Property 'customPlanLoader' for name '" + customPlanLoader
+							+ "' is unknown, please check E_PlanLoader!");
+				}
+			}
+		}
 	}
 
 	public void setDefaultValue() throws Exception {
@@ -119,9 +140,11 @@ public class ConfigValidator extends A_Validator {
 			}
 		}
 
-		if (toValidate.getCustomPlanLoader() == null) {
-			toValidate.setCustomPlanLoader(E_PlanLoader.DEFAULT_XML.name());
-			LOG.info("PlanLoader impl: " + E_PlanLoader.DEFAULT_XML.name());
+		if (toValidate.getCustomPlanLoaders() == null || toValidate.getCustomPlanLoaders().isEmpty()) {
+			toValidate.setCustomPlanLoaders(new ArrayList<String>());
+		} else {
+			LOG.debug("setting default PlanLoader " + E_PlanLoader.DEFAULT_XML.name());
+			toValidate.getCustomPlanLoaders().add(0, E_PlanLoader.DEFAULT_XML.name());
 		}
 	}
 
