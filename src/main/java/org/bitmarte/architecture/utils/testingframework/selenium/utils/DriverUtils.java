@@ -50,7 +50,8 @@ public class DriverUtils {
 
 		boolean hasError = false;
 		try {
-			String archivePath = SeleniumConfigProvider.getConfig().getReportBaseDir() + this.planName + "/screenshots/";
+			String archivePath = SeleniumConfigProvider.getConfig().getReportBaseDir() + this.planName
+					+ "/screenshots/";
 
 			LOG.debug("Take screenshot '" + archivePath + screenshotFileName + ".png'");
 

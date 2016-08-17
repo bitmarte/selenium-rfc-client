@@ -57,8 +57,6 @@ public class PlanLoaderRunnable implements Runnable {
 		DriverUtils driverUtils = null;
 		WebTimingUtils timingUtils = null;
 
-		plan.getPlanReport().setTestResult(E_TestResult.ERROR.name());
-
 		try {
 			driverUtils = new DriverUtils(driver, plan.getPlanName());
 			timingUtils = new WebTimingUtils(driver);
@@ -133,7 +131,6 @@ public class PlanLoaderRunnable implements Runnable {
 						}
 					});
 
-					plan.getPlanReport().setTestResult(E_TestResult.SUCCESS.name());
 					currentRun.getRunReport().setTestResult(E_TestResult.SUCCESS.name());
 					LOG.info("Success on run '" + currentRun.getRunName() + "'");
 				} catch (TimeoutException te1) {
@@ -177,7 +174,6 @@ public class PlanLoaderRunnable implements Runnable {
 							break;
 						} catch (Exception e) {
 							currentRun.getRunReport().setTestResult(E_TestResult.TIMEOUT.name());
-							plan.getPlanReport().setTestResult(E_TestResult.ERROR.name());
 							LOG.error("Timeout on run '" + currentRun.getRunName() + "'");
 						}
 					}
@@ -204,16 +200,6 @@ public class PlanLoaderRunnable implements Runnable {
 					}
 				}
 			}
-
-			switch (E_TestResult.valueOf(plan.getPlanReport().getTestResult())) {
-			case SUCCESS:
-				LOG.info("Plan '" + plan.getPlanName() + "' completed!");
-				break;
-			default:
-				LOG.error("Plan '" + plan.getPlanName() + "' terminated with some error!");
-				break;
-			}
-
 		} catch (Exception e) {
 			LOG.error("Error run()!", e);
 
@@ -223,6 +209,14 @@ public class PlanLoaderRunnable implements Runnable {
 				LOG.error("Error run()!", e1);
 			}
 		} finally {
+			switch (E_TestResult.valueOf(plan.getPlanResult())) {
+			case SUCCESS:
+				LOG.info("Plan '" + plan.getPlanName() + "' completed!");
+				break;
+			default:
+				LOG.error("Plan '" + plan.getPlanName() + "' terminated with some error!");
+				break;
+			}
 			// generating reports...
 			try {
 				List<Plan> plans = new ArrayList<Plan>();

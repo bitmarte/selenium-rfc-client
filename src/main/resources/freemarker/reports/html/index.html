@@ -13,12 +13,12 @@
 			<#list plans as plan>
 				<tr>
 					<td>${plan.planName}</td>
-					<#if plan.planReport.testResult == "SUCCESS">
-						<td style="background-color:green">${plan.planReport.testResult}</td>
-					<#elseif plan.planReport.testResult == "ERROR">
-						<td style="background-color:red">${plan.planReport.testResult}</td>
-					<#elseif plan.planReport.testResult == "TIMEOUT">
-						<td style="background-color:yellow">${plan.planReport.testResult}</td>
+					<#if plan.planResult == "SUCCESS">
+						<td style="background-color:green">${plan.planResult}</td>
+					<#elseif plan.planResult == "ERROR">
+						<td style="background-color:red">${plan.planResult}</td>
+					<#elseif plan.planResult == "TIMEOUT">
+						<td style="background-color:yellow">${plan.planResult}</td>
 					</#if>
 					<td><a href="${plan.planName}/plan-report.html" target="_blank">Open report...</a></td>
 				</tr>
