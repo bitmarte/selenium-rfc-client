@@ -79,8 +79,8 @@ public class ChromeExtensionPlanLoader extends A_PlanLoader {
 					wra.setHeightPx(900);
 					browserActions.add(wra);
 
+					int i = 1;
 					for (JsonValue bAction : bActions) {
-						int i = 1;
 						switch (bAction.asObject().getString("browserAction", NO_VALUE_JSON)) {
 						case "GO_TO_URL":
 							GoToUrlAction goToUrlAction = new GoToUrlAction();
