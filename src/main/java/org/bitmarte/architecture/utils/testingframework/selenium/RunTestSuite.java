@@ -9,7 +9,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.configu
 import org.bitmarte.architecture.utils.testingframework.selenium.service.driver.WebDriverFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.plan.PlanLoaderRunnable;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.plan.WorkingPlans;
-import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.PlanLoaderFactory;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.WorkingPlansProvider;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.report.E_ReportType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.report.ReportProducerFactory;
 import org.slf4j.Logger;
@@ -36,7 +36,7 @@ public class RunTestSuite {
 				cleanReportFolder();
 			}
 
-			workingPlans = PlanLoaderFactory.getInstance(args[0]).loadWorkingPlans();
+			workingPlans = WorkingPlansProvider.getWorkingPlans(args[0]);
 
 			if (SeleniumConfigProvider.getConfig().getMobProxy() != null) {
 				proxy = new BrowserMobProxyServer();

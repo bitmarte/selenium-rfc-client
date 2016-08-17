@@ -55,13 +55,6 @@ public class Plan {
 		this.runs = runs;
 	}
 
-	public PlanReport getPlanReport() {
-		if (planReport == null) {
-			this.planReport = new PlanReport();
-		}
-		return planReport;
-	}
-
 	public int getTotalRun() {
 		return this.runs.size();
 	}
@@ -75,6 +68,19 @@ public class Plan {
 			}
 		}
 		return counter;
+	}
+
+	public String getPlanResult() {
+		String result = E_TestResult.SUCCESS.name();
+		for (Run run : this.runs) {
+			if (run.getRunReport().getTestResult().equals(E_TestResult.TIMEOUT.name())) {
+				result = E_TestResult.TIMEOUT.name();
+			}
+			if (run.getRunReport().getTestResult().equals(E_TestResult.ERROR.name())) {
+				result = E_TestResult.ERROR.name();
+			}
+		}
+		return result;
 	}
 
 	public int getErrorRun() {

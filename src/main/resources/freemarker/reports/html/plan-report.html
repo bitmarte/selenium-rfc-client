@@ -16,12 +16,12 @@
 		<h2>
 			${plan.planName} test report:
 						
-			<#if plan.planReport.testResult == "SUCCESS">
-				<span style="color:green;">${plan.planReport.testResult}</span>
-			<#elseif plan.planReport.testResult == "ERROR">
-				<span style="color:red;">${plan.planReport.testResult}</span>
-			<#elseif plan.planReport.testResult == "TIMEOUT">
-				<span style="color:yellow;">${plan.planReport.testResult}</span>
+			<#if plan.planResult == "SUCCESS">
+				<span style="color:green;">${plan.planResult}</span>
+			<#elseif plan.planResult == "ERROR">
+				<span style="color:red;">${plan.planResult}</span>
+			<#elseif plan.planResult == "TIMEOUT">
+				<span style="color:yellow;">${plan.planResult}</span>
 			</#if>
 		</h2>
 		

@@ -18,9 +18,8 @@ public class WorkingPlans {
 	private List<Plan> workingPlans = new ArrayList<Plan>();
 	private int workedPlans = 0;
 
-	public void pushWorkingPlan(Plan plan) {
-		LOG.info("adding plan '" + plan.getPlanName() + "' to workingPlans...");
-		this.workingPlans.add(plan);
+	public void addAllPlans(List<Plan> planList) {
+		this.workingPlans.addAll(planList);
 	}
 
 	public List<Plan> getPlans() {

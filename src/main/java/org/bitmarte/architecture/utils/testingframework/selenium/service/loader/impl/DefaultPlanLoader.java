@@ -2,14 +2,14 @@ package org.bitmarte.architecture.utils.testingframework.selenium.service.loader
 
 import java.io.File;
 import java.io.FileFilter;
-
-import javax.naming.ConfigurationException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
-import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.plan.WorkingPlans;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.A_PlanLoader;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.E_PlanLoader;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.unmarshaller.UnmarshallerFactory;
 
 import com.rits.cloning.Cloner;
@@ -23,6 +23,7 @@ public class DefaultPlanLoader extends A_PlanLoader {
 	public DefaultPlanLoader(String basePath) {
 		super(basePath);
 		// TODO Auto-generated constructor stub
+		LOG.info("using DefaultPlanLoader...");
 	}
 
 	/*
@@ -32,8 +33,8 @@ public class DefaultPlanLoader extends A_PlanLoader {
 	 * org.bitmarte.architecture.utils.testingframework.selenium.service.loader.
 	 * I_PlanLoader#loadWorkingPlans()
 	 */
-	public WorkingPlans loadWorkingPlans() throws Exception {
-		WorkingPlans workingPlans = new WorkingPlans();
+	public List<Plan> loadPlans() throws Exception {
+		List<Plan> planList = new ArrayList<Plan>();
 		try {
 			File configFolder = new File(this.basePath + "/plans");
 			File[] plans = configFolder.listFiles(new FileFilter() {
@@ -57,17 +58,17 @@ public class DefaultPlanLoader extends A_PlanLoader {
 						for (int i = 1; i <= plan.getExecutions(); i++) {
 							Plan pl = cloner.deepClone(plan);
 							pl.setPlanName(pl.getPlanName() + "_" + i);
-							workingPlans.pushWorkingPlan(pl);
+							planList.add(pl);
 						}
 					} else {
-						workingPlans.pushWorkingPlan(plan);
+						planList.add(plan);
 					}
 				}
 			} else {
-				throw new ConfigurationException("No plans exist!");
+				LOG.warn("No plans loaded for PlanLoader '" + E_PlanLoader.DEFAULT_XML + "'!");
 			}
 
-			return workingPlans;
+			return planList;
 		} catch (Exception e) {
 			throw e;
 		}
