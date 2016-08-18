@@ -13,16 +13,20 @@ import org.openqa.selenium.support.ui.Select;
  */
 public class ComboFillActionExecutor extends A_BrowserActionExecutor {
 
-	public ComboFillActionExecutor(WebDriver driver, A_BrowserAction browserAction) {
+	public ComboFillActionExecutor(WebDriver driver,
+			A_BrowserAction browserAction) {
 		super(driver, browserAction);
 	}
 
-	public void execute() throws Exception {
+	public void launcher() throws Exception {
 		try {
-			super.waitBefore();
-			Select select = new Select(
-					ElementExtractorFactory.getInstance(((ComboFillAction) this.action).getElementExtractor())
-							.getElements(this.driver, ((ComboFillAction) this.action).getElement()).get(0));
+			Select select = new Select(ElementExtractorFactory
+					.getInstance(
+							((ComboFillAction) this.action)
+									.getElementExtractor())
+					.getElements(this.driver,
+							((ComboFillAction) this.action).getElement())
+					.get(0));
 			select.selectByValue(((ComboFillAction) this.action).getValue());
 		} catch (Exception e) {
 			throw e;

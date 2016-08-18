@@ -18,12 +18,6 @@ public class BackActionExecutor extends A_BrowserActionExecutor {
 		try {
 			this.driver.navigate().back();
 		} catch (Exception e) {
-			/*
-			 * TODO: quando rilevi un errore nella execute() di ogni Executor
-			 * aspetta ripeti la execute() aumentando il
-			 * WAIT_BEFORE_ACTION_DEFAULT a un valore più alto da schiantare per
-			 * ora
-			 */
 			throw e;
 		}
 	}

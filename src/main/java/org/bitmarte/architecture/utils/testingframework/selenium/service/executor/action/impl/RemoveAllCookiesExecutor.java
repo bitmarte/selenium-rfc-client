@@ -10,13 +10,13 @@ import org.openqa.selenium.WebDriver;
  */
 public class RemoveAllCookiesExecutor extends A_BrowserActionExecutor {
 
-	public RemoveAllCookiesExecutor(WebDriver driver, A_BrowserAction browserAction) {
+	public RemoveAllCookiesExecutor(WebDriver driver,
+			A_BrowserAction browserAction) {
 		super(driver, browserAction);
 	}
 
-	public void execute() throws Exception {
+	public void launcher() throws Exception {
 		try {
-			super.waitBefore();
 			this.driver.manage().deleteAllCookies();
 		} catch (Exception e) {
 			throw e;

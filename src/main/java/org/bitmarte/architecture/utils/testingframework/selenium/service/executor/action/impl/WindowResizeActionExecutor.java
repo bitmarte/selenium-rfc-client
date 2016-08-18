@@ -13,18 +13,19 @@ import org.openqa.selenium.WebDriver;
  */
 public class WindowResizeActionExecutor extends A_BrowserActionExecutor {
 
-	public WindowResizeActionExecutor(WebDriver driver, A_BrowserAction browserAction) {
+	public WindowResizeActionExecutor(WebDriver driver,
+			A_BrowserAction browserAction) {
 		super(driver, browserAction);
 	}
 
-	public void execute() throws Exception {
+	public void launcher() throws Exception {
 		try {
-			super.waitBefore();
 			if (((WindowResizeAction) this.action).isFullScreen()) {
 				this.driver.manage().window().maximize();
 			} else {
 				this.driver.manage().window().setPosition(new Point(0, 0));
-				Dimension d = new Dimension(((WindowResizeAction) this.action).getWidthPx(),
+				Dimension d = new Dimension(
+						((WindowResizeAction) this.action).getWidthPx(),
 						((WindowResizeAction) this.action).getHeightPx());
 				this.driver.manage().window().setSize(d);
 			}

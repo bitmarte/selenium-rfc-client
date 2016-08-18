@@ -15,18 +15,20 @@ import org.openqa.selenium.WebElement;
  */
 public class RadioFillActionExecutor extends A_BrowserActionExecutor {
 
-	public RadioFillActionExecutor(WebDriver driver, A_BrowserAction browserAction) {
+	public RadioFillActionExecutor(WebDriver driver,
+			A_BrowserAction browserAction) {
 		super(driver, browserAction);
 	}
 
-	public void execute() throws Exception {
+	public void launcher() throws Exception {
 		try {
-			super.waitBefore();
-			List<WebElement> radios = ElementExtractorFactory
-					.getInstance(((RadioFillAction) this.action).getElementExtractor())
-					.getElements(this.driver, ((RadioFillAction) this.action).getElement());
+			List<WebElement> radios = ElementExtractorFactory.getInstance(
+					((RadioFillAction) this.action).getElementExtractor())
+					.getElements(this.driver,
+							((RadioFillAction) this.action).getElement());
 			for (WebElement radio : radios) {
-				if (radio.getText().equals(((RadioFillAction) this.action).getValue())) {
+				if (radio.getText().equals(
+						((RadioFillAction) this.action).getValue())) {
 					radio.click();
 				}
 			}
