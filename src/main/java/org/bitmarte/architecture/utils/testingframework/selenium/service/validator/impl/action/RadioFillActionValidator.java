@@ -12,7 +12,6 @@ public class RadioFillActionValidator extends A_Validator {
 
 	public RadioFillActionValidator(Object inValidation) throws Exception {
 		super(inValidation);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void validate() throws Exception {

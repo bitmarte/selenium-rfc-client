@@ -12,7 +12,6 @@ public class GoToUrlActionValidator extends A_Validator {
 
 	public GoToUrlActionValidator(Object inValidation) throws Exception {
 		super(inValidation);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void validate() throws Exception {

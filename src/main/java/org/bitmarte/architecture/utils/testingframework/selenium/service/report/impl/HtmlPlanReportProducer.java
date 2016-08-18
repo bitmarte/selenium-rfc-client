@@ -17,7 +17,6 @@ public class HtmlPlanReportProducer extends A_ReportProducer {
 
 	public HtmlPlanReportProducer(List<Plan> plans) throws Exception {
 		super(plans, E_ReportType.HTML_PLAN);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void produce() throws Exception {

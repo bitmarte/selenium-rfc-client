@@ -14,6 +14,10 @@ public abstract class A_ElementExtractor implements I_ElementExtractor {
 	private static final long WAIT_FOR_RETRIEVING_ELEMENT_DEFAULT = 5000;
 
 	protected long getWaitingTime() {
+		/*
+		 * TODO: rendere configurabile WAIT_FOR_RETRIEVING_ELEMENT_DEFAULT da
+		 * config.xml con un default impostato dal validator del config
+		 */
 		return WAIT_FOR_RETRIEVING_ELEMENT_DEFAULT;
 	}
 

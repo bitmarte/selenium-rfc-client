@@ -12,7 +12,6 @@ public class IFrameSwitchActionValidator extends A_Validator {
 
 	public IFrameSwitchActionValidator(Object inValidation) throws Exception {
 		super(inValidation);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void validate() throws Exception {

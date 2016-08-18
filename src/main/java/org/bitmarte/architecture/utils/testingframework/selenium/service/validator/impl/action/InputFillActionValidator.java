@@ -12,7 +12,6 @@ public class InputFillActionValidator extends A_Validator {
 
 	public InputFillActionValidator(Object inValidation) throws Exception {
 		super(inValidation);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void validate() throws Exception {

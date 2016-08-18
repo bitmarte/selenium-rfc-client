@@ -12,7 +12,6 @@ public class RemoveCookiesActionValidator extends A_Validator {
 
 	public RemoveCookiesActionValidator(Object inValidation) throws Exception {
 		super(inValidation);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void validate() throws Exception {

@@ -13,7 +13,6 @@ public class RemoveCookiesActionExecutor extends A_BrowserActionExecutor {
 
 	public RemoveCookiesActionExecutor(WebDriver driver, A_BrowserAction browserAction) {
 		super(driver, browserAction);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void execute() throws Exception {

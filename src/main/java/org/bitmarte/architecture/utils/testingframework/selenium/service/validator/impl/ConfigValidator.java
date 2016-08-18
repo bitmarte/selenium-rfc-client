@@ -22,7 +22,6 @@ public class ConfigValidator extends A_Validator {
 
 	public ConfigValidator(Object inValidation) throws Exception {
 		super(inValidation);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void validate() throws Exception {

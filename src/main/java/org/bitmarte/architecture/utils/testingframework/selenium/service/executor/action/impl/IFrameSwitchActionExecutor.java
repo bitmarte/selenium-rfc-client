@@ -14,7 +14,6 @@ public class IFrameSwitchActionExecutor extends A_BrowserActionExecutor {
 
 	public IFrameSwitchActionExecutor(WebDriver driver, A_BrowserAction browserAction) {
 		super(driver, browserAction);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void execute() throws Exception {

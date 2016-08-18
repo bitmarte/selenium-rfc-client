@@ -12,7 +12,6 @@ public class BackActionExecutor extends A_BrowserActionExecutor {
 
 	public BackActionExecutor(WebDriver driver, A_BrowserAction browserAction) {
 		super(driver, browserAction);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void execute() throws Exception {
@@ -20,6 +19,12 @@ public class BackActionExecutor extends A_BrowserActionExecutor {
 			super.waitBefore();
 			this.driver.navigate().back();
 		} catch (Exception e) {
+			/*
+			 * TODO: quando rilevi un errore nella execute() di ogni Executor
+			 * aspetta ripeti la execute() aumentando il
+			 * WAIT_BEFORE_ACTION_DEFAULT a un valore più alto da schiantare per
+			 * ora
+			 */
 			throw e;
 		}
 	}
