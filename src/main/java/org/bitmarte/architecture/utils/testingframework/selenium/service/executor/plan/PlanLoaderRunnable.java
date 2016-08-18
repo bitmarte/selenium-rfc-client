@@ -19,6 +19,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.report.
 import org.bitmarte.architecture.utils.testingframework.selenium.service.report.ReportProducerFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.utils.DriverUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.utils.WebTimingUtils;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -92,7 +93,11 @@ public class PlanLoaderRunnable implements Runnable {
 				// manage browser actions
 				if (currentRun.getBrowserActions() != null) {
 					for (A_BrowserAction browserAction : currentRun.getBrowserActions()) {
-						BrowserActionExecutorFactory.getInstance(driver, browserAction).execute();
+						try {
+							BrowserActionExecutorFactory.getInstance(driver, browserAction).execute();
+						} catch (ElementNotVisibleException e) {
+							LOG.warn("Element not visibile, skip it...");
+						}
 					}
 				}
 
