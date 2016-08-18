@@ -73,10 +73,15 @@ public class Plan {
 	public String getPlanResult() {
 		String result = E_TestResult.SUCCESS.name();
 		for (Run run : this.runs) {
-			if (run.getRunReport().getTestResult().equals(E_TestResult.TIMEOUT.name())) {
-				result = E_TestResult.TIMEOUT.name();
-			}
-			if (run.getRunReport().getTestResult().equals(E_TestResult.ERROR.name())) {
+			if (run.getRunReport().getTestResult() != null) {
+				if (run.getRunReport().getTestResult().equals(E_TestResult.TIMEOUT.name())) {
+					result = E_TestResult.TIMEOUT.name();
+				}
+				if (run.getRunReport().getTestResult().equals(E_TestResult.ERROR.name())) {
+					result = E_TestResult.ERROR.name();
+				}
+			} else {
+				// There was an error because a run does not have TestResult
 				result = E_TestResult.ERROR.name();
 			}
 		}
