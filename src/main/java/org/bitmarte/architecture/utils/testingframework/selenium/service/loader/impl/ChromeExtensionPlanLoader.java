@@ -32,7 +32,9 @@ import com.rits.cloning.Cloner;
  */
 public class ChromeExtensionPlanLoader extends A_PlanLoader {
 
-	private static final String NO_VALUE_JSON = "NO_VALUE";
+	public enum BrowserActions {
+		GO_TO_URL, CLICK, SET, WINDOW_RESIZE, SUCCESS_CONDITION_EQUALS, SUCCESS_CONDITION_CONTAINS
+	};
 
 	public ChromeExtensionPlanLoader(String basePath) {
 		super(basePath);
@@ -73,37 +75,41 @@ public class ChromeExtensionPlanLoader extends A_PlanLoader {
 					Run run = null;
 					SuccessCondition successCondition = null;
 
-					// force window size
-					WindowResizeAction wra = new WindowResizeAction();
-					wra.setWidthPx(1440);
-					wra.setHeightPx(900);
-					browserActions.add(wra);
-
 					int i = 1;
 					for (JsonValue bAction : bActions) {
-						switch (bAction.asObject().getString("browserAction", NO_VALUE_JSON)) {
-						case "GO_TO_URL":
+						switch (BrowserActions
+								.valueOf((String) this.getJsonValue(bAction, "browserAction", new String()))) {
+						case GO_TO_URL:
 							GoToUrlAction goToUrlAction = new GoToUrlAction();
-							goToUrlAction.setUrl(bAction.asObject().getString("content", NO_VALUE_JSON));
+							goToUrlAction.setUrl((String) this.getJsonValue(bAction, "url", new String()));
 							browserActions.add(goToUrlAction);
 							break;
-						case "CLICK":
+						case CLICK:
 							ClickAction clickAction = new ClickAction();
-							clickAction.setElement(bAction.asObject().getString("xpath", NO_VALUE_JSON));
+							clickAction.setElement((String) this.getJsonValue(bAction, "xpath", new String()));
 							browserActions.add(clickAction);
 							break;
-						case "SET":
+						case SET:
 							InputFillAction inputFillAction = new InputFillAction();
-							inputFillAction.setElement(bAction.asObject().getString("xpath", NO_VALUE_JSON));
-							inputFillAction.setValue(bAction.asObject().getString("content", NO_VALUE_JSON));
+							inputFillAction.setElement((String) this.getJsonValue(bAction, "xpath", new String()));
+							inputFillAction.setValue((String) this.getJsonValue(bAction, "content", new String()));
 							browserActions.add(inputFillAction);
 							break;
-						case "SUCCESS_CONDITION_EQUALS":
+						case WINDOW_RESIZE:
+							WindowResizeAction windowResizeAction = new WindowResizeAction();
+							windowResizeAction
+									.setWidthPx((Integer) this.getJsonValue(bAction, "width", new Integer(-1)));
+							windowResizeAction
+									.setHeightPx((Integer) this.getJsonValue(bAction, "height", new Integer(-1)));
+							browserActions.add(windowResizeAction);
+							break;
+						case SUCCESS_CONDITION_EQUALS:
 							run = new Run();
 							run.setRunName("run_" + i);
 							successCondition = new SuccessCondition();
-							successCondition.setElement(bAction.asObject().getString("xpath", NO_VALUE_JSON));
-							successCondition.setElementContent(bAction.asObject().getString("content", NO_VALUE_JSON));
+							successCondition.setElement((String) this.getJsonValue(bAction, "xpath", new String()));
+							successCondition
+									.setElementContent((String) this.getJsonValue(bAction, "content", new String()));
 							successCondition.setContentEvaluator(E_ContentEvaluator.EQUALS.name());
 							run.setSuccessCondition(successCondition);
 							clone = new Cloner();
@@ -112,13 +118,14 @@ public class ChromeExtensionPlanLoader extends A_PlanLoader {
 							browserActions = new ArrayList<A_BrowserAction>();
 							i++;
 							break;
-						case "SUCCESS_CONDITION_CONTAINS":
+						case SUCCESS_CONDITION_CONTAINS:
 							run = new Run();
 							run.setRunName(StringUtils.substring(file.getName(), 0, file.getName().lastIndexOf("."))
 									+ "_" + i);
 							successCondition = new SuccessCondition();
-							successCondition.setElement(bAction.asObject().getString("xpath", NO_VALUE_JSON));
-							successCondition.setElementContent(bAction.asObject().getString("content", NO_VALUE_JSON));
+							successCondition.setElement((String) this.getJsonValue(bAction, "xpath", new String()));
+							successCondition
+									.setElementContent((String) this.getJsonValue(bAction, "content", new String()));
 							successCondition.setContentEvaluator(E_ContentEvaluator.CONTAINS.name());
 							run.setSuccessCondition(successCondition);
 							clone = new Cloner();
@@ -127,12 +134,9 @@ public class ChromeExtensionPlanLoader extends A_PlanLoader {
 							browserActions = new ArrayList<A_BrowserAction>();
 							i++;
 							break;
-						default:
-							throw new Exception("Unknown browserAction!");
 						}
+						plan.setRuns(runs);
 					}
-					plan.setRuns(runs);
-
 					ValidatorHandler.execute(plan);
 					String planFileName = StringUtils.substring(file.getName(), 0, file.getName().lastIndexOf("."));
 					plan.setPlanName(planFileName);
@@ -147,6 +151,24 @@ public class ChromeExtensionPlanLoader extends A_PlanLoader {
 		} catch (Exception e) {
 			throw e;
 		}
+	}
+
+	private Object getJsonValue(JsonValue json, String attributeName, Object type) throws Exception {
+		if (type instanceof String) {
+			type = json.asObject().getString(attributeName, null);
+			if (type == null) {
+				throw new Exception("No value for attribute '" + attributeName + "'");
+			}
+		} else if (type instanceof Integer) {
+			type = json.asObject().getInt(attributeName, -1);
+			if ((Integer) type == -1) {
+				throw new Exception("No value for attribute '" + attributeName + "'");
+			}
+		} else {
+			throw new Exception("Unsupported type '" + type.getClass().getName() + "'");
+		}
+
+		return type;
 	}
 
 }

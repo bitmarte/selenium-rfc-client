@@ -6,6 +6,8 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.extract
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * @author bitmarte
@@ -22,6 +24,19 @@ public class ByClassNameElementExtractor extends A_ElementExtractor {
 	 * java.lang.String)
 	 */
 	public List<WebElement> getElements(WebDriver driver, String str) {
+		WebDriverWait wait = new WebDriverWait(driver, super.getWaitingTime());
+		LOG.debug("Serching element '" + str + "' unit " + super.getWaitingTime() + " ms...");
+		final String el = str;
+		wait.until(new ExpectedCondition<Boolean>() {
+			public Boolean apply(WebDriver d) {
+				List<WebElement> elements = d.findElements(By.className(el));
+				if (!elements.isEmpty()) {
+					return true;
+				}
+				return false;
+			}
+		});
+
 		return driver.findElements(By.className(str));
 	}
 
