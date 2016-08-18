@@ -14,9 +14,8 @@ public class BackActionExecutor extends A_BrowserActionExecutor {
 		super(driver, browserAction);
 	}
 
-	public void execute() throws Exception {
+	public void launcher() throws Exception {
 		try {
-			super.waitBefore();
 			this.driver.navigate().back();
 		} catch (Exception e) {
 			/*

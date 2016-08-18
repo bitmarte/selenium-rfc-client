@@ -25,15 +25,36 @@ public abstract class A_BrowserActionExecutor implements I_BrowserActionExecutor
 		this.action = (A_BrowserAction) browserAction;
 	}
 
-	protected void waitBefore() throws Exception {
-		if (this.action.getWaitBeforeActionInMillis() > WAIT_BEFORE_ACTION_DEFAULT) {
-			Thread.sleep(this.action.getWaitBeforeActionInMillis());
+	protected void waitBefore(long wait) throws Exception {
+		if (wait < 0) {
+			if (this.action.getWaitBeforeActionInMillis() > WAIT_BEFORE_ACTION_DEFAULT) {
+				Thread.sleep(this.action.getWaitBeforeActionInMillis());
+			} else {
+				/*
+				 * TODO: rendere configurabile WAIT_BEFORE_ACTION_DEFAULT da
+				 * config.xml con un default impostato dal validator del config
+				 */
+				Thread.sleep(WAIT_BEFORE_ACTION_DEFAULT);
+			}
 		} else {
-			/*
-			 * TODO: rendere configurabile WAIT_BEFORE_ACTION_DEFAULT da
-			 * config.xml con un default impostato dal validator del config
-			 */
-			Thread.sleep(WAIT_BEFORE_ACTION_DEFAULT);
+			Thread.sleep(wait);
+		}
+	}
+
+	public void execute() throws Exception {
+		try {
+			waitBefore(-1);
+			launcher();
+		} catch (Exception e) {
+			try {
+				/*
+				 * TODO: rendere configurabile anche questo valore
+				 */
+				waitBefore(300);
+				launcher();
+			} catch (Exception e2) {
+				throw e2;
+			}
 		}
 	}
 
