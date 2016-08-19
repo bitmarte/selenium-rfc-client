@@ -34,6 +34,7 @@
 	<li>'seleniumRcURL' is an **optional** node where put the SeleniumRC URL connection. **Remove this node for LOCAL approach**</li>
 	<li>'maxTimeOutPerSuccessConditionInSec' is an **optional** node where put your waiting timeout in second that it used for checking your success condition. The default value is 10 sec. You can override it for each run into your successCondition</li>
 	<li>'maxTimeOutPerErrorConditionInSec' is an "optional" node where put your waiting timeout in second that it used for checking yours error condition. The default value is 2 sec</li>
+	<li>'browserActionExecutor' is an **optional** node where put the default browser action executor configurations, such as 'waitBeforeFirstActionInMs' and 'waitBeforeRetryActionInMs'. **Take a look below for the documentation**</li>
 	<li>'customPlanLoaders' is an **optional** node where put your customPlanLoaders implementations. **Take a look below for supported customPlanLoaders**</li>
 	<li>'reportBaseDir' is a **require** node where put your preferred location where Selenium save reports</li>
 	<li>'cleanReportBaseDirOnStart' is an **optional** node used to clean the location where Selenium save reports before run. The default value is false</li>
@@ -41,7 +42,8 @@
 	<li>'closeBrowserOnFinish' is an **optional** node used to close browser at the end of your test, boolean value. The default value is false</li>
 </ul>
 
-You can see the allowed values for <browserMode> attribute:
+### <browser>
+#### <browserMode>
 
 | Attribute value        		| Description										|
 | ----------------------------- | ------------------------------------------------- |
@@ -51,7 +53,7 @@ You can see the allowed values for <browserMode> attribute:
 (a) You need to install Selenium Standalone Server (http://docs.seleniumhq.org/download/), configure it with the right jar agruments
 and put the right URL for property <seleniumRcURL> in your config.xml file for running your remote browser instance
 
-You can see the allowed values for <browserName> attribute:
+#### <browserName>
 
 | Attribute value        		| Description															|
 | ----------------------------- | --------------------------------------------------------------------- |
@@ -62,7 +64,8 @@ You can see the allowed values for <browserName> attribute:
 (b) You need to download Internet Explorer Driver Server (http://www.seleniumhq.org/download/) and passing the '-Dwebdriver.ie.driver' jar argument point to iexplorer driver on your remote machine.
 Pay attention that all IExplorer security zone must be the same and the zoom must be setup to 100%
 
-You can see the allowed values for <customPlanLoaders> attribute:
+### <customPlanLoaders>
+Add a custom plan loader implementation list to extends it and to allow a different plan input or generator:
 
 | Attribute value        		| Description																												|
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
@@ -73,3 +76,21 @@ Eg.
 	<customPlanLoaders>
 		<string>CHROME_EXTESION_JSON</string>
 	</customPlanLoaders>
+	
+### <browserActionExecutor>
+In order to customize your test run configuration you can override two important waiting time.
+With these two parameters you can drive browser action executors in order to introduce a dalay/sleep time before the first tentative and the retry one.
+So, when the executor try to make the action (using 'waitBeforeFirstActionInMs') and it fails, it retries the last one (using 'waitBeforeRetryActionInMs'):
+
+| Attribute value        		| Description																| Default	|
+| ----------------------------- | ------------------------------------------------------------------------- |-----------|
+| waitBeforeFirstActionInMs		| Waiting time before it hits the first tentative on browserActionExecutor	| 100		|
+| waitBeforeRetryActionInMs		| Waiting time before it hits the retry tentative on browserActionExecutor	| 300		|
+
+
+Eg.
+
+	<browserActionExecutor>
+		<waitBeforeFirstActionInMs>500</waitBeforeFirstActionInMs>
+		<waitBeforeRetryActionInMs>800</waitBeforeRetryActionInMs>
+	</browserActionExecutor>
