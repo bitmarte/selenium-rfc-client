@@ -43,8 +43,8 @@
 	<li>'closeBrowserOnFinish' is an **optional** node used to close browser at the end of your test, boolean value. The default value is false</li>
 </ul>
 
-### <browser>
-#### <browserMode>
+### browser
+#### browserMode
 
 | Attribute value        		| Description										|
 | ----------------------------- | ------------------------------------------------- |
@@ -54,7 +54,7 @@
 (a) You need to install Selenium Standalone Server (http://docs.seleniumhq.org/download/), configure it with the right jar agruments
 and put the right URL for property <seleniumRcURL> in your config.xml file for running your remote browser instance
 
-#### <browserName>
+#### browserName
 
 | Attribute value        		| Description															|
 | ----------------------------- | --------------------------------------------------------------------- |
@@ -65,7 +65,7 @@ and put the right URL for property <seleniumRcURL> in your config.xml file for r
 (b) You need to download Internet Explorer Driver Server (http://www.seleniumhq.org/download/) and passing the '-Dwebdriver.ie.driver' jar argument point to iexplorer driver on your remote machine.
 Pay attention that all IExplorer security zone must be the same and the zoom must be setup to 100%
 
-### <customPlanLoaders>
+### customPlanLoaders
 Add a custom plan loader implementation list to extends it and to allow a different plan input or generator:
 
 | Attribute value        		| Description																												|
@@ -78,7 +78,7 @@ Eg.
 		<string>CHROME_EXTESION_JSON</string>
 	</customPlanLoaders>
 	
-### <browserActionExecutor>
+### browserActionExecutor
 In order to customize your test run configuration you can override two important waiting time.
 With these two parameters you can drive browser action executors in order to introduce a dalay/sleep time before the first tentative and the retry one.
 So, when the executor try to make the action (using 'waitBeforeFirstActionInMs') and it fails, it retries the last one (using 'waitBeforeRetryActionInMs'):
