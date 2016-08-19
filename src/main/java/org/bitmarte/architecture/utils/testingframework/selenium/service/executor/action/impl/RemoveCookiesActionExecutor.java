@@ -11,15 +11,15 @@ import org.openqa.selenium.WebDriver;
  */
 public class RemoveCookiesActionExecutor extends A_BrowserActionExecutor {
 
-	public RemoveCookiesActionExecutor(WebDriver driver, A_BrowserAction browserAction) {
+	public RemoveCookiesActionExecutor(WebDriver driver,
+			A_BrowserAction browserAction) {
 		super(driver, browserAction);
-		// TODO Auto-generated constructor stub
 	}
 
-	public void execute() throws Exception {
+	public void launcher() throws Exception {
 		try {
-			super.waitBefore();
-			for (String cookieName : ((RemoveCookiesAction) this.action).getCookiesName()) {
+			for (String cookieName : ((RemoveCookiesAction) this.action)
+					.getCookiesName()) {
 				this.driver.manage().deleteCookieNamed(cookieName);
 			}
 		} catch (Exception e) {

@@ -13,12 +13,10 @@ public class GoToUrlActionExecutor extends A_BrowserActionExecutor {
 
 	public GoToUrlActionExecutor(WebDriver driver, A_BrowserAction browserAction) {
 		super(driver, browserAction);
-		// TODO Auto-generated constructor stub
 	}
 
-	public void execute() throws Exception {
+	public void launcher() throws Exception {
 		try {
-			super.waitBefore();
 			this.driver.navigate().to(((GoToUrlAction) this.action).getUrl());
 		} catch (Exception e) {
 			throw e;

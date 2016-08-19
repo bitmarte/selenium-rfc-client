@@ -39,7 +39,7 @@ public class WebTimingUtils {
 						Thread.sleep(
 								SeleniumConfigProvider.getConfig().getWebTimings().getKpiIntervalMeasureInSec() * 1000);
 					} catch (Exception e) {
-						// TODO: handle exception
+						LOG.warn("Unexpected exception on thread sleep!", e);
 					}
 				}
 				long valueTmp = (Long) js.executeScript(myKpi);

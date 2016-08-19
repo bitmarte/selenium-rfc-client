@@ -17,7 +17,6 @@ public class PlanValidator extends A_Validator {
 
 	public PlanValidator(Object inValidation) throws Exception {
 		super(inValidation);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void validate() throws Exception {

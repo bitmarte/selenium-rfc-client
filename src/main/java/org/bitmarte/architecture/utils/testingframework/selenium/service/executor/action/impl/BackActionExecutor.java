@@ -12,12 +12,10 @@ public class BackActionExecutor extends A_BrowserActionExecutor {
 
 	public BackActionExecutor(WebDriver driver, A_BrowserAction browserAction) {
 		super(driver, browserAction);
-		// TODO Auto-generated constructor stub
 	}
 
-	public void execute() throws Exception {
+	public void launcher() throws Exception {
 		try {
-			super.waitBefore();
 			this.driver.navigate().back();
 		} catch (Exception e) {
 			throw e;

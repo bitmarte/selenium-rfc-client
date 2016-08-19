@@ -14,12 +14,10 @@ public class ClickActionExecutor extends A_BrowserActionExecutor {
 
 	public ClickActionExecutor(WebDriver driver, A_BrowserAction browserAction) {
 		super(driver, browserAction);
-		// TODO Auto-generated constructor stub
 	}
 
-	public void execute() throws Exception {
+	public void launcher() throws Exception {
 		try {
-			super.waitBefore();
 			ElementExtractorFactory.getInstance(((ClickAction) this.action).getElementExtractor())
 					.getElements(this.driver, ((ClickAction) this.action).getElement()).get(0).click();
 		} catch (Exception e) {

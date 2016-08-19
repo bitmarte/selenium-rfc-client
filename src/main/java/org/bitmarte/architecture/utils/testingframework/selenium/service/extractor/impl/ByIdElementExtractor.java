@@ -24,8 +24,8 @@ public class ByIdElementExtractor extends A_ElementExtractor {
 	 * java.lang.String)
 	 */
 	public List<WebElement> getElements(WebDriver driver, String str) {
-		WebDriverWait wait = new WebDriverWait(driver, super.getWaitingTime());
-		LOG.debug("Serching element '" + str + "' unit " + super.getWaitingTime() + " ms...");
+		WebDriverWait wait = new WebDriverWait(driver, super.getTimeoutPerElementExtrator());
+		LOG.debug("Serching element '" + str + "' unit " + super.getTimeoutPerElementExtrator() + " ms...");
 		final String el = str;
 		wait.until(new ExpectedCondition<Boolean>() {
 			public Boolean apply(WebDriver d) {

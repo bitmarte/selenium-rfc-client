@@ -17,7 +17,6 @@ public class CsvPlanWebTimingsReportProducer extends A_ReportProducer {
 
 	public CsvPlanWebTimingsReportProducer(List<Plan> plans) throws Exception {
 		super(plans, E_ReportType.CSV_WEBTIMINGS);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void produce() throws Exception {

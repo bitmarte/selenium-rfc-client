@@ -30,6 +30,9 @@ public class Config {
 	@XStreamAlias("maxTimeOutPerErrorConditionInSec")
 	private int maxTimeOutPerErrorConditionInSec;
 
+	@XStreamAlias("maxTimeOutPerElementExtratorInSec")
+	private int maxTimeOutPerElementExtratorInSec;
+
 	@XStreamAlias("reportBaseDir")
 	private String reportBaseDir;
 
@@ -56,6 +59,9 @@ public class Config {
 	@XStreamAlias("concurrentPlans")
 	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = { "true", "false" })
 	private boolean concurrentPlans;
+
+	@XStreamAlias("browserActionExecutor")
+	private BrowserActionExecutorConfig browserActionExecutor;
 
 	public String getSeleniumRcURL() {
 		return seleniumRcURL;
@@ -159,6 +165,22 @@ public class Config {
 
 	public void setConcurrentPlans(boolean concurrentPlans) {
 		this.concurrentPlans = concurrentPlans;
+	}
+
+	public BrowserActionExecutorConfig getBrowserActionExecutor() {
+		return browserActionExecutor;
+	}
+
+	public void setBrowserActionExecutor(BrowserActionExecutorConfig browserActionExecutor) {
+		this.browserActionExecutor = browserActionExecutor;
+	}
+
+	public int getMaxTimeOutPerElementExtratorInSec() {
+		return maxTimeOutPerElementExtratorInSec;
+	}
+
+	public void setMaxTimeOutPerElementExtratorInSec(int maxTimeOutPerElementExtratorInSec) {
+		this.maxTimeOutPerElementExtratorInSec = maxTimeOutPerElementExtratorInSec;
 	}
 
 }

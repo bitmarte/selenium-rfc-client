@@ -12,7 +12,6 @@ public class WindowResizeActionValidator extends A_Validator {
 
 	public WindowResizeActionValidator(Object inValidation) throws Exception {
 		super(inValidation);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void validate() throws Exception {

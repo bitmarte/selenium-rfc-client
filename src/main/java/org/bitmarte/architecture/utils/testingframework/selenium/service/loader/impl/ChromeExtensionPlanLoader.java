@@ -38,7 +38,6 @@ public class ChromeExtensionPlanLoader extends A_PlanLoader {
 
 	public ChromeExtensionPlanLoader(String basePath) {
 		super(basePath);
-		// TODO Auto-generated constructor stub
 		LOG.info("using ChromeExtensionPlanLoader...");
 	}
 

@@ -3,6 +3,7 @@ package org.bitmarte.architecture.utils.testingframework.selenium.service.valida
 import java.util.ArrayList;
 
 import org.apache.commons.lang3.StringUtils;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.config.BrowserActionExecutorConfig;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.config.Config;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserMode;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserName;
@@ -19,10 +20,12 @@ public class ConfigValidator extends A_Validator {
 	private static final int MAX_TIMEOUT_PER_SUCCESS_CONDITION_IN_SEC = 10;
 	private static final int MAX_TIMEOUT_PER_ERROR_CONDITION_IN_SEC = 2;
 	private static final int MAX_TIMEOUT_PER_MEASURE_IN_SEC = 5;
+	private static final int MAX_TIMEOUT_PER_ELEMENT_EXTRACTOR_IN_SEC = 5;
+	private static final long WAIT_BEFORE_ACTION_FIRST_EXEC_IN_MS = 100;
+	private static final long WAIT_BEFORE_ACTION_RETRY_EXEC_IN_MS = 300;
 
 	public ConfigValidator(Object inValidation) throws Exception {
 		super(inValidation);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void validate() throws Exception {
@@ -145,6 +148,25 @@ public class ConfigValidator extends A_Validator {
 		} else {
 			LOG.debug("setting default PlanLoader " + E_PlanLoader.DEFAULT_XML.name());
 			toValidate.getCustomPlanLoaders().add(0, E_PlanLoader.DEFAULT_XML.name());
+		}
+
+		// BrowserActionExecutorConfig
+		if (toValidate.getBrowserActionExecutor() == null) {
+			toValidate.setBrowserActionExecutor(new BrowserActionExecutorConfig());
+		}
+		if (toValidate.getBrowserActionExecutor().getWaitBeforeFirstActionInMs() == 0) {
+			toValidate.getBrowserActionExecutor().setWaitBeforeFirstActionInMs(WAIT_BEFORE_ACTION_FIRST_EXEC_IN_MS);
+			LOG.info("setWaitBeforeFirstActionInMs = " + WAIT_BEFORE_ACTION_FIRST_EXEC_IN_MS);
+		}
+		if (toValidate.getBrowserActionExecutor().getWaitBeforeRetryActionInMs() == 0) {
+			toValidate.getBrowserActionExecutor().setWaitBeforeRetryActionInMs(WAIT_BEFORE_ACTION_RETRY_EXEC_IN_MS);
+			LOG.info("setWaitBeforeRetryActionInMs = " + WAIT_BEFORE_ACTION_RETRY_EXEC_IN_MS);
+		}
+
+		// MaxTimeoutPerElementExtractor
+		if (toValidate.getMaxTimeOutPerElementExtratorInSec() == 0) {
+			toValidate.setMaxTimeOutPerElementExtratorInSec(MAX_TIMEOUT_PER_ELEMENT_EXTRACTOR_IN_SEC);
+			LOG.info("setMaxTimeOutPerElementExtratorInSec = " + MAX_TIMEOUT_PER_ELEMENT_EXTRACTOR_IN_SEC);
 		}
 	}
 

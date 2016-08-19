@@ -17,7 +17,6 @@ public class HtmlPlanIndexReportProducer extends A_ReportProducer {
 
 	public HtmlPlanIndexReportProducer(List<Plan> plans) throws Exception {
 		super(plans, E_ReportType.HTML_INDEX);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void produce() throws Exception {

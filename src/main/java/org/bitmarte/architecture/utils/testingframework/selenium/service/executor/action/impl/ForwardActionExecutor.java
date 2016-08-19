@@ -12,12 +12,10 @@ public class ForwardActionExecutor extends A_BrowserActionExecutor {
 
 	public ForwardActionExecutor(WebDriver driver, A_BrowserAction browserAction) {
 		super(driver, browserAction);
-		// TODO Auto-generated constructor stub
 	}
 
-	public void execute() throws Exception {
+	public void launcher() throws Exception {
 		try {
-			super.waitBefore();
 			this.driver.navigate().forward();
 		} catch (Exception e) {
 			throw e;
