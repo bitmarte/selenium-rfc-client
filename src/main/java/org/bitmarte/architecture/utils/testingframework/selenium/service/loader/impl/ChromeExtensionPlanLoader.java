@@ -85,12 +85,12 @@ public class ChromeExtensionPlanLoader extends A_PlanLoader {
 							break;
 						case CLICK:
 							ClickAction clickAction = new ClickAction();
-							clickAction.setElement((String) this.getJsonValue(bAction, "xpath", new String()));
+							clickAction.setElement((String) this.getJsonValue(bAction, "xpath", new ArrayList()));
 							browserActions.add(clickAction);
 							break;
 						case SET:
 							InputFillAction inputFillAction = new InputFillAction();
-							inputFillAction.setElement((String) this.getJsonValue(bAction, "xpath", new String()));
+							inputFillAction.setElement((String) this.getJsonValue(bAction, "xpath", new ArrayList()));
 							inputFillAction.setValue((String) this.getJsonValue(bAction, "content", new String()));
 							browserActions.add(inputFillAction);
 							break;
@@ -106,7 +106,7 @@ public class ChromeExtensionPlanLoader extends A_PlanLoader {
 							run = new Run();
 							run.setRunName("run_" + i);
 							successCondition = new SuccessCondition();
-							successCondition.setElement((String) this.getJsonValue(bAction, "xpath", new String()));
+							successCondition.setElement((String) this.getJsonValue(bAction, "xpath", new ArrayList()));
 							successCondition
 									.setElementContent((String) this.getJsonValue(bAction, "content", new String()));
 							successCondition.setContentEvaluator(E_ContentEvaluator.EQUALS.name());
@@ -122,7 +122,7 @@ public class ChromeExtensionPlanLoader extends A_PlanLoader {
 							run.setRunName(StringUtils.substring(file.getName(), 0, file.getName().lastIndexOf("."))
 									+ "_" + i);
 							successCondition = new SuccessCondition();
-							successCondition.setElement((String) this.getJsonValue(bAction, "xpath", new String()));
+							successCondition.setElement((String) this.getJsonValue(bAction, "xpath", new ArrayList()));
 							successCondition
 									.setElementContent((String) this.getJsonValue(bAction, "content", new String()));
 							successCondition.setContentEvaluator(E_ContentEvaluator.CONTAINS.name());
@@ -163,10 +163,17 @@ public class ChromeExtensionPlanLoader extends A_PlanLoader {
 			if ((Integer) type == -1) {
 				throw new Exception("No value for attribute '" + attributeName + "'");
 			}
+		} else if (type instanceof ArrayList) {
+			/*
+			 * TODO passare array intero in modo che @ByXpathElementExtractor
+			 * possa riprovare su vari xpath per trovare l'elemento
+			 */
+			type = json.asObject().get(attributeName).asArray().get(0).toString().replace("\"", "");
 		} else {
 			throw new Exception("Unsupported type '" + type.getClass().getName() + "'");
 		}
 
+		LOG.debug(type + "");
 		return type;
 	}
 
