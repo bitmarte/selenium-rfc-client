@@ -30,6 +30,9 @@ public class Config {
 	@XStreamAlias("maxTimeOutPerErrorConditionInSec")
 	private int maxTimeOutPerErrorConditionInSec;
 
+	@XStreamAlias("maxTimeOutPerElementExtratorInSec")
+	private int maxTimeOutPerElementExtratorInSec;
+
 	@XStreamAlias("reportBaseDir")
 	private String reportBaseDir;
 
@@ -170,6 +173,14 @@ public class Config {
 
 	public void setBrowserActionExecutor(BrowserActionExecutorConfig browserActionExecutor) {
 		this.browserActionExecutor = browserActionExecutor;
+	}
+
+	public int getMaxTimeOutPerElementExtratorInSec() {
+		return maxTimeOutPerElementExtratorInSec;
+	}
+
+	public void setMaxTimeOutPerElementExtratorInSec(int maxTimeOutPerElementExtratorInSec) {
+		this.maxTimeOutPerElementExtratorInSec = maxTimeOutPerElementExtratorInSec;
 	}
 
 }
