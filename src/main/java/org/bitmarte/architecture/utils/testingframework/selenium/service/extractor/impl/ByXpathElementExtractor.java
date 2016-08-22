@@ -24,6 +24,12 @@ public class ByXpathElementExtractor extends A_ElementExtractor {
 	 * java.lang.String)
 	 */
 	public List<WebElement> getElements(WebDriver driver, String str) {
+		/*
+		 * TODO fare in modo che venga accettato un array e che sia possibile
+		 * iterare sugli xpath per trovare l'elemento in caso di fallimento.
+		 * Occorre modificare l'interfaccia e tutte le altre
+		 * implementazioni @I_ElementExtractor
+		 */
 		WebDriverWait wait = new WebDriverWait(driver, super.getTimeoutPerElementExtrator());
 		LOG.debug("Serching element '" + str + "' unit " + super.getTimeoutPerElementExtrator() + " ms...");
 		final String el = str;

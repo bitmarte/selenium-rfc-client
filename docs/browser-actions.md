@@ -13,6 +13,7 @@ Here you can find the lists of allowed actions:
 * [RemoveAllCookiesAction](#removeallcookiesaction)
 * [RemoveCookiesAction](#removecookiesaction)
 * [WindowResizeAction](#windowresizeaction)
+* [ScrollAction](#scrollaction)
 <hr/>
 
 ## BackAction
@@ -117,3 +118,20 @@ Your size:
 		<widthPx>1440</widthPx>
 		<heightPx>900</heightPx>
 	</windowResize>
+	
+## ScrollAction
+It simulates the scroll.
+Scroll on the window:
+
+	<scroll>
+		<topPx>100</topPx>
+		<leftPx>0</leftPx>
+	</scroll>
+	
+Scroll on a specific element:
+
+	<scroll>
+		<element>/html/body</element>
+		<topPx>100</topPx>
+		<leftPx>0</leftPx>
+	</scroll>
