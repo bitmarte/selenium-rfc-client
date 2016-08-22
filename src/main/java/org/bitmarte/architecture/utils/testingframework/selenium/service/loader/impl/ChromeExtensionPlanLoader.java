@@ -15,6 +15,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.actio
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.ClickAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.GoToUrlAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.InputFillAction;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.ScrollAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.WindowResizeAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.evaluator.E_ContentEvaluator;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.A_PlanLoader;
@@ -33,7 +34,7 @@ import com.rits.cloning.Cloner;
 public class ChromeExtensionPlanLoader extends A_PlanLoader {
 
 	public enum BrowserActions {
-		GO_TO_URL, CLICK, SET, WINDOW_RESIZE, SUCCESS_CONDITION_EQUALS, SUCCESS_CONDITION_CONTAINS
+		GO_TO_URL, CLICK, SET, WINDOW_RESIZE, SUCCESS_CONDITION_EQUALS, SUCCESS_CONDITION_CONTAINS, SCROLL
 	};
 
 	public ChromeExtensionPlanLoader(String basePath) {
@@ -101,6 +102,13 @@ public class ChromeExtensionPlanLoader extends A_PlanLoader {
 							windowResizeAction
 									.setHeightPx((Integer) this.getJsonValue(bAction, "height", new Integer(-1)));
 							browserActions.add(windowResizeAction);
+							break;
+						case SCROLL:
+							ScrollAction scrollAction = new ScrollAction();
+							scrollAction.setElement((String) this.getJsonValue(bAction, "xpath", new ArrayList()));
+							scrollAction.setTopPx((Integer) this.getJsonValue(bAction, "top", new Integer(-1)));
+							scrollAction.setLeftPx((Integer) this.getJsonValue(bAction, "left", new Integer(-1)));
+							browserActions.add(scrollAction);
 							break;
 						case SUCCESS_CONDITION_EQUALS:
 							run = new Run();

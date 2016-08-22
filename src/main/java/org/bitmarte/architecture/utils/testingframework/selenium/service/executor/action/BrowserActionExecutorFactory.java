@@ -12,6 +12,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.actio
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.RefreshAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.RemoveAllCookiesAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.RemoveCookiesAction;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.ScrollAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.WindowResizeAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.exceptions.BrowserActionExecutorException;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.impl.BackActionExecutor;
@@ -25,6 +26,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.executo
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.impl.RefreshActionExecutor;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.impl.RemoveAllCookiesExecutor;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.impl.RemoveCookiesActionExecutor;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.impl.ScrollActionExecutor;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.impl.WindowResizeActionExecutor;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
@@ -69,6 +71,8 @@ public class BrowserActionExecutorFactory {
 				return new RemoveCookiesActionExecutor(driver, (RemoveCookiesAction) browserAction);
 			} else if (browserAction instanceof WindowResizeAction) {
 				return new WindowResizeActionExecutor(driver, (WindowResizeAction) browserAction);
+			} else if (browserAction instanceof ScrollAction) {
+				return new ScrollActionExecutor(driver, (ScrollAction) browserAction);
 			}
 		} catch (Exception e) {
 			throw e;
