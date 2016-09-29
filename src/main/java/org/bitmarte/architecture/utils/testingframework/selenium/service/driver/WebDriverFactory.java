@@ -52,10 +52,6 @@ public class WebDriverFactory {
 			capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
 		}
 
-		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--disable-http2");
-		capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-
 		switch (e_BrowserMode) {
 		case REMOTE:
 			switch (e_BrowserName) {
@@ -98,6 +94,8 @@ public class WebDriverFactory {
 				browserArgumentsConfig(capabilities);
 				return new ChromeDriver(capabilities);
 			case IEXPLORER:
+				// settings arguments
+				browserArgumentsConfig(capabilities);
 				throw new WebDriverException("IExplorer browser in remote mode is not supported!");
 			default:
 				// Using Firefox as default local browser
