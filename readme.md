@@ -3,6 +3,7 @@ This project allow you to create and run ent-to-end tests, running on real brows
 The artifact is a simple JAR file that you need to run directly from a shell; it requires only one argument, the path where you put configuration files (setup and plans).
 
 <hr/>
+* [Requirements](docs/requirements.md)
 * [Two different approaches (local vs. remote)](docs/approaches.md)
  * [Local approach](docs/approaches.md#local-approach)
  * [Remote approach](docs/approaches.md#local-approach)
