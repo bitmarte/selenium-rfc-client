@@ -30,7 +30,7 @@
 <ul>
 	<li>'browser/mode' is **require** node where put the test approach. **Take a look below for supported browsers**</li>
 	<li>'browser/name' is a **require** node where put the browser that you want to run tests on. **Take a look below for supported browsers**</li>
-	<li>'browser/arguments' is an **optional** node where put the webdriver arguments, just Chrome supported (http://peter.sh/experiments/chromium-command-line-switches/)</li>
+	<li>'browser/arguments' is an **optional** node where put the webdriver arguments, just Chrome and Firefox supported (http://peter.sh/experiments/chromium-command-line-switches/)</li>
 	<li>'localWebDriverPath' is a **required** node where put the webdriver path</li>
 	<li>'seleniumRcURL' is an **optional** node where put the SeleniumRC URL connection. **Remove this node for LOCAL approach**</li>
 	<li>'maxTimeOutPerSuccessConditionInSec' is an **optional** node where put the timeout (in second) used for checking your success condition. The default value is 10. You can override it for each run into your successCondition</li>
