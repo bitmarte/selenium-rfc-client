@@ -14,6 +14,7 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -44,6 +45,7 @@ public class WebDriverFactory {
 		}
 
 		DesiredCapabilities capabilities = new DesiredCapabilities();
+		capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 
 		// BrowserMobProxyServer
 		if (proxy != null) {
@@ -67,16 +69,12 @@ public class WebDriverFactory {
 				LOG.info("using remote iexplorer browser on server '"
 						+ SeleniumConfigProvider.getConfig().getSeleniumRcURL() + "'");
 				capabilities.setBrowserName("internet explorer");
-				// settings arguments
-				browserArgumentsConfig(capabilities);
 				return new RemoteWebDriver(new URL(SeleniumConfigProvider.getConfig().getSeleniumRcURL()),
 						capabilities);
 			case FIREFOX:
 				LOG.info("using remote firefox browser on server '"
 						+ SeleniumConfigProvider.getConfig().getSeleniumRcURL() + "'");
 				capabilities.setBrowserName("firefox");
-				// settings arguments
-				browserArgumentsConfig(capabilities);
 				return new RemoteWebDriver(new URL(SeleniumConfigProvider.getConfig().getSeleniumRcURL()),
 						capabilities);
 
@@ -94,15 +92,15 @@ public class WebDriverFactory {
 				browserArgumentsConfig(capabilities);
 				return new ChromeDriver(capabilities);
 			case IEXPLORER:
-				// settings arguments
-				browserArgumentsConfig(capabilities);
 				throw new WebDriverException("IExplorer browser in remote mode is not supported!");
 			default:
 				// Using Firefox as default local browser
 				LOG.info("using local firefox browser");
-				// settings arguments
-				browserArgumentsConfig(capabilities);
-				return new FirefoxDriver(capabilities);
+				System.setProperty("webdriver.gecko.driver",
+						SeleniumConfigProvider.getConfig().getLocalWebDriverPath());
+				FirefoxProfile profile = new FirefoxProfile();
+				profile.setAssumeUntrustedCertificateIssuer(false);
+				return new FirefoxDriver(null, profile, capabilities);
 			}
 
 		default:
