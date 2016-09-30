@@ -14,7 +14,6 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -45,7 +44,6 @@ public class WebDriverFactory {
 		}
 
 		DesiredCapabilities capabilities = new DesiredCapabilities();
-		capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 
 		// BrowserMobProxyServer
 		if (proxy != null) {
@@ -98,9 +96,7 @@ public class WebDriverFactory {
 				LOG.info("using local firefox browser");
 				System.setProperty("webdriver.gecko.driver",
 						SeleniumConfigProvider.getConfig().getLocalWebDriverPath());
-				FirefoxProfile profile = new FirefoxProfile();
-				profile.setAssumeUntrustedCertificateIssuer(false);
-				return new FirefoxDriver(null, profile, capabilities);
+				return new FirefoxDriver(capabilities);
 			}
 
 		default:
