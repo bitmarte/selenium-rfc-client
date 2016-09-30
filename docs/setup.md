@@ -14,6 +14,7 @@
 			<name>CHROME</name>
 			<arguments>--disable-http2</arguments>
 		</browser>
+		<localWebDriverPath>/path/to/browser-web-driver</localWebDriverPath>
 		<seleniumRcURL>http://10.217.xx.xx:4444/wd/hub</seleniumRcURL>
 		<reportBaseDir>/var/tmp/selenium/reports/</reportBaseDir>
 		<cleanReportBaseDirOnStart>true</cleanReportBaseDirOnStart>
@@ -30,7 +31,7 @@
 	<li>'browser/mode' is **require** node where put the test approach. **Take a look below for supported browsers**</li>
 	<li>'browser/name' is a **require** node where put the browser that you want to run tests on. **Take a look below for supported browsers**</li>
 	<li>'browser/arguments' is an **optional** node where put the webdriver arguments, just Chrome supported (http://peter.sh/experiments/chromium-command-line-switches/)</li>
-	<li>'localWebDriverPath' is an **optional** node where put the webdriver path, only if you are not using Firefox</li>
+	<li>'localWebDriverPath' is a **required** node where put the webdriver path</li>
 	<li>'seleniumRcURL' is an **optional** node where put the SeleniumRC URL connection. **Remove this node for LOCAL approach**</li>
 	<li>'maxTimeOutPerSuccessConditionInSec' is an **optional** node where put the timeout (in second) used for checking your success condition. The default value is 10. You can override it for each run into your successCondition</li>
 	<li>'maxTimeOutPerErrorConditionInSec' is an "optional" node where put the timeout (in second) used for checking yours error condition. The default value is 2</li>
@@ -58,7 +59,7 @@ and put the right URL for property <seleniumRcURL> in your config.xml file for r
 
 | Attribute value        		| Description															|
 | ----------------------------- | --------------------------------------------------------------------- |
-| FIREFOX						| Using firefox browser instance										|
+| FIREFOX						| Using firefox browser instance, only 48.x and later supported			|
 | CHROME						| Using chrome browser instance											|
 | IEXPLORER						| Using iexplorer browser instance, only remote mode is allowed (b)		|
 

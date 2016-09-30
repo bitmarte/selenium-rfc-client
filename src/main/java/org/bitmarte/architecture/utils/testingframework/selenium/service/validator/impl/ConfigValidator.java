@@ -42,6 +42,10 @@ public class ConfigValidator extends A_Validator {
 				throw new ValidatorException("Property 'mode' is missing for browser!");
 			}
 		}
+		
+		if(toValidate.getLocalWebDriverPath() == null) {
+			throw new ValidatorException("Property 'localWebDriverPath' is missing!");
+		}
 
 		if (toValidate.getReportBaseDir() == null) {
 			throw new ValidatorException("Property 'reportBaseDir' is missing!");
