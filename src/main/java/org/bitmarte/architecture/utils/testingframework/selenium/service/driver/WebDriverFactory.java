@@ -14,6 +14,7 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -60,7 +61,7 @@ public class WebDriverFactory {
 						+ SeleniumConfigProvider.getConfig().getSeleniumRcURL() + "'");
 				capabilities.setBrowserName("chrome");
 				// settings arguments
-				browserArgumentsConfig(capabilities);
+				browserArgumentsConfig(E_BrowserName.CHROME, capabilities);
 				return new RemoteWebDriver(new URL(SeleniumConfigProvider.getConfig().getSeleniumRcURL()),
 						capabilities);
 			case IEXPLORER:
@@ -73,6 +74,8 @@ public class WebDriverFactory {
 				LOG.info("using remote firefox browser on server '"
 						+ SeleniumConfigProvider.getConfig().getSeleniumRcURL() + "'");
 				capabilities.setBrowserName("firefox");
+				// settings arguments
+				browserArgumentsConfig(E_BrowserName.FIREFOX, capabilities);
 				return new RemoteWebDriver(new URL(SeleniumConfigProvider.getConfig().getSeleniumRcURL()),
 						capabilities);
 
@@ -87,7 +90,7 @@ public class WebDriverFactory {
 				System.setProperty("webdriver.chrome.driver",
 						SeleniumConfigProvider.getConfig().getLocalWebDriverPath());
 				// settings arguments
-				browserArgumentsConfig(capabilities);
+				browserArgumentsConfig(E_BrowserName.CHROME, capabilities);
 				return new ChromeDriver(capabilities);
 			case IEXPLORER:
 				throw new WebDriverException("IExplorer browser in remote mode is not supported!");
@@ -96,6 +99,8 @@ public class WebDriverFactory {
 				LOG.info("using local firefox browser");
 				System.setProperty("webdriver.gecko.driver",
 						SeleniumConfigProvider.getConfig().getLocalWebDriverPath());
+				// settings arguments
+				browserArgumentsConfig(E_BrowserName.FIREFOX, capabilities);
 				return new FirefoxDriver(capabilities);
 			}
 
@@ -109,17 +114,32 @@ public class WebDriverFactory {
 	 * 
 	 * @param capabilities
 	 */
-	private static void browserArgumentsConfig(DesiredCapabilities capabilities) {
+	private static void browserArgumentsConfig(E_BrowserName browserName, DesiredCapabilities capabilities) {
 		if (SeleniumConfigProvider.getConfig().getBrowser().getArguments() != null) {
 			StringTokenizer args = new StringTokenizer(SeleniumConfigProvider.getConfig().getBrowser().getArguments(),
 					",");
-			ChromeOptions options = new ChromeOptions();
-			while (args.hasMoreTokens()) {
-				String arg = args.nextToken();
-				LOG.info("Setting argument for WebDriver: " + arg);
-				options.addArguments(arg);
+
+			switch (browserName) {
+			case CHROME:
+				ChromeOptions chromeOpts = new ChromeOptions();
+				while (args.hasMoreTokens()) {
+					String arg = args.nextToken();
+					LOG.info("Setting argument for WebDriver: " + arg);
+					chromeOpts.addArguments(arg);
+				}
+				capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOpts);
+				break;
+			default:
+				FirefoxOptions firefoxOpts = new FirefoxOptions();
+				while (args.hasMoreTokens()) {
+					String arg = args.nextToken();
+					LOG.info("Setting argument for WebDriver: " + arg);
+					firefoxOpts.addArguments(arg);
+				}
+				capabilities.setCapability(FirefoxOptions.FIREFOX_OPTIONS, firefoxOpts);
+				break;
 			}
-			capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+
 		}
 	}
 

@@ -42,8 +42,8 @@ public class ConfigValidator extends A_Validator {
 				throw new ValidatorException("Property 'mode' is missing for browser!");
 			}
 		}
-		
-		if(toValidate.getLocalWebDriverPath() == null) {
+
+		if (toValidate.getLocalWebDriverPath() == null) {
 			throw new ValidatorException("Property 'localWebDriverPath' is missing!");
 		}
 
@@ -82,8 +82,9 @@ public class ConfigValidator extends A_Validator {
 		}
 		// arguments allowed just for ChromeDriver
 		if (toValidate.getBrowser().getArguments() != null
-				&& !E_BrowserName.valueOf(toValidate.getBrowser().getName()).equals(E_BrowserName.CHROME)) {
-			throw new ValidatorException("Property 'arguments' is supported just for browser " + E_BrowserName.CHROME);
+				&& E_BrowserName.valueOf(toValidate.getBrowser().getName()).equals(E_BrowserName.IEXPLORER)) {
+			throw new ValidatorException(
+					"Property 'arguments' is not supported for browser " + E_BrowserName.IEXPLORER);
 		}
 
 		// checking errorConditions
