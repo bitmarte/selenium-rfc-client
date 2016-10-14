@@ -31,7 +31,7 @@ public class ByXpathElementExtractor extends A_ElementExtractor {
 		 * implementazioni @I_ElementExtractor
 		 */
 		WebDriverWait wait = new WebDriverWait(driver, super.getTimeoutPerElementExtrator());
-		LOG.debug("Serching element '" + str + "' unit " + super.getTimeoutPerElementExtrator() + " ms...");
+		LOG.debug("Serching element '" + str + "' unit " + super.getTimeoutPerElementExtrator() + " sec...");
 		final String el = str;
 		wait.until(new ExpectedCondition<Boolean>() {
 			public Boolean apply(WebDriver d) {
