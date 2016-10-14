@@ -4,7 +4,15 @@ It depends on your goal you can run a test on two different platforms: "local" o
 
 ### Local approach
 In this case the client execute tests on the same machine that you use to run it.<br/>
-**You need to be sure that the browser used for testing is installed on you machine.**
+You need to be sure that the browser used for testing is installed on you machine, also the right web-driver (it depends on the browser):
+<ul>
+	<li>
+		Google Chrome: https://sites.google.com/a/chromium.org/chromedriver/downloads
+	</li>
+	<li>
+		Mozilla Firefox: https://github.com/mozilla/geckodriver/releases
+	</li>
+</ul>
 
 ### Remote approach
 In this case the client execute tests on remote machine.<br/>
