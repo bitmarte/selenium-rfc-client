@@ -1,4 +1,4 @@
-# Selenium Run-From-Configuration client
+# <img src="./docs/images/icon.png" width="40"/> Selenium Run-From-Configuration client
 This project allow you to create and run ent-to-end tests, running on real browser.<br/>
 The artifact is a simple JAR file that you need to run directly from a shell; it requires only one argument, the path where you put configuration files (setup and plans).
 
