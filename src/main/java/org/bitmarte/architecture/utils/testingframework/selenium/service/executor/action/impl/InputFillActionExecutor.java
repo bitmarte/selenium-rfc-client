@@ -19,7 +19,7 @@ public class InputFillActionExecutor extends A_BrowserActionExecutor {
 	public void launcher() throws Exception {
 		try {
 			ElementExtractorFactory.getInstance(((InputFillAction) this.action).getElementExtractor())
-					.getElements(this.driver, ((InputFillAction) this.action).getElement()).get(0)
+					.getElement(this.driver, ((InputFillAction) this.action).getElement())
 					.sendKeys(((InputFillAction) this.action).getValue());
 		} catch (Exception e) {
 			throw e;
