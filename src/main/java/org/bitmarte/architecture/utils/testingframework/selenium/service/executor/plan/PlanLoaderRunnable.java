@@ -3,7 +3,6 @@ package org.bitmarte.architecture.utils.testingframework.selenium.service.execut
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.ErrorCondition;
@@ -24,7 +23,6 @@ import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -103,32 +101,13 @@ public class PlanLoaderRunnable implements Runnable {
 
 				// checking successCondition
 				LOG.info("Test result checking...");
-				WebDriverWait wait = null;
 				final Run finalRun = currentRun;
 				try {
-					int waitPerSuccessConditionInSec = SeleniumConfigProvider.getConfig()
-							.getMaxTimeOutPerSuccessConditionInSec();
-					if (currentRun.getSuccessCondition().getMaxTimeOutPerSuccessConditionInSec() > 0) {
-						waitPerSuccessConditionInSec = currentRun.getSuccessCondition()
-								.getMaxTimeOutPerSuccessConditionInSec();
-					}
-					wait = new WebDriverWait(driver, waitPerSuccessConditionInSec);
-					LOG.debug("Serching success condition unit " + waitPerSuccessConditionInSec + " sec...");
-
-					wait.until(new Function<WebDriver, WebElement>() {
-						public WebElement apply(WebDriver d) {
-							WebElement el = ElementExtractorFactory
-									.getInstance(finalRun.getSuccessCondition().getElementExtractor())
-									.getElement(d, finalRun.getSuccessCondition().getElement());
-							if (ContentEvaluatorFactory
-									.getInstance(finalRun.getSuccessCondition().getContentEvaluator())
-									.evaluate(finalRun.getSuccessCondition().getElementContent(), el.getText())) {
-								return el;
-							} else {
-								return null;
-							}
-						}
-					});
+					WebElement el = ElementExtractorFactory
+							.getInstance(finalRun.getSuccessCondition().getElementExtractor())
+							.getElement(driver, finalRun.getSuccessCondition().getElement());
+					ContentEvaluatorFactory.getInstance(finalRun.getSuccessCondition().getContentEvaluator())
+							.evaluate(finalRun.getSuccessCondition().getElementContent(), el.getText());
 
 					currentRun.getRunReport().setTestResult(E_TestResult.SUCCESS.name());
 					LOG.info("Success on run '" + currentRun.getRunName() + "'");
@@ -141,29 +120,11 @@ public class PlanLoaderRunnable implements Runnable {
 
 					for (final ErrorCondition errorCondition : errorConditions) {
 						try {
-							int waitPerErrorConditionInSec = SeleniumConfigProvider.getConfig()
-									.getMaxTimeOutPerErrorConditionInSec();
-							if (errorCondition.getMaxTimeOutPerErrorConditionInSec() > 0) {
-								waitPerErrorConditionInSec = errorCondition.getMaxTimeOutPerErrorConditionInSec();
-							}
-							wait = new WebDriverWait(driver, waitPerErrorConditionInSec);
-							LOG.debug("Serching error condition unit " + waitPerErrorConditionInSec + " sec...");
-
-							wait.until(new Function<WebDriver, WebElement>() {
-								public WebElement apply(WebDriver d) {
-									WebElement el = ElementExtractorFactory
-											.getInstance(errorCondition.getElementExtractor())
-											.getElement(d, errorCondition.getElement());
-									if (ContentEvaluatorFactory.getInstance(errorCondition.getContentEvaluator())
-											.evaluate(errorCondition.getElementContent(), el.getText())) {
-										return el;
-									} else {
-										return null;
-									}
-								}
-							});
+							WebElement el = ElementExtractorFactory.getInstance(errorCondition.getElementExtractor())
+									.getElement(driver, errorCondition.getElement());
+							ContentEvaluatorFactory.getInstance(errorCondition.getContentEvaluator())
+									.evaluate(errorCondition.getElementContent(), el.getText());
 							LOG.error("Error on run '" + currentRun.getRunName() + "'");
-
 							break;
 						} catch (Exception e) {
 							currentRun.getRunReport().setTestResult(E_TestResult.TIMEOUT.name());

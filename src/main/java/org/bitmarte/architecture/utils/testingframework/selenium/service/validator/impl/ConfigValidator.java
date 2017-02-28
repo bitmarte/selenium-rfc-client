@@ -17,8 +17,6 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.validat
  */
 public class ConfigValidator extends A_Validator {
 
-	private static final int MAX_TIMEOUT_PER_SUCCESS_CONDITION_IN_SEC = 10;
-	private static final int MAX_TIMEOUT_PER_ERROR_CONDITION_IN_SEC = 2;
 	private static final int MAX_TIMEOUT_PER_MEASURE_IN_SEC = 5;
 	private static final int MAX_TIMEOUT_PER_ELEMENT_EXTRACTOR_IN_SEC = 5;
 	private static final long WAIT_BEFORE_ACTION_FIRST_EXEC_IN_MS = 100;
@@ -127,14 +125,6 @@ public class ConfigValidator extends A_Validator {
 	public void setDefaultValue() throws Exception {
 		Config toValidate = (Config) this.inValidation;
 
-		if (toValidate.getMaxTimeOutPerSuccessConditionInSec() <= 0) {
-			toValidate.setMaxTimeOutPerSuccessConditionInSec(MAX_TIMEOUT_PER_SUCCESS_CONDITION_IN_SEC);
-			LOG.info("setMaxTimeOutPerSuccessConditionInSec = " + MAX_TIMEOUT_PER_SUCCESS_CONDITION_IN_SEC);
-		}
-		if (toValidate.getMaxTimeOutPerErrorConditionInSec() <= 0) {
-			toValidate.setMaxTimeOutPerErrorConditionInSec(MAX_TIMEOUT_PER_ERROR_CONDITION_IN_SEC);
-			LOG.info("setMaxTimeOutPerErrorConditionInSec = " + MAX_TIMEOUT_PER_ERROR_CONDITION_IN_SEC);
-		}
 		if (!(StringUtils.endsWith(toValidate.getReportBaseDir(), "/")
 				|| StringUtils.endsWith(toValidate.getReportBaseDir(), "\\"))) {
 			toValidate.setReportBaseDir(toValidate.getReportBaseDir().concat("/"));

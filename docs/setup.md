@@ -33,8 +33,6 @@
 	<li>'browser/arguments' is an **optional** node where put the webdriver arguments, just Chrome and Firefox supported (http://peter.sh/experiments/chromium-command-line-switches/)</li>
 	<li>'localWebDriverPath' is a **required** node where put the webdriver path</li>
 	<li>'seleniumRcURL' is an **optional** node where put the SeleniumRC URL connection. **Remove this node for LOCAL approach**</li>
-	<li>'maxTimeOutPerSuccessConditionInSec' is an **optional** node where put the timeout (in second) used for checking your success condition. The default value is 10. You can override it for each run into your successCondition</li>
-	<li>'maxTimeOutPerErrorConditionInSec' is an "optional" node where put the timeout (in second) used for checking yours error condition. The default value is 2</li>
 	<li>'browserActionExecutor' is an **optional** node where put the default browser action executor configurations, such as 'waitBeforeFirstActionInMs' and 'waitBeforeRetryActionInMs'. **Take a look below for the documentation**</li>
 	<li>'maxTimeOutPerElementExtratorInSec' is an **optional** node where put the timeout (in second) user for element extractors. The default value is 5</li>
 	<li>'customPlanLoaders' is an **optional** node where put your customPlanLoaders implementations. **Take a look below for supported customPlanLoaders**</li>
