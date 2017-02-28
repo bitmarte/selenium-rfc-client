@@ -24,12 +24,6 @@ public class Config {
 	@XStreamAlias("localWebDriverPath")
 	private String localWebDriverPath;
 
-	@XStreamAlias("maxTimeOutPerSuccessConditionInSec")
-	private int maxTimeOutPerSuccessConditionInSec;
-
-	@XStreamAlias("maxTimeOutPerErrorConditionInSec")
-	private int maxTimeOutPerErrorConditionInSec;
-
 	@XStreamAlias("maxTimeOutPerElementExtratorInSec")
 	private int maxTimeOutPerElementExtratorInSec;
 
@@ -69,22 +63,6 @@ public class Config {
 
 	public void setSeleniumRcURL(String seleniumRcURL) {
 		this.seleniumRcURL = seleniumRcURL;
-	}
-
-	public int getMaxTimeOutPerSuccessConditionInSec() {
-		return maxTimeOutPerSuccessConditionInSec;
-	}
-
-	public void setMaxTimeOutPerSuccessConditionInSec(int maxTimeOutPerSuccessConditionInSec) {
-		this.maxTimeOutPerSuccessConditionInSec = maxTimeOutPerSuccessConditionInSec;
-	}
-
-	public int getMaxTimeOutPerErrorConditionInSec() {
-		return maxTimeOutPerErrorConditionInSec;
-	}
-
-	public void setMaxTimeOutPerErrorConditionInSec(int maxTimeOutPerErrorConditionInSec) {
-		this.maxTimeOutPerErrorConditionInSec = maxTimeOutPerErrorConditionInSec;
 	}
 
 	public String getReportBaseDir() {

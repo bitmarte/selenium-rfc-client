@@ -28,10 +28,6 @@ public class SuccessCondition {
 	@XStreamAsAttribute
 	private long waitBeforeScreenshotInMilliSec;
 
-	@XStreamAlias("maxTimeOutPerSuccessConditionInSec")
-	@XStreamAsAttribute
-	private int maxTimeOutPerSuccessConditionInSec;
-
 	@XStreamAlias("screenshotFileName")
 	@XStreamAsAttribute
 	private String screenshotFileName;
@@ -82,14 +78,6 @@ public class SuccessCondition {
 
 	public void setScreenshotFileName(String screenshotFileName) {
 		this.screenshotFileName = screenshotFileName;
-	}
-
-	public int getMaxTimeOutPerSuccessConditionInSec() {
-		return maxTimeOutPerSuccessConditionInSec;
-	}
-
-	public void setMaxTimeOutPerSuccessConditionInSec(int maxTimeOutPerSuccessConditionInSec) {
-		this.maxTimeOutPerSuccessConditionInSec = maxTimeOutPerSuccessConditionInSec;
 	}
 
 }

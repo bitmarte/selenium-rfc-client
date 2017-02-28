@@ -24,7 +24,7 @@ public class ByClassNameElementExtractor extends A_ElementExtractor {
 	 */
 	public WebElement getElement(WebDriver driver, String str) {
 		WebDriverWait wait = new WebDriverWait(driver, super.getTimeoutPerElementExtrator());
-		LOG.debug("Serching element '" + str + "' unit " + super.getTimeoutPerElementExtrator() + " sec...");
+		LOG.debug("Serching element '" + str + "' until " + super.getTimeoutPerElementExtrator() + " sec...");
 
 		return wait.until(new Function<WebDriver, WebElement>() {
 			public WebElement apply(WebDriver d) {

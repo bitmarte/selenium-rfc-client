@@ -24,17 +24,6 @@ Here you can find an example:
 			<elementContent>MyContent</elementContent>
 		</successCondition>
 	</run>
-	
-### maxTimeOutPerSuccessConditionInSec
-You can override this property directly in your successCondition tag for each run.
-
-	<run>
-		...
-		<successCondition maxTimeOutPerSuccessConditionInSec="30">
-			<element>//h5</element>
-			<elementContent>MyContent</elementContent>
-		</successCondition>
-	</run>
 
 * [Evaluator](evaluator.md)
 * [Extractor](extractor.md)
