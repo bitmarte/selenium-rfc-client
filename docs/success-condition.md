@@ -14,7 +14,7 @@ Here you can find an example:
 	</run>
 
 ### waitBeforeScreenshotInMilliSec
-You can specify a sleep time after success condition evaluator before take the screenshot.
+You can specify a sleep time after success and error condition evaluator before take the screenshot.
 Here you can find an example:
 
 	<run>

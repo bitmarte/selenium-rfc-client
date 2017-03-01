@@ -10,21 +10,9 @@ import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 @XStreamAlias("successCondition")
 public class SuccessCondition extends A_TestCondition {
 
-	@XStreamAlias("waitBeforeScreenshotInMilliSec")
-	@XStreamAsAttribute
-	private long waitBeforeScreenshotInMilliSec;
-
 	@XStreamAlias("screenshotFileName")
 	@XStreamAsAttribute
 	private String screenshotFileName;
-
-	public long getWaitBeforeScreenshotInMilliSec() {
-		return waitBeforeScreenshotInMilliSec;
-	}
-
-	public void setWaitBeforeScreenshotInMilliSec(long waitBeforeScreenshotInMilliSec) {
-		this.waitBeforeScreenshotInMilliSec = waitBeforeScreenshotInMilliSec;
-	}
 
 	public String getScreenshotFileName() {
 		return screenshotFileName;

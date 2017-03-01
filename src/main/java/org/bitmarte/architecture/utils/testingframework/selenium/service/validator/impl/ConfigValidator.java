@@ -163,6 +163,7 @@ public class ConfigValidator extends A_Validator {
 			toValidate.setMaxTimeOutPerElementExtratorInSec(MAX_TIMEOUT_PER_ELEMENT_EXTRACTOR_IN_SEC);
 			LOG.info("setMaxTimeOutPerElementExtratorInSec = " + MAX_TIMEOUT_PER_ELEMENT_EXTRACTOR_IN_SEC);
 		}
+
 	}
 
 }

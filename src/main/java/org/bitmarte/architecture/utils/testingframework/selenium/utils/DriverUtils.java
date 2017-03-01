@@ -55,10 +55,22 @@ public class DriverUtils {
 
 			LOG.debug("Take screenshot '" + archivePath + screenshotFileName + ".png'");
 
-			if (run.getSuccessCondition().getWaitBeforeScreenshotInMilliSec() != 0) {
-				LOG.info("waiting before take screenshot ["
-						+ run.getSuccessCondition().getWaitBeforeScreenshotInMilliSec() + "ms] ...");
-				Thread.sleep(run.getSuccessCondition().getWaitBeforeScreenshotInMilliSec());
+			long waitBeforeScreenshotInMilliSec = SeleniumConfigProvider.getConfig()
+					.getWaitBeforeScreenshotInMilliSec();
+			switch (testResult) {
+			case SUCCESS:
+				if (run.getSuccessCondition().getWaitBeforeScreenshotInMilliSec() != 0) {
+					waitBeforeScreenshotInMilliSec = run.getSuccessCondition().getWaitBeforeScreenshotInMilliSec();
+				}
+				break;
+			default:
+				// no wait
+				break;
+			}
+
+			if (waitBeforeScreenshotInMilliSec > 0) {
+				LOG.info("waiting before take screenshot [" + waitBeforeScreenshotInMilliSec + "ms] ...");
+				Thread.sleep(waitBeforeScreenshotInMilliSec);
 			}
 
 			WebDriver augmentedDriver = this.driver;
