@@ -25,5 +25,5 @@ Here you can find an example:
 		</successCondition>
 	</run>
 
-* [Evaluator](evaluator.md)
 * [Extractor](extractor.md)
+* [Evaluator](evaluator.md)

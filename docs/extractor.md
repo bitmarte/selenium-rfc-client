@@ -15,3 +15,14 @@ Here you can find an example that you can use for matching all numbers inside an
 	</successCondition>
 
 **Pay attention: when attribute is not present or an unknown value is used, the dafault content evaluator will be use: BY_XPATH**
+
+## maxTimeOutPerElementExtratorInSec
+This is an **optional** attribute for setting the timeout (in second) used for element extractors overriding the configuration.
+Here you can find an example, waiting until 20sec:
+
+	<successCondition contentEvaluator="REGEX" elementExtractor="BY_ID" maxTimeOutPerElementExtratorInSec="20">
+		<element>myName</element>
+		<elementContent>[0-9]</elementContent>
+	</successCondition>
+
+**Pay attention: take a look at [Setup](setup.md) for the default value**

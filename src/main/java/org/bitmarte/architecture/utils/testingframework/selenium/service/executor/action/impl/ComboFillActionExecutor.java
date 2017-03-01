@@ -21,7 +21,7 @@ public class ComboFillActionExecutor extends A_BrowserActionExecutor {
 		try {
 			Select select = new Select(
 					ElementExtractorFactory.getInstance(((ComboFillAction) this.action).getElementExtractor())
-							.getElement(this.driver, ((ComboFillAction) this.action).getElement()));
+							.getElement(this.driver, ((ComboFillAction) this.action).getElement(), null));
 			select.selectByValue(((ComboFillAction) this.action).getValue());
 		} catch (Exception e) {
 			throw e;

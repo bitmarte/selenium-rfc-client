@@ -19,7 +19,7 @@ public class ClickActionExecutor extends A_BrowserActionExecutor {
 	public void launcher() throws Exception {
 		try {
 			ElementExtractorFactory.getInstance(((ClickAction) this.action).getElementExtractor())
-					.getElement(this.driver, ((ClickAction) this.action).getElement()).click();
+					.getElement(this.driver, ((ClickAction) this.action).getElement(), null).click();
 		} catch (Exception e) {
 			throw e;
 		}

@@ -1,5 +1,6 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.service.extractor;
 
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.A_TestCondition;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +13,14 @@ public abstract class A_ElementExtractor implements I_ElementExtractor {
 
 	protected static final Logger LOG = LoggerFactory.getLogger(A_ElementExtractor.class);
 
-	protected long getTimeoutPerElementExtrator() {
-		return SeleniumConfigProvider.getConfig().getMaxTimeOutPerElementExtratorInSec();
+	protected long getTimeoutPerElementExtrator(A_TestCondition condition) {
+		long timeoutPerElementExtrator = SeleniumConfigProvider.getConfig().getMaxTimeOutPerElementExtratorInSec();
+
+		if (condition != null && condition.getMaxTimeOutPerElementExtratorInSec() > 0) {
+			timeoutPerElementExtrator = condition.getMaxTimeOutPerElementExtratorInSec();
+		}
+
+		return timeoutPerElementExtrator;
 	}
 
 }

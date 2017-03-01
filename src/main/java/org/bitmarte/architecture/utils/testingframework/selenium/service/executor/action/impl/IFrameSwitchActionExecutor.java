@@ -20,7 +20,7 @@ public class IFrameSwitchActionExecutor extends A_BrowserActionExecutor {
 		try {
 			this.driver.switchTo()
 					.frame(ElementExtractorFactory.getInstance(((IFrameSwitchAction) this.action).getElementExtractor())
-							.getElement(this.driver, ((IFrameSwitchAction) this.action).getElement()));
+							.getElement(this.driver, ((IFrameSwitchAction) this.action).getElement(), null));
 		} catch (Exception e) {
 			throw e;
 		}
