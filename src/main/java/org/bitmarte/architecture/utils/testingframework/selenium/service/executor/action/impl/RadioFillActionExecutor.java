@@ -20,7 +20,7 @@ public class RadioFillActionExecutor extends A_BrowserActionExecutor {
 	public void launcher() throws Exception {
 		try {
 			WebElement el = ElementExtractorFactory.getInstance(((RadioFillAction) this.action).getElementExtractor())
-					.getElement(this.driver, ((RadioFillAction) this.action).getElement());
+					.getElement(this.driver, ((RadioFillAction) this.action).getElement(), null);
 			if (el.getText().equals(((RadioFillAction) this.action).getValue())) {
 				el.click();
 			}

@@ -25,7 +25,7 @@ public class Config {
 	private String localWebDriverPath;
 
 	@XStreamAlias("maxTimeOutPerElementExtratorInSec")
-	private int maxTimeOutPerElementExtratorInSec;
+	private long maxTimeOutPerElementExtratorInSec;
 
 	@XStreamAlias("reportBaseDir")
 	private String reportBaseDir;
@@ -153,11 +153,11 @@ public class Config {
 		this.browserActionExecutor = browserActionExecutor;
 	}
 
-	public int getMaxTimeOutPerElementExtratorInSec() {
+	public long getMaxTimeOutPerElementExtratorInSec() {
 		return maxTimeOutPerElementExtratorInSec;
 	}
 
-	public void setMaxTimeOutPerElementExtratorInSec(int maxTimeOutPerElementExtratorInSec) {
+	public void setMaxTimeOutPerElementExtratorInSec(long maxTimeOutPerElementExtratorInSec) {
 		this.maxTimeOutPerElementExtratorInSec = maxTimeOutPerElementExtratorInSec;
 	}
 

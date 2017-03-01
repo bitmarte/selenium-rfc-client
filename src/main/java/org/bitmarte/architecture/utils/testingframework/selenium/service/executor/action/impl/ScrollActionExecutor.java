@@ -31,7 +31,7 @@ public class ScrollActionExecutor extends A_BrowserActionExecutor {
 				LOG.debug("scroll element in page [" + ((ScrollAction) this.action).getElement() + "] "
 						+ ((ScrollAction) this.action).getLeftPx() + "," + ((ScrollAction) this.action).getTopPx());
 				WebElement el = ElementExtractorFactory.getInstance(((ScrollAction) this.action).getElementExtractor())
-						.getElement(this.driver, ((ScrollAction) this.action).getElement());
+						.getElement(this.driver, ((ScrollAction) this.action).getElement(), null);
 				((JavascriptExecutor) this.driver)
 						.executeScript("arguments[0].scrollTop = " + ((ScrollAction) this.action).getTopPx(), el, "");
 				((JavascriptExecutor) this.driver)

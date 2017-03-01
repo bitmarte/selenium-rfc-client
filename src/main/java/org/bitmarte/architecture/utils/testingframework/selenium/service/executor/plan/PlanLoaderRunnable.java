@@ -104,8 +104,8 @@ public class PlanLoaderRunnable implements Runnable {
 				final Run finalRun = currentRun;
 				try {
 					WebElement el = ElementExtractorFactory
-							.getInstance(finalRun.getSuccessCondition().getElementExtractor())
-							.getElement(driver, finalRun.getSuccessCondition().getElement());
+							.getInstance(finalRun.getSuccessCondition().getElementExtractor()).getElement(driver,
+									finalRun.getSuccessCondition().getElement(), finalRun.getSuccessCondition());
 					ContentEvaluatorFactory.getInstance(finalRun.getSuccessCondition().getContentEvaluator())
 							.evaluate(finalRun.getSuccessCondition().getElementContent(), el.getText());
 
@@ -121,7 +121,7 @@ public class PlanLoaderRunnable implements Runnable {
 					for (final ErrorCondition errorCondition : errorConditions) {
 						try {
 							WebElement el = ElementExtractorFactory.getInstance(errorCondition.getElementExtractor())
-									.getElement(driver, errorCondition.getElement());
+									.getElement(driver, errorCondition.getElement(), errorCondition);
 							ContentEvaluatorFactory.getInstance(errorCondition.getContentEvaluator())
 									.evaluate(errorCondition.getElementContent(), el.getText());
 							LOG.error("Error on run '" + currentRun.getRunName() + "'");
