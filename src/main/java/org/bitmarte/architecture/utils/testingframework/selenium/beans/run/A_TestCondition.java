@@ -27,6 +27,10 @@ public abstract class A_TestCondition {
 	@XStreamAsAttribute
 	private long maxTimeOutPerElementExtratorInSec;
 
+	@XStreamAlias("waitBeforeScreenshotInMilliSec")
+	@XStreamAsAttribute
+	private long waitBeforeScreenshotInMilliSec;
+
 	public String getElement() {
 		return element;
 	}
@@ -65,6 +69,14 @@ public abstract class A_TestCondition {
 
 	public void setMaxTimeOutPerElementExtratorInSec(long maxTimeOutPerElementExtratorInSec) {
 		this.maxTimeOutPerElementExtratorInSec = maxTimeOutPerElementExtratorInSec;
+	}
+
+	public long getWaitBeforeScreenshotInMilliSec() {
+		return waitBeforeScreenshotInMilliSec;
+	}
+
+	public void setWaitBeforeScreenshotInMilliSec(long waitBeforeScreenshotInMilliSec) {
+		this.waitBeforeScreenshotInMilliSec = waitBeforeScreenshotInMilliSec;
 	}
 
 }

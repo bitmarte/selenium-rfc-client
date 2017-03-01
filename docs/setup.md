@@ -40,6 +40,7 @@
 	<li>'cleanReportBaseDirOnStart' is an **optional** node used to clean the location where Selenium save reports before run. The default value is false</li>
 	<li>'errorConditions' is a **require** node where put your generic error conditions</li>
 	<li>'closeBrowserOnFinish' is an **optional** node used to close browser at the end of your test, boolean value. The default value is false</li>
+	<li>'waitBeforeScreenshotInMilliSec' is an **optional** node used to apply a sleep time after SuccessCondition evaluator before take the screenshot. You can override it for each condition. The dafault value is 0ms</li>
 </ul>
 
 ### browser

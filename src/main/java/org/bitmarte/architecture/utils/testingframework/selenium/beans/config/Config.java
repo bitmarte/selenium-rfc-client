@@ -57,6 +57,9 @@ public class Config {
 	@XStreamAlias("browserActionExecutor")
 	private BrowserActionExecutorConfig browserActionExecutor;
 
+	@XStreamAlias("waitBeforeScreenshotInMilliSec")
+	private long waitBeforeScreenshotInMilliSec;
+
 	public String getSeleniumRcURL() {
 		return seleniumRcURL;
 	}
@@ -159,6 +162,14 @@ public class Config {
 
 	public void setMaxTimeOutPerElementExtratorInSec(long maxTimeOutPerElementExtratorInSec) {
 		this.maxTimeOutPerElementExtratorInSec = maxTimeOutPerElementExtratorInSec;
+	}
+
+	public long getWaitBeforeScreenshotInMilliSec() {
+		return waitBeforeScreenshotInMilliSec;
+	}
+
+	public void setWaitBeforeScreenshotInMilliSec(long waitBeforeScreenshotInMilliSec) {
+		this.waitBeforeScreenshotInMilliSec = waitBeforeScreenshotInMilliSec;
 	}
 
 }
