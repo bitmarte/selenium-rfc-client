@@ -26,4 +26,5 @@ The artifact is a simple JAR file that you need to run directly from a shell; it
 * [BrowserMob Proxy (for bandwidth throttling and more)](docs/browsermob.md)
  * [Generating HAR file](docs/browsermob.md#generating-har-file)
 * [Concurrent plan](docs/concurrent-plan.md)
+* [Contrib](docs/contrib.md)
 <hr/>
