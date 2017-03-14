@@ -1,6 +1,7 @@
 # BrowserActions
 Here you can find the lists of allowed actions:
 <hr/>
+
 * [BackAction](#backaction)
 * [ClickAction](#clickaction)
 * [ComboFillAction](#combofillaction)
@@ -14,6 +15,7 @@ Here you can find the lists of allowed actions:
 * [RemoveCookiesAction](#removecookiesaction)
 * [WindowResizeAction](#windowresizeaction)
 * [ScrollAction](#scrollaction)
+
 <hr/>
 
 ## BackAction
