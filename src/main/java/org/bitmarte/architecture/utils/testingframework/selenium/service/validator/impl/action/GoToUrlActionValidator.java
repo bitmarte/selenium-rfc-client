@@ -5,8 +5,9 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.validat
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.exceptions.ValidatorException;
 
 /**
+ * Validate the go to URL action configuration
+ * 
  * @author bitmarte
- *
  */
 public class GoToUrlActionValidator extends A_Validator {
 
@@ -14,6 +15,12 @@ public class GoToUrlActionValidator extends A_Validator {
 		super(inValidation);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.bitmarte.architecture.utils.testingframework.selenium.service.
+	 * validator.I_Validator#validate()
+	 */
 	public void validate() throws Exception {
 		GoToUrlAction toValidate = (GoToUrlAction) this.inValidation;
 		if (toValidate.getUrl() == null) {
@@ -21,6 +28,12 @@ public class GoToUrlActionValidator extends A_Validator {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.bitmarte.architecture.utils.testingframework.selenium.service.
+	 * validator.I_Validator#setDefaultValue()
+	 */
 	public void setDefaultValue() throws Exception {
 		GoToUrlAction toValidate = (GoToUrlAction) this.inValidation;
 

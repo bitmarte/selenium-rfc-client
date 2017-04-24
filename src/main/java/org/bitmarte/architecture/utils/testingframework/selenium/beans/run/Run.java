@@ -9,27 +9,46 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 /**
+ * The test run
+ * 
  * @author bitmarte
- *
  */
 @XStreamAlias("run")
 public class Run {
 
+	/**
+	 * @see RunReport
+	 */
 	@XStreamOmitField
 	private RunReport runReport;
 
+	/**
+	 * The name of the test run, unique
+	 */
 	@XStreamAlias("runName")
 	private String runName;
 
+	/**
+	 * Indicates the authentication, @see {@link Authentication}
+	 */
 	@XStreamAlias("authentication")
 	private Authentication authentication;
 
+	/**
+	 * The success condition, @see {@link SuccessCondition}
+	 */
 	@XStreamAlias("successCondition")
 	private SuccessCondition successCondition;
 
+	/**
+	 * The list of browser actions; the run respects the ordered list
+	 */
 	@XStreamAlias("browserActions")
 	private List<A_BrowserAction> browserActions;
 
+	/**
+	 * The list of error condition, more than one is posssible
+	 */
 	@XStreamAlias("errorConditions")
 	private List<ErrorCondition> errorConditions;
 

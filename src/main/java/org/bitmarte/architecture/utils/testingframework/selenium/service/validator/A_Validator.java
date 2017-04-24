@@ -4,8 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * This is the generic validator, abstract one
+ * 
  * @author bitmarte
- *
  */
 public abstract class A_Validator implements I_Validator {
 

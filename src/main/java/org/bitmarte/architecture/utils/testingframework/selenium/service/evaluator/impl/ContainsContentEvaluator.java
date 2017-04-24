@@ -4,8 +4,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.evaluator.A_ContentEvaluator;
 
 /**
+ * Contains content evaluator implementation
+ * 
  * @author bitmarte
- *
  */
 public class ContainsContentEvaluator extends A_ContentEvaluator {
 

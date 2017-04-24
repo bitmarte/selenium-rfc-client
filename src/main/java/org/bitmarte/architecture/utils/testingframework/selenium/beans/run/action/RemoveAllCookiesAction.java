@@ -3,6 +3,8 @@ package org.bitmarte.architecture.utils.testingframework.selenium.beans.run.acti
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
+ * This class allows you to remove all browser cookies
+ * 
  * @author bitmarte
  *
  */

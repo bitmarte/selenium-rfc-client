@@ -4,12 +4,16 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
 /**
+ * This is the concrete success condition
+ * 
  * @author bitmarte
- *
  */
 @XStreamAlias("successCondition")
 public class SuccessCondition extends A_TestCondition {
 
+	/**
+	 * The file name of the screenshot
+	 */
 	@XStreamAlias("screenshotFileName")
 	@XStreamAsAttribute
 	private String screenshotFileName;

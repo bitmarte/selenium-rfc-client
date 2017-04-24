@@ -5,8 +5,9 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.validat
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.exceptions.ValidatorException;
 
 /**
+ * Validate the radio filler action configuration
+ * 
  * @author bitmarte
- *
  */
 public class RadioFillActionValidator extends A_Validator {
 
@@ -14,6 +15,12 @@ public class RadioFillActionValidator extends A_Validator {
 		super(inValidation);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.bitmarte.architecture.utils.testingframework.selenium.service.
+	 * validator.I_Validator#validate()
+	 */
 	public void validate() throws Exception {
 		RadioFillAction toValidate = (RadioFillAction) this.inValidation;
 		if (toValidate.getElement() == null) {
@@ -24,6 +31,12 @@ public class RadioFillActionValidator extends A_Validator {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.bitmarte.architecture.utils.testingframework.selenium.service.
+	 * validator.I_Validator#setDefaultValue()
+	 */
 	public void setDefaultValue() throws Exception {
 		RadioFillAction toValidate = (RadioFillAction) this.inValidation;
 

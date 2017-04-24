@@ -5,18 +5,28 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
 import com.thoughtworks.xstream.converters.basic.BooleanConverter;
 
 /**
+ * Simulates the window resize action
+ * 
  * @author bitmarte
- *
  */
 @XStreamAlias("windowResize")
 public class WindowResizeAction extends A_BrowserAction {
 
+	/**
+	 * The width of the windw, expressed in px
+	 */
 	@XStreamAlias("widthPx")
 	private int widthPx;
 
+	/**
+	 * The height of the windw, expressed in px
+	 */
 	@XStreamAlias("heightPx")
 	private int heightPx;
 
+	/**
+	 * This flag force the full screen of the browser window
+	 */
 	@XStreamAlias("fullScreen")
 	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = { "true", "false" })
 	private boolean fullScreen;

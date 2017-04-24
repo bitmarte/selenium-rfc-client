@@ -19,8 +19,9 @@ import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
 
 /**
+ * This is the main class
+ * 
  * @author bitmarte
- *
  */
 public class RunTestSuite {
 

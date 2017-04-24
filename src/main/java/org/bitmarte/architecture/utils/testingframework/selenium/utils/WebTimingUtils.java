@@ -9,8 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * This is the W3C timings utility
+ * 
  * @author bitmarte
- *
  */
 public class WebTimingUtils {
 
@@ -24,6 +25,22 @@ public class WebTimingUtils {
 		this.driver = driver;
 	}
 
+	/**
+	 * Use the W3C timing api in order to retrieve the value of a specific kpi
+	 * 
+	 * @see WebTimingsReport
+	 * 
+	 * @param the
+	 *            name of the kpi
+	 * @param the
+	 *            previous kpi value
+	 * @return
+	 */
+	/**
+	 * @param kpi
+	 * @param previousValue
+	 * @return
+	 */
 	private long ritrieveTime(String kpi, long previousValue) {
 		final String myKpi = kpi;
 		final JavascriptExecutor js = (JavascriptExecutor) this.driver;
@@ -42,6 +59,12 @@ public class WebTimingUtils {
 		return valueTmp;
 	}
 
+	/**
+	 * Calculate all kpis for a run
+	 * 
+	 * @param run
+	 * @throws Exception
+	 */
 	public void calculateTimings(Run run) throws Exception {
 		LOG.debug("monitor performance with webTimingsAPI...");
 		if (run.getRunReport().getWebTimings() == null) {

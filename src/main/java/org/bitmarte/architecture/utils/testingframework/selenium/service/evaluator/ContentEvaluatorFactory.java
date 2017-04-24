@@ -9,13 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * This is the content evaluator factory
+ * 
  * @author bitmarte
- *
  */
 public class ContentEvaluatorFactory {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(ContentEvaluatorFactory.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ContentEvaluatorFactory.class);
 
 	public static I_ContentEvaluator getInstance(String contentEvaluator) {
 		if (contentEvaluator == null) {

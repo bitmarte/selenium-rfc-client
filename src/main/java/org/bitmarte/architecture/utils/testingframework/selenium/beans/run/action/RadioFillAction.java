@@ -4,19 +4,29 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
 /**
+ * This class allows you to fill the radios
+ * 
  * @author bitmarte
- *
  */
 @XStreamAlias("radioFill")
 public class RadioFillAction extends A_BrowserAction {
 
+	/**
+	 * Indicates the radio in page
+	 */
 	@XStreamAlias("element")
 	private String element;
 
+	/**
+	 * The extractor
+	 */
 	@XStreamAlias("elementExtractor")
 	@XStreamAsAttribute
 	private String elementExtractor;
 
+	/**
+	 * The value that will be select, radio
+	 */
 	@XStreamAlias("value")
 	private String value;
 

@@ -4,19 +4,29 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
 /**
+ * This action allows you to fill the input fiels
+ * 
  * @author bitmarte
- *
  */
 @XStreamAlias("inputFill")
 public class InputFillAction extends A_BrowserAction {
 
+	/**
+	 * Indicates the element that will be select
+	 */
 	@XStreamAlias("element")
 	private String element;
 
+	/**
+	 * The extractor
+	 */
 	@XStreamAlias("elementExtractor")
 	@XStreamAsAttribute
 	private String elementExtractor;
 
+	/**
+	 * The string to fill the input text
+	 */
 	@XStreamAlias("value")
 	private String value;
 
