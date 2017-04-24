@@ -12,22 +12,36 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 /**
+ * This is the plan, serialzed from configuration
+ * 
  * @author bitmarte
- *
  */
 @XStreamAlias("plan")
 public class Plan {
 
+	/**
+	 * Indicates the number of concurrent run (of plan) that will be execute at
+	 * the same time
+	 */
 	@XStreamAlias("executions")
 	@XStreamAsAttribute
 	private int executions;
 
+	/**
+	 * The name of the plan, unique
+	 */
 	@XStreamOmitField
 	private String planName;
 
+	/**
+	 * @see PlanReport
+	 */
 	@XStreamOmitField
 	private PlanReport planReport;
 
+	/**
+	 * The list of {@link Run} in the plan
+	 */
 	@XStreamImplicit
 	private List<Run> runs;
 

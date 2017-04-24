@@ -1,8 +1,9 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.beans.reports;
 
 /**
+ * This class contains the pojo for W3C timings and the kpis, string constants
+ * 
  * @author bitmarte
- *
  */
 public class WebTimingsReport {
 

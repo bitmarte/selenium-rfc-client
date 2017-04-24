@@ -3,60 +3,105 @@ package org.bitmarte.architecture.utils.testingframework.selenium.beans.config;
 import java.util.List;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.ErrorCondition;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.E_PlanLoader;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import com.thoughtworks.xstream.converters.basic.BooleanConverter;
 
 /**
+ * This is the configuration class, 'config.xml' serialized one.
+ * 
  * @author bitmarte
- *
  */
 @XStreamAlias("config")
 public class Config {
 
+	/**
+	 * The SeleniumRC URL, used to connect a remote hub, grid
+	 */
 	@XStreamAlias("seleniumRcURL")
 	private String seleniumRcURL;
 
+	/**
+	 * @see BrowserConfig
+	 */
 	@XStreamAlias("browser")
 	private BrowserConfig browser;
 
+	/**
+	 * The path where webdriver is installed
+	 */
 	@XStreamAlias("localWebDriverPath")
 	private String localWebDriverPath;
 
+	/**
+	 * The timeout for element extractors, in seconds
+	 */
 	@XStreamAlias("maxTimeOutPerElementExtratorInSec")
 	private long maxTimeOutPerElementExtratorInSec;
 
+	/**
+	 * The path of test reports
+	 */
 	@XStreamAlias("reportBaseDir")
 	private String reportBaseDir;
 
+	/**
+	 * The list of customPlanLoaders for load test suite, {@link E_PlanLoader}
+	 */
 	@XStreamAlias("customPlanLoaders")
 	private List<String> customPlanLoaders;
 
+	/**
+	 * The list of default {@link ErrorCondition}, applied to all run in case of
+	 * no SuccessCondition and ErrorCondition run hits
+	 */
 	@XStreamAlias("errorConditions")
 	private List<ErrorCondition> errorConditions;
 
+	/**
+	 * To close browser at the end of the test
+	 */
 	@XStreamAlias("closeBrowserOnFinish")
 	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = { "true", "false" })
 	private boolean closeBrowserOnFinish;
 
+	/**
+	 * To clean report directory instead of a new run
+	 */
 	@XStreamAlias("cleanReportBaseDirOnStart")
 	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = { "true", "false" })
 	private boolean cleanReportBaseDirOnStart;
 
+	/**
+	 * @see WebTimingsConfig
+	 */
 	@XStreamAlias("webTimings")
 	private WebTimingsConfig webTimings;
 
+	/**
+	 * @see MobProxyConfig
+	 */
 	@XStreamAlias("mobProxy")
 	private MobProxyConfig mobProxy;
 
+	/**
+	 * To activate concurrent plans run
+	 */
 	@XStreamAlias("concurrentPlans")
 	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = { "true", "false" })
 	private boolean concurrentPlans;
 
+	/**
+	 * @see BrowserActionExecutorConfig
+	 */
 	@XStreamAlias("browserActionExecutor")
 	private BrowserActionExecutorConfig browserActionExecutor;
 
+	/**
+	 * Waiting timeout before take a screenshot, on a SuccessCondition
+	 */
 	@XStreamAlias("waitBeforeScreenshotInMilliSec")
 	private long waitBeforeScreenshotInMilliSec;
 

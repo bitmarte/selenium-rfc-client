@@ -4,29 +4,48 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
 /**
+ * The generic test condition, abstract one
+ * 
  * @author bitmarte
- *
  */
 public abstract class A_TestCondition {
 
+	/**
+	 * Indicates the element that will be test, the presence
+	 */
 	@XStreamAlias("element")
 	private String element;
 
+	/**
+	 * The content {@link String} that will be compared
+	 */
 	@XStreamAlias("elementContent")
 	private String elementContent;
 
+	/**
+	 * The comparator will be used to compare content, @see E_ContentEvaluator
+	 */
 	@XStreamAlias("contentEvaluator")
 	@XStreamAsAttribute
 	private String contentEvaluator;
 
+	/**
+	 * The extractor
+	 */
 	@XStreamAlias("elementExtractor")
 	@XStreamAsAttribute
 	private String elementExtractor;
 
+	/**
+	 * Waiting timeout for element extractor, before hits
+	 */
 	@XStreamAlias("maxTimeOutPerElementExtratorInSec")
 	@XStreamAsAttribute
 	private long maxTimeOutPerElementExtratorInSec;
 
+	/**
+	 * Waiting timeout before taking a screenshot
+	 */
 	@XStreamAlias("waitBeforeScreenshotInMilliSec")
 	@XStreamAsAttribute
 	private long waitBeforeScreenshotInMilliSec;

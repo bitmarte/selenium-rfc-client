@@ -22,5 +22,6 @@ Take a look below for our contrib flow:
 * Versions:
  * major.minor.bugfix (eg. 1.0.3)
 * pom.xml will be updated with the follow commands:
- * mvn versions:set -DnewVersion=<newVersion>
- * mvn versions:commit
+
+	mvn versions:set -DnewVersion=<newVersion>
+	mvn versions:commit

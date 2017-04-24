@@ -6,8 +6,9 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.config.Co
 import org.bitmarte.architecture.utils.testingframework.selenium.service.unmarshaller.UnmarshallerFactory;
 
 /**
+ * This is the configuration provider, load configuration
+ * 
  * @author bitmarte
- *
  */
 public class SeleniumConfigProvider {
 

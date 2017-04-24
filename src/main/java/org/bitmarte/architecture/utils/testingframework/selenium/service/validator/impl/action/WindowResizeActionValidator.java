@@ -5,8 +5,9 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.validat
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.exceptions.ValidatorException;
 
 /**
+ * Validate the window resizer action configuration
+ * 
  * @author bitmarte
- *
  */
 public class WindowResizeActionValidator extends A_Validator {
 
@@ -14,6 +15,12 @@ public class WindowResizeActionValidator extends A_Validator {
 		super(inValidation);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.bitmarte.architecture.utils.testingframework.selenium.service.
+	 * validator.I_Validator#validate()
+	 */
 	public void validate() throws Exception {
 		WindowResizeAction toValidate = (WindowResizeAction) this.inValidation;
 		if (toValidate.isFullScreen()) {
@@ -28,6 +35,12 @@ public class WindowResizeActionValidator extends A_Validator {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.bitmarte.architecture.utils.testingframework.selenium.service.
+	 * validator.I_Validator#setDefaultValue()
+	 */
 	public void setDefaultValue() throws Exception {
 		WindowResizeAction toValidate = (WindowResizeAction) this.inValidation;
 

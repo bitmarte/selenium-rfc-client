@@ -5,8 +5,9 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.validat
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.exceptions.ValidatorException;
 
 /**
+ * Validate the remove all cookies action configuration
+ * 
  * @author bitmarte
- *
  */
 public class RemoveCookiesActionValidator extends A_Validator {
 
@@ -14,6 +15,12 @@ public class RemoveCookiesActionValidator extends A_Validator {
 		super(inValidation);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.bitmarte.architecture.utils.testingframework.selenium.service.
+	 * validator.I_Validator#validate()
+	 */
 	public void validate() throws Exception {
 		RemoveCookiesAction toValidate = (RemoveCookiesAction) this.inValidation;
 		if (toValidate.getCookiesName() == null) {
@@ -25,6 +32,12 @@ public class RemoveCookiesActionValidator extends A_Validator {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.bitmarte.architecture.utils.testingframework.selenium.service.
+	 * validator.I_Validator#setDefaultValue()
+	 */
 	public void setDefaultValue() throws Exception {
 		RemoveCookiesAction toValidate = (RemoveCookiesAction) this.inValidation;
 

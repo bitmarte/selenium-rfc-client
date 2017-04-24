@@ -6,27 +6,49 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
 import com.thoughtworks.xstream.converters.basic.BooleanConverter;
 
 /**
+ * This is the browsermob-proxy configuration.
+ * 
+ * Thanks to browsermob-proxy project
+ * [https://github.com/lightbody/browsermob-proxy]
+ * 
  * @author bitmarte
- *
  */
 @XStreamAlias("mobProxy")
 public class MobProxyConfig {
 
+	/**
+	 * The port which proxy will start
+	 */
 	@XStreamAlias("port")
 	private int port;
 
+	/**
+	 * Limit download rate in order to simulate a slower network connection
+	 */
 	@XStreamAlias("downloadBytePerSec")
 	private long downloadBytePerSec;
 
+	/**
+	 * Limit upload rate in order to simulate a slower network connection
+	 */
 	@XStreamAlias("uploadBytePerSec")
 	private long uploadBytePerSec;
 
+	/**
+	 * Introducing a network latency, expressed in milliseconds
+	 */
 	@XStreamAlias("latencyInMillisec")
 	private long latencyInMillisec;
 
+	/**
+	 * The whole URL of chained proxy, {@link String} format
+	 */
 	@XStreamAlias("chainedProxy")
 	private String chainedProxy;
 
+	/**
+	 * Flag for enabling the HAR file caputer of the test
+	 */
 	@XStreamAlias("enableHarCapture")
 	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = { "true", "false" })
 	@XStreamAsAttribute

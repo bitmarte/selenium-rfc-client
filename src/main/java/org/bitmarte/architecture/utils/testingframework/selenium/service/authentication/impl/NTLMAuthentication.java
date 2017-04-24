@@ -10,11 +10,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * This is the NTML authentication type implementeation
+ * 
  * @author bitmarte
- *
  */
 public class NTLMAuthentication implements Runnable {
 
+	/**
+	 * Default waiting timeout for attempt the NTLM browser prompt
+	 */
 	public static final int DEFAULT_WAIT_PROMPT_IN_SEC = 5;
 
 	private static final Logger LOG = LoggerFactory.getLogger(NTLMAuthentication.class);
@@ -25,6 +29,9 @@ public class NTLMAuthentication implements Runnable {
 		this.run = run;
 	}
 
+	/**
+	 * Using {@link Robot} in order to take the browser controll, very low level
+	 */
 	public void run() {
 		try {
 			// wait - increase this wait period if required

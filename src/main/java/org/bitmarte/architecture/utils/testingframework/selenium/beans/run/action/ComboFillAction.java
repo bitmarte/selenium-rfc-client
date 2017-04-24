@@ -4,19 +4,29 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
 /**
+ * Simulates the combo select filler
+ * 
  * @author bitmarte
- *
  */
 @XStreamAlias("comboFill")
 public class ComboFillAction extends A_BrowserAction {
 
+	/**
+	 * The string that indicates the element will be click
+	 */
 	@XStreamAlias("element")
 	private String element;
 
+	/**
+	 * The extractor for the element
+	 */
 	@XStreamAlias("elementExtractor")
 	@XStreamAsAttribute
 	private String elementExtractor;
 
+	/**
+	 * The value will be select
+	 */
 	@XStreamAlias("value")
 	private String value;
 

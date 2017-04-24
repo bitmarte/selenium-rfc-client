@@ -6,8 +6,9 @@ import java.util.regex.Pattern;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.evaluator.A_ContentEvaluator;
 
 /**
+ * This evaluator checks if the content respects a regular expression
+ * 
  * @author bitmarte
- *
  */
 public class RegexContentEvaluator extends A_ContentEvaluator {
 
@@ -15,8 +16,8 @@ public class RegexContentEvaluator extends A_ContentEvaluator {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.bitmarte.architecture.utils.testingframework.selenium.dom.evaluator.I_ContentEvaluator#evaluate(java
-	 * .lang.String, java.lang.String)
+	 * org.bitmarte.architecture.utils.testingframework.selenium.dom.evaluator.
+	 * I_ContentEvaluator#evaluate(java .lang.String, java.lang.String)
 	 */
 	public boolean evaluate(String str1, String str2) {
 		LOG.debug("using RegExContentEvaluator...");

@@ -25,8 +25,9 @@ import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.client.ClientUtil;
 
 /**
+ * This is the Selenium web driver custom factory
+ * 
  * @author bitmarte
- *
  */
 public class WebDriverFactory {
 

@@ -4,8 +4,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.evaluator.A_ContentEvaluator;
 
 /**
+ * This evaluator checks if the content start with a specific string
+ * 
  * @author bitmarte
- *
  */
 public class StartWithContentEvaluator extends A_ContentEvaluator {
 

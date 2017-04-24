@@ -4,15 +4,22 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
 /**
+ * Simulates mouse clicking
+ * 
  * @author bitmarte
- *
  */
 @XStreamAlias("click")
 public class ClickAction extends A_BrowserAction {
 
+	/**
+	 * The string that indicates the element will be click
+	 */
 	@XStreamAlias("element")
 	private String element;
 
+	/**
+	 * The extractor for the element
+	 */
 	@XStreamAlias("elementExtractor")
 	@XStreamAsAttribute
 	private String elementExtractor;

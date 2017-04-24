@@ -10,8 +10,9 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.validat
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.exceptions.ValidatorException;
 
 /**
+ * This is the concrete {@link Plan} validator
+ * 
  * @author bitmarte
- *
  */
 public class PlanValidator extends A_Validator {
 
@@ -19,6 +20,12 @@ public class PlanValidator extends A_Validator {
 		super(inValidation);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.bitmarte.architecture.utils.testingframework.selenium.service.
+	 * validator.I_Validator#validate()
+	 */
 	public void validate() throws Exception {
 		Plan toValidate = (Plan) this.inValidation;
 
@@ -70,6 +77,12 @@ public class PlanValidator extends A_Validator {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.bitmarte.architecture.utils.testingframework.selenium.service.
+	 * validator.I_Validator#setDefaultValue()
+	 */
 	public void setDefaultValue() throws Exception {
 		Plan toValidate = (Plan) this.inValidation;
 

@@ -4,15 +4,22 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
 /**
+ * This action allows you to browse from the iframes
+ * 
  * @author bitmarte
- *
  */
 @XStreamAlias("iFrameSwitch")
 public class IFrameSwitchAction extends A_BrowserAction {
 
+	/**
+	 * Indicates the element that contains the iframe
+	 */
 	@XStreamAlias("element")
 	private String element;
 
+	/**
+	 * The extractor
+	 */
 	@XStreamAlias("elementExtractor")
 	@XStreamAsAttribute
 	private String elementExtractor;

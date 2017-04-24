@@ -4,11 +4,15 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
 /**
+ * The generic browser action, abstract one
+ * 
  * @author bitmarte
- *
  */
 public abstract class A_BrowserAction {
 
+	/**
+	 * Waiting timeout before hits the action, expressed in milliseconds
+	 */
 	@XStreamAlias("waitBeforeActionInMillis")
 	@XStreamAsAttribute
 	private long waitBeforeActionInMillis;

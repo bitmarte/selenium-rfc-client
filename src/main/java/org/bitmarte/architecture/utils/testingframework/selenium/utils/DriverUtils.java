@@ -14,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * This is the web driver utility class
+ * 
  * @author bitmarte
  */
 public class DriverUtils {

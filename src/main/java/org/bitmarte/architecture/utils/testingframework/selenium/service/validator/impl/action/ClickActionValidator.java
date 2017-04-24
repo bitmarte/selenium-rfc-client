@@ -5,8 +5,9 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.validat
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.exceptions.ValidatorException;
 
 /**
+ * Validate the click action configuration
+ * 
  * @author bitmarte
- *
  */
 public class ClickActionValidator extends A_Validator {
 
@@ -14,6 +15,12 @@ public class ClickActionValidator extends A_Validator {
 		super(inValidation);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.bitmarte.architecture.utils.testingframework.selenium.service.
+	 * validator.I_Validator#validate()
+	 */
 	public void validate() throws Exception {
 		ClickAction toValidate = (ClickAction) this.inValidation;
 		if (toValidate.getElement() == null) {
@@ -21,6 +28,12 @@ public class ClickActionValidator extends A_Validator {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.bitmarte.architecture.utils.testingframework.selenium.service.
+	 * validator.I_Validator#setDefaultValue()
+	 */
 	public void setDefaultValue() throws Exception {
 		ClickAction toValidate = (ClickAction) this.inValidation;
 
