@@ -5,6 +5,10 @@
 	<groupId>org.bitmarte.architecture.utils.testingframework</groupId>
 	<artifactId>selenium-rfc-client</artifactId>
 	<version>4.7</version>
+	<url>https://github.com/bitmarte/selenium-rfc-client</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
@@ -72,15 +76,32 @@
 			<url>${snapshots.repo.url}</url>
 		</snapshotRepository>
 	</distributionManagement>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.0.2</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
+			</plugin>
+		</plugins>
+	</reporting>
 	<build>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.2</version>
 				<configuration>
-				       <source>1.8</source>
-				       <target>1.8</target>
-				       <compilerVersion>1.8</compilerVersion>
+					<source>1.8</source>
+					<target>1.8</target>
+					<compilerVersion>1.8</compilerVersion>
 				</configuration>
 			</plugin>
 		</plugins>
