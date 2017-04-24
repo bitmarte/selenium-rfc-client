@@ -24,6 +24,6 @@ Take a look below for our contrib flow:
 * pom.xml will be updated with the follow commands:
 
 <code>
-	mvn versions:set -DnewVersion= [newVersion]<br/>
+	mvn versions:set -DnewVersion= [newVersion]
 	mvn versions:commit
 </code>
