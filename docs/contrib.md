@@ -25,5 +25,7 @@ Take a look below for our contrib flow:
 
 <code>
 	mvn versions:set -DnewVersion= [newVersion]
+</code>
+<code>
 	mvn versions:commit
 </code>
