@@ -10,13 +10,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.A_PlanLoader;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.E_PlanLoader;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.I_PlanLoader;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.unmarshaller.UnmarshallerFactory;
 
 import com.rits.cloning.Cloner;
 
 /**
+ * This is the default plan loader implementation. It reads XML configuration
+ * 
  * @author bitmarte
- *
  */
 public class DefaultPlanLoader extends A_PlanLoader {
 
@@ -25,12 +27,8 @@ public class DefaultPlanLoader extends A_PlanLoader {
 		LOG.info("using DefaultPlanLoader...");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.bitmarte.architecture.utils.testingframework.selenium.service.loader.
-	 * I_PlanLoader#loadWorkingPlans()
+	/**
+	 * @see I_PlanLoader#loadPlans()
 	 */
 	public List<Plan> loadPlans() throws Exception {
 		List<Plan> planList = new ArrayList<Plan>();

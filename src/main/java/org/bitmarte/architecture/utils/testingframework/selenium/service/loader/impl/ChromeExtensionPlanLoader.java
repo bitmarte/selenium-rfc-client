@@ -20,6 +20,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.actio
 import org.bitmarte.architecture.utils.testingframework.selenium.service.evaluator.E_ContentEvaluator;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.A_PlanLoader;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.E_PlanLoader;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.I_PlanLoader;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.ValidatorHandler;
 
 import com.eclipsesource.json.Json;
@@ -28,8 +29,11 @@ import com.eclipsesource.json.JsonValue;
 import com.rits.cloning.Cloner;
 
 /**
+ * This is the plan loader implementation for the <a target="_blank" href=
+ * "https://github.com/bitmarte/selenium-rfc-chrome-extension">Chrome
+ * extension</a>
+ * 
  * @author bitmarte
- *
  */
 public class ChromeExtensionPlanLoader extends A_PlanLoader {
 
@@ -42,12 +46,8 @@ public class ChromeExtensionPlanLoader extends A_PlanLoader {
 		LOG.info("using ChromeExtensionPlanLoader...");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.bitmarte.architecture.utils.testingframework.selenium.service.loader.
-	 * I_PlanLoader#loadWorkingPlans()
+	/**
+	 * @see I_PlanLoader#loadPlans()
 	 */
 	public List<Plan> loadPlans() throws Exception {
 		List<Plan> planList = new ArrayList<Plan>();
