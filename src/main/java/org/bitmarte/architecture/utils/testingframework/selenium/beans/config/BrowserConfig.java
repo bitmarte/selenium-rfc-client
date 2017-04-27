@@ -1,9 +1,12 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.beans.config;
 
+import java.util.List;
+
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserMode;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserName;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 /**
  * This is the browser configuration
@@ -33,6 +36,12 @@ public class BrowserConfig {
 	@XStreamAlias("arguments")
 	private String arguments;
 
+	/**
+	 * The list of {@link BrowserCapabilityConfig}
+	 */
+	@XStreamImplicit
+	private List<BrowserCapabilityConfig> browserCapabilities;
+
 	public String getMode() {
 		return mode;
 	}
@@ -55,6 +64,14 @@ public class BrowserConfig {
 
 	public void setArguments(String arguments) {
 		this.arguments = arguments;
+	}
+
+	public List<BrowserCapabilityConfig> getBrowserCapabilities() {
+		return browserCapabilities;
+	}
+
+	public void setBrowserCapabilities(List<BrowserCapabilityConfig> browserCapabilities) {
+		this.browserCapabilities = browserCapabilities;
 	}
 
 }

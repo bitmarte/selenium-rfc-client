@@ -1,7 +1,7 @@
 <config>
 	<browser>
 		<mode>REMOTE</mode>
-		<name>FIREFOX</name>
+		<name>CHROME</name>
 	</browser>
 	<seleniumRcURL>http://10.217.xx.xx:4444/wd/hub</seleniumRcURL>
 	<reportBaseDir>/var/tmp/selenium/reports/</reportBaseDir>

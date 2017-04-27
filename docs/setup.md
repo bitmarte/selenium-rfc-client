@@ -13,6 +13,10 @@
 			<mode>LOCAL</mode>
 			<name>CHROME</name>
 			<arguments>--disable-http2</arguments>
+			<browserCapability capabilityType="BOOLEAN">
+			<capabilityName>acceptInsecureCerts</capabilityName>
+				<capabilityValue>true</capabilityValue>
+			</browserCapability>
 		</browser>
 		<localWebDriverPath>/path/to/browser-web-driver</localWebDriverPath>
 		<seleniumRcURL>http://10.217.xx.xx:4444/wd/hub</seleniumRcURL>
@@ -31,6 +35,7 @@
 	<li>'browser/mode' is **require** node where put the test approach. **Take a look below for supported browsers**</li>
 	<li>'browser/name' is a **require** node where put the browser that you want to run tests on. **Take a look below for supported browsers**</li>
 	<li>'browser/arguments' is an **optional** node where put the webdriver arguments, just Chrome and Firefox supported (http://peter.sh/experiments/chromium-command-line-switches/)</li>
+	<li>'browser/browserCapability' is an **optional** list where put DesiredCapabilities of your selected browser, just Chrome and Firefox supported</li>
 	<li>'localWebDriverPath' is a **required** node where put the webdriver path</li>
 	<li>'seleniumRcURL' is an **optional** node where put the SeleniumRC URL connection. **Remove this node for LOCAL approach**</li>
 	<li>'browserActionExecutor' is an **optional** node where put the default browser action executor configurations, such as 'waitBeforeFirstActionInMs' and 'waitBeforeRetryActionInMs'. **Take a look below for the documentation**</li>
@@ -64,6 +69,13 @@ and put the right URL for property <seleniumRcURL> in your config.xml file for r
 
 (b) You need to download Internet Explorer Driver Server (http://www.seleniumhq.org/download/) and passing the '-Dwebdriver.ie.driver' jar argument point to iexplorer driver on your remote machine.
 Pay attention that all IExplorer security zone must be the same and the zoom must be setup to 100%
+
+#### browserCapability/capabilityType
+
+| Attribute value        		| Description																		|
+| ----------------------------- | --------------------------------------------------------------------------------- |
+| STRING						| Using DesiredCapabilities.setCapability(String capabilityName, String value)		|
+| BOOLEAN						| Using DesiredCapabilities.setCapability(String capabilityName, boolean value)		|
 
 ### customPlanLoaders
 Add a custom plan loader implementation list to extends it and to allow a different plan input or generator:
