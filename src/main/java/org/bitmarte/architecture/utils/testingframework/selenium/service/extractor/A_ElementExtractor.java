@@ -33,4 +33,13 @@ public abstract class A_ElementExtractor implements I_ElementExtractor {
 		return timeoutPerElementExtrator;
 	}
 
+	/**
+	 * Retrieves the polling in millesec, during element extractor
+	 * 
+	 * @return time for polling in millesec, during element extractor
+	 */
+	protected long getPollingPerElementExtractor() {
+		return SeleniumConfigProvider.getConfig().getPollingPerElementExtractorInMillisec();
+	}
+
 }

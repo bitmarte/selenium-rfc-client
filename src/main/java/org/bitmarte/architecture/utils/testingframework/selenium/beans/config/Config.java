@@ -42,6 +42,12 @@ public class Config {
 	private long maxTimeOutPerElementExtratorInSec;
 
 	/**
+	 * The polling during element extractor for fluent waiting
+	 */
+	@XStreamAlias("pollingPerElementExtractorInMillisec")
+	private long pollingPerElementExtractorInMillisec;
+
+	/**
 	 * The path of test reports
 	 */
 	@XStreamAlias("reportBaseDir")
@@ -199,6 +205,14 @@ public class Config {
 
 	public void setBrowserActionExecutor(BrowserActionExecutorConfig browserActionExecutor) {
 		this.browserActionExecutor = browserActionExecutor;
+	}
+
+	public long getPollingPerElementExtractorInMillisec() {
+		return pollingPerElementExtractorInMillisec;
+	}
+
+	public void setPollingPerElementExtractorInMillisec(long pollingPerElementExtractorInMillisec) {
+		this.pollingPerElementExtractorInMillisec = pollingPerElementExtractorInMillisec;
 	}
 
 	public long getMaxTimeOutPerElementExtratorInSec() {
