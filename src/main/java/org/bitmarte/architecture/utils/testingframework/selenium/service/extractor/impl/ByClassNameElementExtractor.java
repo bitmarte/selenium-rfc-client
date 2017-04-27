@@ -20,11 +20,14 @@ public class ByClassNameElementExtractor extends A_ElementExtractor {
 	 * @see I_ElementExtractor#getElement(WebDriver, String, A_TestCondition)
 	 */
 	public WebElement getElement(WebDriver driver, String str, A_TestCondition condition) {
-		return super.getWait(driver, str, condition).until(new Function<WebDriver, WebElement>() {
+
+		Function<WebDriver, WebElement> waiting = new Function<WebDriver, WebElement>() {
 			public WebElement apply(WebDriver d) {
 				return (WebElement) d.findElement(By.className(str));
 			}
-		});
+		};
+
+		return super.getWait(driver, str, condition).until(waiting);
 	}
 
 }
