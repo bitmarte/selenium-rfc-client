@@ -7,14 +7,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * This is the concrete element extractor factory
+ * 
  * @author bitmarte
- *
  */
 public class ElementExtractorFactory {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(ElementExtractorFactory.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ElementExtractorFactory.class);
 
+	/**
+	 * This is the factory method, it retrieves the right instance
+	 * 
+	 * @param elementExtractor
+	 * @return
+	 */
 	public static I_ElementExtractor getInstance(String elementExtractor) {
 		if (elementExtractor == null) {
 			elementExtractor = E_ElementExtractor.BY_XPATH.name();
