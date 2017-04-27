@@ -9,6 +9,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_Bro
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserName;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.E_PlanLoader;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.A_Validator;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.I_Validator;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.exceptions.ValidatorException;
 
 /**
@@ -27,11 +28,8 @@ public class ConfigValidator extends A_Validator {
 		super(inValidation);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.bitmarte.architecture.utils.testingframework.selenium.service.
-	 * validator.I_Validator#validate()
+	/**
+	 * @see I_Validator#validate()
 	 */
 	public void validate() throws Exception {
 		Config toValidate = (Config) this.inValidation;
@@ -129,11 +127,10 @@ public class ConfigValidator extends A_Validator {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Setting default values for configuration
 	 * 
-	 * @see org.bitmarte.architecture.utils.testingframework.selenium.service.
-	 * validator.I_Validator#setDefaultValue()
+	 * @see I_Validator#setDefaultValue()
 	 */
 	public void setDefaultValue() throws Exception {
 		Config toValidate = (Config) this.inValidation;

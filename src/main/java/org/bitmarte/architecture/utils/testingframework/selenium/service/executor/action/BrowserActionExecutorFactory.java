@@ -33,13 +33,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * This is the concrete factory that it retrieves the right instance
+ * 
  * @author bitmarte
- *
  */
 public class BrowserActionExecutorFactory {
 
 	private static final Logger LOG = LoggerFactory.getLogger(BrowserActionExecutorFactory.class);
 
+	/**
+	 * 
+	 * @param driver
+	 *            the {@link WebDriver} instance
+	 * @param browserAction
+	 *            the abstract browser action, {@link A_BrowserAction}
+	 * @return the {@link I_BrowserActionExecutor} interface, but concrete class
+	 *         will be retrieved
+	 * @throws Exception
+	 */
 	public static I_BrowserActionExecutor getInstance(WebDriver driver, A_BrowserAction browserAction)
 			throws Exception {
 

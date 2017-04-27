@@ -8,8 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * This is the generic browser action executor
+ * 
  * @author bitmarte
- *
  */
 public abstract class A_BrowserActionExecutor implements I_BrowserActionExecutor {
 
@@ -24,6 +25,14 @@ public abstract class A_BrowserActionExecutor implements I_BrowserActionExecutor
 		this.action = (A_BrowserAction) browserAction;
 	}
 
+	/**
+	 * Implementig a sleeper that it will be used into each executor, waiting
+	 * before the action
+	 * 
+	 * @param wait
+	 *            the waiting time, in milliseconds
+	 * @throws Exception
+	 */
 	protected void waitBefore(long wait) throws Exception {
 		if (wait < 0) {
 			if (this.action.getWaitBeforeActionInMillis() != 0) {
@@ -37,6 +46,10 @@ public abstract class A_BrowserActionExecutor implements I_BrowserActionExecutor
 		}
 	}
 
+	/**
+	 * The main executor. This method hits the concrete launcher of each action
+	 * excecutors
+	 */
 	public void execute() throws Exception {
 		try {
 			waitBefore(-1);

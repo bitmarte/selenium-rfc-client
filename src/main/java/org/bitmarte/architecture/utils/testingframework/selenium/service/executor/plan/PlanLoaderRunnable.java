@@ -30,8 +30,9 @@ import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.proxy.CaptureType;
 
 /**
+ * This is the plan loader, runnable implementation for multi threads runs
+ * 
  * @author bitmarte
- *
  */
 public class PlanLoaderRunnable implements Runnable {
 
@@ -49,6 +50,11 @@ public class PlanLoaderRunnable implements Runnable {
 		this.workingPlans = workingPlans;
 	}
 
+	/**
+	 * The {@link Runnable} implementation for each plans. This method allows to
+	 * execute more plan at the same time, each plans have a dedicated thread,
+	 * for concurrent run
+	 */
 	public void run() {
 		LOG.info(Thread.currentThread().getName() + " running for plan " + plan.getPlanName());
 

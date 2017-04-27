@@ -5,8 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 /**
+ * This is the DOM Element extractor implementation
+ * 
  * @author bitmarte
- *
  */
 public interface I_ElementExtractor {
 
@@ -15,7 +16,9 @@ public interface I_ElementExtractor {
 	 * {@link A_TestCondition} as configuration
 	 * 
 	 * @param driver
+	 *            {@link WebDriver} implementation
 	 * @param str
+	 *            element identifier {@link String}
 	 * @param condition
 	 *            null if you don't have a condition
 	 * @return

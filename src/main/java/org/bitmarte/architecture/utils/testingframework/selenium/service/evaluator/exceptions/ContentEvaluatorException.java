@@ -1,7 +1,7 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.service.evaluator.exceptions;
 
 /**
- * Custom exception
+ * Custom exception of content evaluator executor
  * 
  * @author bitmarte
  */

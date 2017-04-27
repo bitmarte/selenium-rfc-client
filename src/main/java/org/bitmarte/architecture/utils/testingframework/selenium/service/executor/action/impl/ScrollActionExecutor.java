@@ -3,6 +3,7 @@ package org.bitmarte.architecture.utils.testingframework.selenium.service.execut
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.A_BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.ScrollAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.A_BrowserActionExecutor;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.I_BrowserActionExecutor;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.extractor.ElementExtractorFactory;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -18,6 +19,9 @@ public class ScrollActionExecutor extends A_BrowserActionExecutor {
 		super(driver, browserAction);
 	}
 
+	/**
+	 * @see I_BrowserActionExecutor#launcher()
+	 */
 	public void launcher() throws Exception {
 		try {
 			// no element -> window scroll
