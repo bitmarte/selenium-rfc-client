@@ -6,6 +6,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.actio
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.E_AuthType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.impl.NTLMAuthentication;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.A_Validator;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.I_Validator;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.ValidatorHandler;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.exceptions.ValidatorException;
 
@@ -20,11 +21,10 @@ public class PlanValidator extends A_Validator {
 		super(inValidation);
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Plan validator
 	 * 
-	 * @see org.bitmarte.architecture.utils.testingframework.selenium.service.
-	 * validator.I_Validator#validate()
+	 * @see I_Validator#validate()
 	 */
 	public void validate() throws Exception {
 		Plan toValidate = (Plan) this.inValidation;
@@ -77,11 +77,10 @@ public class PlanValidator extends A_Validator {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Setting default values for {@link Plan}
 	 * 
-	 * @see org.bitmarte.architecture.utils.testingframework.selenium.service.
-	 * validator.I_Validator#setDefaultValue()
+	 * @see I_Validator#setDefaultValue()
 	 */
 	public void setDefaultValue() throws Exception {
 		Plan toValidate = (Plan) this.inValidation;
