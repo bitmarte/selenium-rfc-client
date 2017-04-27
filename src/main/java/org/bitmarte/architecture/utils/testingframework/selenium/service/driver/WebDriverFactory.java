@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.StringTokenizer;
 import java.util.concurrent.TimeUnit;
 
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.config.BrowserCapabilityConfig;
+import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserCapabilityType;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserMode;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserName;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
@@ -58,7 +60,7 @@ public class WebDriverFactory {
 					+ "' and browserName '" + browserName + "'", e);
 		}
 
-		DesiredCapabilities capabilities = new DesiredCapabilities();
+		DesiredCapabilities capabilities = getBrowserCapabilitiesFromConfiguration();
 
 		// BrowserMobProxyServer
 		if (proxy != null) {
@@ -121,12 +123,14 @@ public class WebDriverFactory {
 		default:
 			throw new WebDriverException("Unknown case on E_BrowserMode enum!");
 		}
+
 	}
 
 	/**
 	 * Configure arguments for WebDriver
 	 * 
 	 * @param capabilities
+	 *            {@link DesiredCapabilities}
 	 */
 	private static void browserArgumentsConfig(E_BrowserName browserName, DesiredCapabilities capabilities) {
 		if (SeleniumConfigProvider.getConfig().getBrowser().getArguments() != null) {
@@ -155,6 +159,35 @@ public class WebDriverFactory {
 			}
 
 		}
+	}
+
+	/**
+	 * Retrieve {@link DesiredCapabilities} based on configuration, if it is
+	 * specified
+	 * 
+	 * @return {@link DesiredCapabilities}
+	 */
+	private static DesiredCapabilities getBrowserCapabilitiesFromConfiguration() {
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+		if (SeleniumConfigProvider.getConfig().getBrowser().getBrowserCapabilities() != null) {
+			for (BrowserCapabilityConfig capability : SeleniumConfigProvider.getConfig().getBrowser()
+					.getBrowserCapabilities()) {
+				LOG.debug("adding capability '" + capability.getCapabilityName() + " = "
+						+ capability.getCapabilityValue() + "'");
+				switch (E_BrowserCapabilityType.valueOf(capability.getCapabilityType())) {
+				case BOOLEAN:
+					capabilities.setCapability(capability.getCapabilityName(),
+							Boolean.parseBoolean(capability.getCapabilityValue()));
+					break;
+				default:
+					capabilities.setCapability(capability.getCapabilityName(),
+							capability.getCapabilityValue().toString());
+					break;
+				}
+			}
+		}
+
+		return capabilities;
 	}
 
 	/**

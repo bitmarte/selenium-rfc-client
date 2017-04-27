@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.config.BrowserActionExecutorConfig;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.config.BrowserCapabilityConfig;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.config.Config;
+import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserCapabilityType;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserMode;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserName;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.E_PlanLoader;
@@ -122,6 +124,18 @@ public class ConfigValidator extends A_Validator {
 				} catch (Exception e) {
 					throw new ValidatorException("Property 'customPlanLoader' for name '" + customPlanLoader
 							+ "' is unknown, please check E_PlanLoader!");
+				}
+			}
+		}
+
+		// checking E_BrowserCapabilityType
+		if (toValidate.getBrowser().getBrowserCapabilities() != null) {
+			for (BrowserCapabilityConfig capability : toValidate.getBrowser().getBrowserCapabilities()) {
+				try {
+					E_BrowserCapabilityType.valueOf(capability.getCapabilityType());
+				} catch (Exception e) {
+					throw new ValidatorException(
+							"Property 'capabilityType' for browserCapability list must be BOOLEAN or STRING!");
 				}
 			}
 		}
