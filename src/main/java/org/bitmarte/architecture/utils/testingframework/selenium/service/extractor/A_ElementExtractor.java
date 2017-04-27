@@ -1,7 +1,12 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.service.extractor;
 
+import java.util.concurrent.TimeUnit;
+
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.A_TestCondition;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +20,33 @@ public abstract class A_ElementExtractor implements I_ElementExtractor {
 	protected static final Logger LOG = LoggerFactory.getLogger(A_ElementExtractor.class);
 
 	/**
+	 * Retrieves the fluent wait for element extractor
+	 * 
+	 * @param driver
+	 *            the {@link WebDriver}
+	 * @param str
+	 *            the element identifier
+	 * @param condition
+	 *            the generic test condition for override configurations
+	 *            {@link A_TestCondition}
+	 * @return
+	 */
+	protected FluentWait<WebDriver> getWait(WebDriver driver, String str, A_TestCondition condition) {
+		long timeoutPerElementExtrator = this.getTimeoutPerElementExtrator(condition);
+		long pollingPerElementExtrator = this.getPollingPerElementExtractor();
+
+		FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver);
+		wait.pollingEvery(pollingPerElementExtrator, TimeUnit.MILLISECONDS);
+		wait.withTimeout(timeoutPerElementExtrator, TimeUnit.SECONDS);
+		wait.ignoring(NoSuchElementException.class);
+
+		LOG.debug("Serching element '" + str + "' until " + timeoutPerElementExtrator + " sec every "
+				+ pollingPerElementExtrator + " msec...");
+
+		return wait;
+	}
+
+	/**
 	 * Retrieves the waiting time before hits the element extractor, expressed
 	 * in milliseconds
 	 * 
@@ -23,7 +55,7 @@ public abstract class A_ElementExtractor implements I_ElementExtractor {
 	 * @return the waiting time before hits the element extractor, expressed in
 	 *         milliseconds
 	 */
-	protected long getTimeoutPerElementExtrator(A_TestCondition condition) {
+	private long getTimeoutPerElementExtrator(A_TestCondition condition) {
 		long timeoutPerElementExtrator = SeleniumConfigProvider.getConfig().getMaxTimeOutPerElementExtratorInSec();
 
 		if (condition != null && condition.getMaxTimeOutPerElementExtratorInSec() > 0) {
@@ -38,7 +70,7 @@ public abstract class A_ElementExtractor implements I_ElementExtractor {
 	 * 
 	 * @return time for polling in millesec, during element extractor
 	 */
-	protected long getPollingPerElementExtractor() {
+	private long getPollingPerElementExtractor() {
 		return SeleniumConfigProvider.getConfig().getPollingPerElementExtractorInMillisec();
 	}
 
