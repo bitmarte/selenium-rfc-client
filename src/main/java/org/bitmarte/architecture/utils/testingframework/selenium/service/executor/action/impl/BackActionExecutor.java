@@ -2,11 +2,13 @@ package org.bitmarte.architecture.utils.testingframework.selenium.service.execut
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.A_BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.A_BrowserActionExecutor;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.I_BrowserActionExecutor;
 import org.openqa.selenium.WebDriver;
 
 /**
+ * This is the concrete BackActionExecutor implementation
+ * 
  * @author bitmarte
- *
  */
 public class BackActionExecutor extends A_BrowserActionExecutor {
 
@@ -14,6 +16,9 @@ public class BackActionExecutor extends A_BrowserActionExecutor {
 		super(driver, browserAction);
 	}
 
+	/**
+	 * @see I_BrowserActionExecutor#launcher()
+	 */
 	public void launcher() throws Exception {
 		try {
 			this.driver.navigate().back();

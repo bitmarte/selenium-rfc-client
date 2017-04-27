@@ -33,6 +33,19 @@ public class WebDriverFactory {
 
 	private static final Logger LOG = LoggerFactory.getLogger(WebDriverFactory.class);
 
+	/**
+	 * This is the main factory method that retrieve the {@link WebDriver}
+	 * instance
+	 * 
+	 * @param browserMode
+	 *            {@link E_BrowserMode}
+	 * @param browserName
+	 *            {@link E_BrowserName}
+	 * @param proxy
+	 *            {@link BrowserMobProxy}
+	 * @return the {@link WebDriver} instance
+	 * @throws Exception
+	 */
 	public static WebDriver getInstance(String browserMode, String browserName, BrowserMobProxy proxy)
 			throws Exception {
 		E_BrowserMode e_BrowserMode = E_BrowserMode.LOCAL;
