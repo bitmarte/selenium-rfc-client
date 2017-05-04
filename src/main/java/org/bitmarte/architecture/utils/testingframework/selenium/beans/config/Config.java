@@ -6,6 +6,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Error
 import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.E_PlanLoader;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import com.thoughtworks.xstream.converters.basic.BooleanConverter;
 
@@ -104,6 +105,16 @@ public class Config {
 	 */
 	@XStreamAlias("browserActionExecutor")
 	private BrowserActionExecutorConfig browserActionExecutor;
+
+	/**
+	 * If <code>true</code> only in view page will be saved, if
+	 * <code>false</code> the whole page will be saved. Default value is
+	 * <code>false</code>
+	 */
+	@XStreamAlias("inViewScreenshot")
+	@XStreamAsAttribute
+	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = { "true", "false" })
+	private boolean inViewScreenshot;
 
 	/**
 	 * Waiting timeout before take a screenshot, on a SuccessCondition
@@ -221,6 +232,14 @@ public class Config {
 
 	public void setMaxTimeOutPerElementExtratorInSec(long maxTimeOutPerElementExtratorInSec) {
 		this.maxTimeOutPerElementExtratorInSec = maxTimeOutPerElementExtratorInSec;
+	}
+
+	public boolean isInViewScreenshot() {
+		return inViewScreenshot;
+	}
+
+	public void setInViewScreenshot(boolean inViewScreenshot) {
+		this.inViewScreenshot = inViewScreenshot;
 	}
 
 	public long getWaitBeforeScreenshotInMilliSec() {

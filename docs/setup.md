@@ -29,6 +29,9 @@
 			</errorCondition>
 		</errorConditions>
 		<closeBrowserOnFinish>false</closeBrowserOnFinish>
+		<waitBeforeScreenshotInMilliSec>10</waitBeforeScreenshotInMilliSec>
+		<inViewScreenshot>true</inViewScreenshot>
+		<concurrentPlans>false</concurrentPlans>
 	</config>
 
 <ul>
@@ -47,6 +50,8 @@
 	<li>'errorConditions' is a **require** node where put your generic error conditions</li>
 	<li>'closeBrowserOnFinish' is an **optional** node used to close browser at the end of your test, boolean value. The default value is false</li>
 	<li>'waitBeforeScreenshotInMilliSec' is an **optional** node used to apply a sleep time after SuccessCondition evaluator before take the screenshot. You can override it for each condition. The dafault value is 0ms</li>
+	<li>'inViewScreenshot' is an **optional** node (boolean value) that it allows you to save the whole page, not only in view one. The default value is false</li>
+	<li>'concurrentPlans' is an **optional** node for allowing concurrent tests, for more details see [Concurrent plan](docs/concurrent-plan.md)</li>
 </ul>
 
 ### browser

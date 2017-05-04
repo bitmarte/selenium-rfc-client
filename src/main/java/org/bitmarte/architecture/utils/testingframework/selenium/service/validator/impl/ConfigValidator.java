@@ -100,7 +100,8 @@ public class ConfigValidator extends A_Validator {
 			throw new ValidatorException("ErrorConditions must not be empty!");
 		}
 
-		LOG.warn("setCloseBrowserOnFinish = " + toValidate.isCloseBrowserOnFinish());
+		LOG.info("setInViewScreenshot = " + toValidate.isInViewScreenshot());
+		LOG.info("setCloseBrowserOnFinish = " + toValidate.isCloseBrowserOnFinish());
 
 		// checking for webTimingsAPI
 		if (toValidate.getWebTimings() != null) {

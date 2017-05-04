@@ -11,4 +11,7 @@
 			<elementContent>error-msg-content</elementContent>
 		</errorCondition>
 	</errorConditions>
+	<closeBrowserOnFinish>true</closeBrowserOnFinish>
+	<inViewScreenshot>true</inViewScreenshot>
+	<concurrentPlans>false</concurrentPlans>
 </config>
