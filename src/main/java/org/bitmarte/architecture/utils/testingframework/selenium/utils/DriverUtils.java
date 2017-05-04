@@ -1,9 +1,14 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.utils;
 
+import java.io.File;
+
+import org.apache.commons.io.FileUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,7 +79,8 @@ public class DriverUtils {
 					LOG.info("waiting before take screenshot [" + waitBeforeScreenshotInMilliSec + "ms] ...");
 					Thread.sleep(waitBeforeScreenshotInMilliSec);
 				}
-				Shutterbug.shootPage(this.driver).withName(screenshotFileName).save(archivePath);
+				File scrFile = ((TakesScreenshot) this.driver).getScreenshotAs(OutputType.FILE);
+				FileUtils.copyFile(scrFile, new File(archivePath + screenshotFileName + ".png"));
 			} else {
 				// whole page screenshot
 				Shutterbug.shootPage(this.driver, ScrollStrategy.BOTH_DIRECTIONS);
