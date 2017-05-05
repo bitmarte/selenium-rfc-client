@@ -8,7 +8,7 @@ You can use this attribute in order to execute the same plan more times
 	</plan>
 
 ### Concurrent executio
-You can use this node in order to execute plans in parallel
+You can use this node in order to execute plans in parallel. The default value is false
 
 	<config>
 		...

@@ -6,9 +6,6 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Error
 import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.E_PlanLoader;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
-import com.thoughtworks.xstream.annotations.XStreamConverter;
-import com.thoughtworks.xstream.converters.basic.BooleanConverter;
 
 /**
  * This is the configuration class, 'config.xml' serialized one.
@@ -68,18 +65,16 @@ public class Config {
 	private List<ErrorCondition> errorConditions;
 
 	/**
-	 * To close browser at the end of the test
+	 * To close browser at the end of the test, default <code>true</code>
 	 */
 	@XStreamAlias("closeBrowserOnFinish")
-	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = { "true", "false" })
-	private boolean closeBrowserOnFinish;
+	private String closeBrowserOnFinish;
 
 	/**
 	 * To clean report directory instead of a new run
 	 */
 	@XStreamAlias("cleanReportBaseDirOnStart")
-	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = { "true", "false" })
-	private boolean cleanReportBaseDirOnStart;
+	private String cleanReportBaseDirOnStart;
 
 	/**
 	 * @see WebTimingsConfig
@@ -97,8 +92,7 @@ public class Config {
 	 * To activate concurrent plans run
 	 */
 	@XStreamAlias("concurrentPlans")
-	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = { "true", "false" })
-	private boolean concurrentPlans;
+	private String concurrentPlans;
 
 	/**
 	 * @see BrowserActionExecutorConfig
@@ -112,9 +106,7 @@ public class Config {
 	 * <code>false</code>
 	 */
 	@XStreamAlias("inViewScreenshot")
-	@XStreamAsAttribute
-	@XStreamConverter(value = BooleanConverter.class, booleans = { true }, strings = { "true", "false" })
-	private boolean inViewScreenshot;
+	private String inViewScreenshot;
 
 	/**
 	 * Waiting timeout before take a screenshot, on a SuccessCondition
@@ -128,22 +120,6 @@ public class Config {
 
 	public void setSeleniumRcURL(String seleniumRcURL) {
 		this.seleniumRcURL = seleniumRcURL;
-	}
-
-	public String getReportBaseDir() {
-		return reportBaseDir;
-	}
-
-	public void setReportBaseDir(String reportBaseDir) {
-		this.reportBaseDir = reportBaseDir;
-	}
-
-	public List<String> getCustomPlanLoaders() {
-		return customPlanLoaders;
-	}
-
-	public void setCustomPlanLoaders(List<String> customPlanLoaders) {
-		this.customPlanLoaders = customPlanLoaders;
 	}
 
 	public BrowserConfig getBrowser() {
@@ -162,6 +138,38 @@ public class Config {
 		this.localWebDriverPath = localWebDriverPath;
 	}
 
+	public long getMaxTimeOutPerElementExtratorInSec() {
+		return maxTimeOutPerElementExtratorInSec;
+	}
+
+	public void setMaxTimeOutPerElementExtratorInSec(long maxTimeOutPerElementExtratorInSec) {
+		this.maxTimeOutPerElementExtratorInSec = maxTimeOutPerElementExtratorInSec;
+	}
+
+	public long getPollingPerElementExtractorInMillisec() {
+		return pollingPerElementExtractorInMillisec;
+	}
+
+	public void setPollingPerElementExtractorInMillisec(long pollingPerElementExtractorInMillisec) {
+		this.pollingPerElementExtractorInMillisec = pollingPerElementExtractorInMillisec;
+	}
+
+	public String getReportBaseDir() {
+		return reportBaseDir;
+	}
+
+	public void setReportBaseDir(String reportBaseDir) {
+		this.reportBaseDir = reportBaseDir;
+	}
+
+	public List<String> getCustomPlanLoaders() {
+		return customPlanLoaders;
+	}
+
+	public void setCustomPlanLoaders(List<String> customPlanLoaders) {
+		this.customPlanLoaders = customPlanLoaders;
+	}
+
 	public List<ErrorCondition> getErrorConditions() {
 		return errorConditions;
 	}
@@ -170,19 +178,19 @@ public class Config {
 		this.errorConditions = errorConditions;
 	}
 
-	public boolean isCloseBrowserOnFinish() {
+	public String isCloseBrowserOnFinish() {
 		return closeBrowserOnFinish;
 	}
 
-	public void setCloseBrowserOnFinish(boolean closeBrowserOnFinish) {
+	public void setCloseBrowserOnFinish(String closeBrowserOnFinish) {
 		this.closeBrowserOnFinish = closeBrowserOnFinish;
 	}
 
-	public boolean isCleanReportBaseDirOnStart() {
+	public String isCleanReportBaseDirOnStart() {
 		return cleanReportBaseDirOnStart;
 	}
 
-	public void setCleanReportBaseDirOnStart(boolean cleanReportBaseDirOnStart) {
+	public void setCleanReportBaseDirOnStart(String cleanReportBaseDirOnStart) {
 		this.cleanReportBaseDirOnStart = cleanReportBaseDirOnStart;
 	}
 
@@ -202,11 +210,11 @@ public class Config {
 		this.mobProxy = mobProxy;
 	}
 
-	public boolean isConcurrentPlans() {
+	public String isConcurrentPlans() {
 		return concurrentPlans;
 	}
 
-	public void setConcurrentPlans(boolean concurrentPlans) {
+	public void setConcurrentPlans(String concurrentPlans) {
 		this.concurrentPlans = concurrentPlans;
 	}
 
@@ -218,27 +226,11 @@ public class Config {
 		this.browserActionExecutor = browserActionExecutor;
 	}
 
-	public long getPollingPerElementExtractorInMillisec() {
-		return pollingPerElementExtractorInMillisec;
-	}
-
-	public void setPollingPerElementExtractorInMillisec(long pollingPerElementExtractorInMillisec) {
-		this.pollingPerElementExtractorInMillisec = pollingPerElementExtractorInMillisec;
-	}
-
-	public long getMaxTimeOutPerElementExtratorInSec() {
-		return maxTimeOutPerElementExtratorInSec;
-	}
-
-	public void setMaxTimeOutPerElementExtratorInSec(long maxTimeOutPerElementExtratorInSec) {
-		this.maxTimeOutPerElementExtratorInSec = maxTimeOutPerElementExtratorInSec;
-	}
-
-	public boolean isInViewScreenshot() {
+	public String isInViewScreenshot() {
 		return inViewScreenshot;
 	}
 
-	public void setInViewScreenshot(boolean inViewScreenshot) {
+	public void setInViewScreenshot(String inViewScreenshot) {
 		this.inViewScreenshot = inViewScreenshot;
 	}
 

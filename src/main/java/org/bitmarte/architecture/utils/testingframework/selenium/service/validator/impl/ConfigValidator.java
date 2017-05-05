@@ -100,9 +100,6 @@ public class ConfigValidator extends A_Validator {
 			throw new ValidatorException("ErrorConditions must not be empty!");
 		}
 
-		LOG.info("setInViewScreenshot = " + toValidate.isInViewScreenshot());
-		LOG.info("setCloseBrowserOnFinish = " + toValidate.isCloseBrowserOnFinish());
-
 		// checking for webTimingsAPI
 		if (toValidate.getWebTimings() != null) {
 			if (E_BrowserName.valueOf(toValidate.getBrowser().getName()).equals(E_BrowserName.IEXPLORER)) {
@@ -192,7 +189,26 @@ public class ConfigValidator extends A_Validator {
 
 		// pollingPerElementExtractor
 		if (toValidate.getPollingPerElementExtractorInMillisec() == 0) {
+			toValidate.setPollingPerElementExtractorInMillisec(POLLING_PER_ELEMENT_EXTRACTOR_IN_MILLISEC);
 			LOG.info("setMaxTimeOutPerElementExtratorInSec = " + POLLING_PER_ELEMENT_EXTRACTOR_IN_MILLISEC);
+		}
+
+		// closeBrowserOnFinish
+		if (toValidate.isCloseBrowserOnFinish() == null) {
+			toValidate.setCloseBrowserOnFinish("true");
+			LOG.info("setCloseBrowserOnFinish = true");
+		}
+
+		// cleanReportBaseDirOnStart
+		if (toValidate.isCleanReportBaseDirOnStart() == null) {
+			toValidate.setCleanReportBaseDirOnStart("true");
+			LOG.info("setCleanReportBaseDirOnStart = true");
+		}
+
+		// inViewScreenshot
+		if (toValidate.isInViewScreenshot() == null) {
+			toValidate.setInViewScreenshot("true");
+			LOG.info("setInViewScreenshot = true");
 		}
 
 	}

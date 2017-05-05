@@ -33,7 +33,7 @@ public class RunTestSuite {
 		try {
 			SeleniumConfigProvider.loadConfiguration(args);
 
-			if (SeleniumConfigProvider.getConfig().isCleanReportBaseDirOnStart()) {
+			if (Boolean.valueOf(SeleniumConfigProvider.getConfig().isCleanReportBaseDirOnStart())) {
 				cleanReportFolder();
 			}
 
@@ -52,7 +52,7 @@ public class RunTestSuite {
 				t.start();
 
 				// If concurrentPlans flag is enabled don't wait thread
-				if (!SeleniumConfigProvider.getConfig().isConcurrentPlans()) {
+				if (!Boolean.valueOf(SeleniumConfigProvider.getConfig().isConcurrentPlans())) {
 					t.join();
 				}
 			}
@@ -70,7 +70,7 @@ public class RunTestSuite {
 								.produce();
 					}
 
-					if (SeleniumConfigProvider.getConfig().isCloseBrowserOnFinish()) {
+					if (Boolean.valueOf(SeleniumConfigProvider.getConfig().isCloseBrowserOnFinish())) {
 						try {
 							if (proxy != null) {
 								proxy.stop();

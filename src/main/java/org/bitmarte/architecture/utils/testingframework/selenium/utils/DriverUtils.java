@@ -73,7 +73,7 @@ public class DriverUtils {
 				break;
 			}
 
-			if (SeleniumConfigProvider.getConfig().isInViewScreenshot()) {
+			if (Boolean.parseBoolean(SeleniumConfigProvider.getConfig().isInViewScreenshot())) {
 				// in view screenshot
 				if (waitBeforeScreenshotInMilliSec > 0) {
 					LOG.info("waiting before take screenshot [" + waitBeforeScreenshotInMilliSec + "ms] ...");

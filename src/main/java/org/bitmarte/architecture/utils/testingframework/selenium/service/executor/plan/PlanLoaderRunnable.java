@@ -185,7 +185,7 @@ public class PlanLoaderRunnable implements Runnable {
 
 				this.workingPlans.regWorkedPlan(plan);
 
-				if (SeleniumConfigProvider.getConfig().isCloseBrowserOnFinish()) {
+				if (Boolean.valueOf(SeleniumConfigProvider.getConfig().isCloseBrowserOnFinish())) {
 					try {
 						this.driver.quit();
 					} catch (Throwable t) {
