@@ -44,6 +44,13 @@ public abstract class A_TestCondition {
 	private long maxTimeOutPerElementExtratorInSec;
 
 	/**
+	 * The file name of the screenshot
+	 */
+	@XStreamAlias("screenshotFileName")
+	@XStreamAsAttribute
+	private String screenshotFileName;
+
+	/**
 	 * Waiting timeout before taking a screenshot
 	 */
 	@XStreamAlias("waitBeforeScreenshotInMilliSec")
@@ -88,6 +95,14 @@ public abstract class A_TestCondition {
 
 	public void setMaxTimeOutPerElementExtratorInSec(long maxTimeOutPerElementExtratorInSec) {
 		this.maxTimeOutPerElementExtratorInSec = maxTimeOutPerElementExtratorInSec;
+	}
+
+	public String getScreenshotFileName() {
+		return screenshotFileName;
+	}
+
+	public void setScreenshotFileName(String screenshotFileName) {
+		this.screenshotFileName = screenshotFileName;
 	}
 
 	public long getWaitBeforeScreenshotInMilliSec() {

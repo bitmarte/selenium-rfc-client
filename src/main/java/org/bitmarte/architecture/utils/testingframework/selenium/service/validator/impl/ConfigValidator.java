@@ -23,6 +23,7 @@ public class ConfigValidator extends A_Validator {
 
 	private static final int MAX_TIMEOUT_PER_MEASURE_IN_SEC = 5;
 	private static final int MAX_TIMEOUT_PER_ELEMENT_EXTRACTOR_IN_SEC = 5;
+	private static final long POLLING_PER_ELEMENT_EXTRACTOR_IN_MILLISEC = 250;
 	private static final long WAIT_BEFORE_ACTION_FIRST_EXEC_IN_MS = 100;
 	private static final long WAIT_BEFORE_ACTION_RETRY_EXEC_IN_MS = 300;
 
@@ -99,8 +100,6 @@ public class ConfigValidator extends A_Validator {
 			throw new ValidatorException("ErrorConditions must not be empty!");
 		}
 
-		LOG.warn("setCloseBrowserOnFinish = " + toValidate.isCloseBrowserOnFinish());
-
 		// checking for webTimingsAPI
 		if (toValidate.getWebTimings() != null) {
 			if (E_BrowserName.valueOf(toValidate.getBrowser().getName()).equals(E_BrowserName.IEXPLORER)) {
@@ -139,6 +138,25 @@ public class ConfigValidator extends A_Validator {
 				}
 			}
 		}
+
+		// closeBrowserOnFinish
+		if (!StringUtils.equalsAny(toValidate.isCloseBrowserOnFinish(), "true", "false")) {
+			throw new ValidatorException("Property 'closeBrowserOnFinish' must be a BOOLEAN value (true/false)!");
+		}
+		// cleanReportBaseDirOnStart
+		if (!StringUtils.equalsAny(toValidate.isCleanReportBaseDirOnStart(), "true", "false")) {
+			throw new ValidatorException("Property 'cleanReportBaseDirOnStart' must be a BOOLEAN value (true/false)!");
+		}
+		// inViewScreenshot
+		if (!StringUtils.equalsAny(toValidate.isInViewScreenshot(), "true", "false")) {
+			throw new ValidatorException("Property 'inViewScreenshot' must be a BOOLEAN value (true/false)!");
+		}
+		// enableHarCapture
+		if (!StringUtils.equalsAny(toValidate.getMobProxy().isEnableHarCapture(), "true", "false")) {
+			throw new ValidatorException(
+					"Property 'enableHarCapture' for mobProxy must be a BOOLEAN value (true/false)!");
+		}
+
 	}
 
 	/**
@@ -186,6 +204,36 @@ public class ConfigValidator extends A_Validator {
 		if (toValidate.getMaxTimeOutPerElementExtratorInSec() == 0) {
 			toValidate.setMaxTimeOutPerElementExtratorInSec(MAX_TIMEOUT_PER_ELEMENT_EXTRACTOR_IN_SEC);
 			LOG.info("setMaxTimeOutPerElementExtratorInSec = " + MAX_TIMEOUT_PER_ELEMENT_EXTRACTOR_IN_SEC);
+		}
+
+		// pollingPerElementExtractor
+		if (toValidate.getPollingPerElementExtractorInMillisec() == 0) {
+			toValidate.setPollingPerElementExtractorInMillisec(POLLING_PER_ELEMENT_EXTRACTOR_IN_MILLISEC);
+			LOG.info("setMaxTimeOutPerElementExtratorInSec = " + POLLING_PER_ELEMENT_EXTRACTOR_IN_MILLISEC);
+		}
+
+		// closeBrowserOnFinish
+		if (toValidate.isCloseBrowserOnFinish() == null) {
+			toValidate.setCloseBrowserOnFinish("true");
+			LOG.info("isCloseBrowserOnFinish = true");
+		}
+
+		// cleanReportBaseDirOnStart
+		if (toValidate.isCleanReportBaseDirOnStart() == null) {
+			toValidate.setCleanReportBaseDirOnStart("true");
+			LOG.info("isCleanReportBaseDirOnStart = true");
+		}
+
+		// inViewScreenshot
+		if (toValidate.isInViewScreenshot() == null) {
+			toValidate.setInViewScreenshot("true");
+			LOG.info("isInViewScreenshot = true");
+		}
+
+		// enableHarCapture
+		if (toValidate.getMobProxy().isEnableHarCapture() == null) {
+			toValidate.getMobProxy().setEnableHarCapture("false");
+			LOG.info("isEnableHarCapture = false");
 		}
 
 	}

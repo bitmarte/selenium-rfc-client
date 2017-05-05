@@ -21,14 +21,13 @@
 		<localWebDriverPath>/path/to/browser-web-driver</localWebDriverPath>
 		<seleniumRcURL>http://10.217.xx.xx:4444/wd/hub</seleniumRcURL>
 		<reportBaseDir>/var/tmp/selenium/reports/</reportBaseDir>
-		<cleanReportBaseDirOnStart>true</cleanReportBaseDirOnStart>
 		<errorConditions>
 			<errorCondition elementExtractor="BY_CLASSNAME" contentEvaluator="CONTAINS">
 				<element>error-msg-container</element>
 				<elementContent>error-msg-content</elementContent>
 			</errorCondition>
 		</errorConditions>
-		<closeBrowserOnFinish>false</closeBrowserOnFinish>
+		<waitBeforeScreenshotInMilliSec>10</waitBeforeScreenshotInMilliSec>
 	</config>
 
 <ul>
@@ -39,13 +38,16 @@
 	<li>'localWebDriverPath' is a **required** node where put the webdriver path</li>
 	<li>'seleniumRcURL' is an **optional** node where put the SeleniumRC URL connection. **Remove this node for LOCAL approach**</li>
 	<li>'browserActionExecutor' is an **optional** node where put the default browser action executor configurations, such as 'waitBeforeFirstActionInMs' and 'waitBeforeRetryActionInMs'. **Take a look below for the documentation**</li>
-	<li>'maxTimeOutPerElementExtratorInSec' is an **optional** node where put the timeout (in second) user for element extractors. The default value is 5. You can override it for each run, take a look at [Extractor](extractor.md)</li>
+	<li>'maxTimeOutPerElementExtratorInSec' is an **optional** node where put the timeout (in second) user for element extractors. The default value is 5sec. You can override it for each run, take a look at [Extractor](extractor.md)</li>
+	<li>'pollingPerElementExtractorInMillisec' is an **optional** node where put the polling (in millisecond) used during element extractor. The default value is 250msec.</li>
 	<li>'customPlanLoaders' is an **optional** node where put your customPlanLoaders implementations. **Take a look below for supported customPlanLoaders**</li>
 	<li>'reportBaseDir' is a **require** node where put your preferred location where Selenium save reports</li>
-	<li>'cleanReportBaseDirOnStart' is an **optional** node used to clean the location where Selenium save reports before run. The default value is false</li>
+	<li>'cleanReportBaseDirOnStart' is an **optional** node used to clean the location where Selenium save reports before run. The default value is true</li>
 	<li>'errorConditions' is a **require** node where put your generic error conditions</li>
-	<li>'closeBrowserOnFinish' is an **optional** node used to close browser at the end of your test, boolean value. The default value is false</li>
+	<li>'closeBrowserOnFinish' is an **optional** node used to close browser at the end of your test, boolean value. The default value is true</li>
 	<li>'waitBeforeScreenshotInMilliSec' is an **optional** node used to apply a sleep time after SuccessCondition evaluator before take the screenshot. You can override it for each condition. The dafault value is 0ms</li>
+	<li>'inViewScreenshot' is an **optional** node (boolean value) that it allows you to save the whole page, not only in view one. The default value is true</li>
+	<li>'concurrentPlans' is an **optional** node for allowing concurrent tests with default value false. For more details see [Concurrent plan](docs/concurrent-plan.md)</li>
 </ul>
 
 ### browser

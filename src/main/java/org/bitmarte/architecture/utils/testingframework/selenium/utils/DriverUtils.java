@@ -6,12 +6,15 @@ import org.apache.commons.io.FileUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.Augmenter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.assertthat.selenium_shutterbug.core.Shutterbug;
+import com.assertthat.selenium_shutterbug.utils.web.ScrollStrategy;
 
 /**
  * This is the web driver utility class
@@ -66,22 +69,32 @@ public class DriverUtils {
 				}
 				break;
 			default:
-				// no wait
+				// Nothing to do
 				break;
 			}
 
-			if (waitBeforeScreenshotInMilliSec > 0) {
-				LOG.info("waiting before take screenshot [" + waitBeforeScreenshotInMilliSec + "ms] ...");
-				Thread.sleep(waitBeforeScreenshotInMilliSec);
+			if (Boolean.parseBoolean(SeleniumConfigProvider.getConfig().isInViewScreenshot())) {
+				// in view screenshot
+				if (waitBeforeScreenshotInMilliSec > 0) {
+					LOG.info("waiting before take screenshot [" + waitBeforeScreenshotInMilliSec + "ms] ...");
+					Thread.sleep(waitBeforeScreenshotInMilliSec);
+				}
+				File scrFile = ((TakesScreenshot) this.driver).getScreenshotAs(OutputType.FILE);
+				FileUtils.copyFile(scrFile, new File(archivePath + screenshotFileName + ".png"));
+			} else {
+				// whole page screenshot
+				Shutterbug.shootPage(this.driver, ScrollStrategy.BOTH_DIRECTIONS);
+				if (waitBeforeScreenshotInMilliSec > 0) {
+					LOG.info("waiting before take screenshot [" + waitBeforeScreenshotInMilliSec + "ms] ...");
+					Thread.sleep(waitBeforeScreenshotInMilliSec);
+				}
+				Shutterbug.shootPage(this.driver, ScrollStrategy.BOTH_DIRECTIONS).withName(screenshotFileName)
+						.save(archivePath);
+				// scroll to top page
+				JavascriptExecutor js = (JavascriptExecutor) this.driver;
+				js.executeScript("window.scrollTo(0, 0);");
 			}
 
-			WebDriver augmentedDriver = this.driver;
-			if (SeleniumConfigProvider.getConfig().getSeleniumRcURL() != null) {
-				augmentedDriver = new Augmenter().augment(this.driver);
-			}
-			File scrFile = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
-
-			FileUtils.copyFile(scrFile, new File(archivePath + screenshotFileName + ".png"));
 		} catch (Exception e) {
 			hasError = true;
 			LOG.error("Error takeScreenshot()!", e);

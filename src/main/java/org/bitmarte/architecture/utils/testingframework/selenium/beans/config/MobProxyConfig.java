@@ -2,8 +2,6 @@ package org.bitmarte.architecture.utils.testingframework.selenium.beans.config;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
-import com.thoughtworks.xstream.annotations.XStreamConverter;
-import com.thoughtworks.xstream.converters.basic.BooleanConverter;
 
 /**
  * This is the browsermob-proxy configuration.
@@ -50,9 +48,8 @@ public class MobProxyConfig {
 	 * Flag for enabling the HAR file caputer of the test
 	 */
 	@XStreamAlias("enableHarCapture")
-	@XStreamConverter(value = BooleanConverter.class, booleans = { false }, strings = { "true", "false" })
 	@XStreamAsAttribute
-	private boolean enableHarCapture;
+	private String enableHarCapture;
 
 	public int getPort() {
 		return port;
@@ -94,11 +91,11 @@ public class MobProxyConfig {
 		this.chainedProxy = chainedProxy;
 	}
 
-	public boolean isEnableHarCapture() {
+	public String isEnableHarCapture() {
 		return enableHarCapture;
 	}
 
-	public void setEnableHarCapture(boolean enableHarCapture) {
+	public void setEnableHarCapture(String enableHarCapture) {
 		this.enableHarCapture = enableHarCapture;
 	}
 
