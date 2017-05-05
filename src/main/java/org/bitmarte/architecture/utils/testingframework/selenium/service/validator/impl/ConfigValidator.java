@@ -138,6 +138,25 @@ public class ConfigValidator extends A_Validator {
 				}
 			}
 		}
+
+		// closeBrowserOnFinish
+		if (!StringUtils.equalsAny(toValidate.isCloseBrowserOnFinish(), "true", "false")) {
+			throw new ValidatorException("Property 'closeBrowserOnFinish' must be a BOOLEAN value (true/false)!");
+		}
+		// cleanReportBaseDirOnStart
+		if (!StringUtils.equalsAny(toValidate.isCleanReportBaseDirOnStart(), "true", "false")) {
+			throw new ValidatorException("Property 'cleanReportBaseDirOnStart' must be a BOOLEAN value (true/false)!");
+		}
+		// inViewScreenshot
+		if (!StringUtils.equalsAny(toValidate.isInViewScreenshot(), "true", "false")) {
+			throw new ValidatorException("Property 'inViewScreenshot' must be a BOOLEAN value (true/false)!");
+		}
+		// enableHarCapture
+		if (!StringUtils.equalsAny(toValidate.getMobProxy().isEnableHarCapture(), "true", "false")) {
+			throw new ValidatorException(
+					"Property 'enableHarCapture' for mobProxy must be a BOOLEAN value (true/false)!");
+		}
+
 	}
 
 	/**
@@ -196,19 +215,25 @@ public class ConfigValidator extends A_Validator {
 		// closeBrowserOnFinish
 		if (toValidate.isCloseBrowserOnFinish() == null) {
 			toValidate.setCloseBrowserOnFinish("true");
-			LOG.info("setCloseBrowserOnFinish = true");
+			LOG.info("isCloseBrowserOnFinish = true");
 		}
 
 		// cleanReportBaseDirOnStart
 		if (toValidate.isCleanReportBaseDirOnStart() == null) {
 			toValidate.setCleanReportBaseDirOnStart("true");
-			LOG.info("setCleanReportBaseDirOnStart = true");
+			LOG.info("isCleanReportBaseDirOnStart = true");
 		}
 
 		// inViewScreenshot
 		if (toValidate.isInViewScreenshot() == null) {
 			toValidate.setInViewScreenshot("true");
-			LOG.info("setInViewScreenshot = true");
+			LOG.info("isInViewScreenshot = true");
+		}
+
+		// enableHarCapture
+		if (toValidate.getMobProxy().isEnableHarCapture() == null) {
+			toValidate.getMobProxy().setEnableHarCapture("false");
+			LOG.info("isEnableHarCapture = false");
 		}
 
 	}
