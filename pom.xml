@@ -68,7 +68,7 @@
 		<dependency>
 		    <groupId>com.assertthat</groupId> 
 		    <artifactId>selenium-shutterbug</artifactId>
-		    <version>0.6</version>
+		    <version>0.6.1</version>
 		</dependency>
 	</dependencies>
 	<distributionManagement>
