@@ -87,12 +87,12 @@ public class ChromeExtensionPlanLoader extends A_PlanLoader {
 							break;
 						case CLICK:
 							ClickAction clickAction = new ClickAction();
-							clickAction.setElement((String) this.getJsonValue(bAction, "xpath", new ArrayList()));
+							clickAction.setElement((String) this.getJsonValue(bAction, "xpath", new ArrayList<>()));
 							browserActions.add(clickAction);
 							break;
 						case SET:
 							InputFillAction inputFillAction = new InputFillAction();
-							inputFillAction.setElement((String) this.getJsonValue(bAction, "xpath", new ArrayList()));
+							inputFillAction.setElement((String) this.getJsonValue(bAction, "xpath", new ArrayList<>()));
 							inputFillAction.setValue((String) this.getJsonValue(bAction, "content", new String()));
 							browserActions.add(inputFillAction);
 							break;
@@ -106,7 +106,7 @@ public class ChromeExtensionPlanLoader extends A_PlanLoader {
 							break;
 						case SCROLL:
 							ScrollAction scrollAction = new ScrollAction();
-							scrollAction.setElement((String) this.getJsonValue(bAction, "xpath", new ArrayList()));
+							scrollAction.setElement((String) this.getJsonValue(bAction, "xpath", new ArrayList<>()));
 							scrollAction.setTopPx((Integer) this.getJsonValue(bAction, "top", new Integer(-1)));
 							scrollAction.setLeftPx((Integer) this.getJsonValue(bAction, "left", new Integer(-1)));
 							browserActions.add(scrollAction);
@@ -115,7 +115,8 @@ public class ChromeExtensionPlanLoader extends A_PlanLoader {
 							run = new Run();
 							run.setRunName("run_" + i);
 							successCondition = new SuccessCondition();
-							successCondition.setElement((String) this.getJsonValue(bAction, "xpath", new ArrayList()));
+							successCondition
+									.setElement((String) this.getJsonValue(bAction, "xpath", new ArrayList<>()));
 							successCondition
 									.setElementContent((String) this.getJsonValue(bAction, "content", new String()));
 							successCondition.setContentEvaluator(E_ContentEvaluator.EQUALS.name());
@@ -131,7 +132,8 @@ public class ChromeExtensionPlanLoader extends A_PlanLoader {
 							run.setRunName(StringUtils.substring(file.getName(), 0, file.getName().lastIndexOf("."))
 									+ "_" + i);
 							successCondition = new SuccessCondition();
-							successCondition.setElement((String) this.getJsonValue(bAction, "xpath", new ArrayList()));
+							successCondition
+									.setElement((String) this.getJsonValue(bAction, "xpath", new ArrayList<>()));
 							successCondition
 									.setElementContent((String) this.getJsonValue(bAction, "content", new String()));
 							successCondition.setContentEvaluator(E_ContentEvaluator.CONTAINS.name());
