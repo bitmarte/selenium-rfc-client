@@ -2,6 +2,7 @@ package org.bitmarte.architecture.utils.testingframework.selenium.service.loader
 
 import java.io.File;
 import java.io.FileFilter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +67,7 @@ public class ChromeExtensionPlanLoader extends A_PlanLoader {
 
 			if (plans.length > 0) {
 				for (File file : plans) {
-					JsonArray bActions = Json.parse(FileUtils.readFileToString(file)).asArray();
+					JsonArray bActions = Json.parse(FileUtils.readFileToString(file, StandardCharsets.UTF_8)).asArray();
 					Plan plan = new Plan();
 					plan.setPlanName(file.getName());
 					List<Run> runs = new ArrayList<Run>();
