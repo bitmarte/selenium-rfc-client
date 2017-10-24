@@ -10,6 +10,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_Bro
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserMode;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserName;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -60,7 +61,7 @@ public class WebDriverFactory {
 					+ "' and browserName '" + browserName + "'", e);
 		}
 
-		DesiredCapabilities capabilities = getBrowserCapabilitiesFromConfiguration();
+		MutableCapabilities capabilities = getBrowserCapabilitiesFromConfiguration();
 
 		// BrowserMobProxyServer
 		if (proxy != null) {
@@ -75,7 +76,7 @@ public class WebDriverFactory {
 			case CHROME:
 				LOG.info("using remote chrome browser on server '"
 						+ SeleniumConfigProvider.getConfig().getSeleniumRcURL() + "'");
-				capabilities.setBrowserName("chrome");
+				capabilities.setCapability(CapabilityType.BROWSER_NAME, "chrome");
 				// settings arguments
 				browserArgumentsConfig(E_BrowserName.CHROME, capabilities);
 				return new RemoteWebDriver(new URL(SeleniumConfigProvider.getConfig().getSeleniumRcURL()),
@@ -83,13 +84,13 @@ public class WebDriverFactory {
 			case IEXPLORER:
 				LOG.info("using remote iexplorer browser on server '"
 						+ SeleniumConfigProvider.getConfig().getSeleniumRcURL() + "'");
-				capabilities.setBrowserName("internet explorer");
+				capabilities.setCapability(CapabilityType.BROWSER_NAME, "internet explorer");
 				return new RemoteWebDriver(new URL(SeleniumConfigProvider.getConfig().getSeleniumRcURL()),
 						capabilities);
 			case FIREFOX:
 				LOG.info("using remote firefox browser on server '"
 						+ SeleniumConfigProvider.getConfig().getSeleniumRcURL() + "'");
-				capabilities.setBrowserName("firefox");
+				capabilities.setCapability(CapabilityType.BROWSER_NAME, "firefox");
 				// settings arguments
 				browserArgumentsConfig(E_BrowserName.FIREFOX, capabilities);
 				return new RemoteWebDriver(new URL(SeleniumConfigProvider.getConfig().getSeleniumRcURL()),
@@ -107,7 +108,7 @@ public class WebDriverFactory {
 						SeleniumConfigProvider.getConfig().getLocalWebDriverPath());
 				// settings arguments
 				browserArgumentsConfig(E_BrowserName.CHROME, capabilities);
-				return new ChromeDriver(capabilities);
+				return new ChromeDriver((ChromeOptions) capabilities);
 			case IEXPLORER:
 				throw new WebDriverException("IExplorer browser in remote mode is not supported!");
 			default:
@@ -117,7 +118,7 @@ public class WebDriverFactory {
 						SeleniumConfigProvider.getConfig().getLocalWebDriverPath());
 				// settings arguments
 				browserArgumentsConfig(E_BrowserName.FIREFOX, capabilities);
-				return new FirefoxDriver(capabilities);
+				return new FirefoxDriver((FirefoxOptions) capabilities);
 			}
 
 		default:
@@ -130,9 +131,9 @@ public class WebDriverFactory {
 	 * Configure arguments for WebDriver
 	 * 
 	 * @param capabilities
-	 *            {@link DesiredCapabilities}
+	 *            {@link MutableCapabilities}
 	 */
-	private static void browserArgumentsConfig(E_BrowserName browserName, DesiredCapabilities capabilities) {
+	private static void browserArgumentsConfig(E_BrowserName browserName, MutableCapabilities capabilities) {
 		if (SeleniumConfigProvider.getConfig().getBrowser().getArguments() != null) {
 			StringTokenizer args = new StringTokenizer(SeleniumConfigProvider.getConfig().getBrowser().getArguments(),
 					",");
@@ -162,12 +163,12 @@ public class WebDriverFactory {
 	}
 
 	/**
-	 * Retrieve {@link DesiredCapabilities} based on configuration, if it is
+	 * Retrieve {@link MutableCapabilities} based on configuration, if it is
 	 * specified
 	 * 
-	 * @return {@link DesiredCapabilities}
+	 * @return {@link MutableCapabilities}
 	 */
-	private static DesiredCapabilities getBrowserCapabilitiesFromConfiguration() {
+	private static MutableCapabilities getBrowserCapabilitiesFromConfiguration() {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		if (SeleniumConfigProvider.getConfig().getBrowser().getBrowserCapabilities() != null) {
 			for (BrowserCapabilityConfig capability : SeleniumConfigProvider.getConfig().getBrowser()
@@ -187,7 +188,7 @@ public class WebDriverFactory {
 			}
 		}
 
-		return capabilities;
+		return new MutableCapabilities(capabilities);
 	}
 
 	/**
