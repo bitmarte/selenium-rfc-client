@@ -5,7 +5,7 @@
 3. Copy to your preferred path all "src/main/examples/" content (config.xml and plans folder with its content)
 4. Open "config.xml" (eg. /var/selenium/my-cfg/config.xml) and apply your configuration, as the example below:
 
-`
+
 	<config>
 		<browser>
 			<mode>LOCAL</mode>
@@ -27,7 +27,6 @@
 		</errorConditions>
 		<waitBeforeScreenshotInMilliSec>10</waitBeforeScreenshotInMilliSec>
 	</config>
-`
 
 * 'browser/mode' is **require** node where put the test approach. **Take a look below for supported browsers**
 * 'browser/name' is a **require** node where put the browser that you want to run tests on. **Take a look below for supported browsers**
