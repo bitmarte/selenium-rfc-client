@@ -1,12 +1,9 @@
 ## Client Setup
-<ol>
-	<li>Clone this repo</li>
-	<li>Choose a path where you want to put your configuration, and create it on your local machine (eg. /var/selenium/my-cfg)</li>
-	<li>Copy to your preferred path all "src/main/examples/" content (config.xml and plans folder with its content)</li>
-	<li>
-		Open "config.xml" (eg. /var/selenium/my-cfg/config.xml) and apply your configuration, as the example below:
-	</li>
-</ol>
+
+1. Clone this repo
+2. Choose a path where you want to put your configuration, and create it on your local machine (eg. /var/selenium/my-cfg)
+3. Copy to your preferred path all "src/main/examples/" content (config.xml and plans folder with its content)
+4. Open "config.xml" (eg. /var/selenium/my-cfg/config.xml) and apply your configuration, as the example below:
 	
 	<config>
 		<browser>
