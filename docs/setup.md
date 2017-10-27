@@ -1,12 +1,9 @@
 ## Client Setup
-<ol>
-	<li>Clone this repo</li>
-	<li>Choose a path where you want to put your configuration, and create it on your local machine (eg. /var/selenium/my-cfg)</li>
-	<li>Copy to your preferred path all "src/main/examples/" content (config.xml and plans folder with its content)</li>
-	<li>
-		Open "config.xml" (eg. /var/selenium/my-cfg/config.xml) and apply your configuration, as the example below:
-	</li>
-</ol>
+
+1. Clone this repo
+2. Choose a path where you want to put your configuration, and create it on your local machine (eg. /var/selenium/my-cfg)
+3. Copy to your preferred path all "src/main/examples/" content (config.xml and plans folder with its content)
+4. Open "config.xml" (eg. /var/selenium/my-cfg/config.xml) and apply your configuration, as the example below:
 	
 	<config>
 		<browser>
@@ -30,25 +27,23 @@
 		<waitBeforeScreenshotInMilliSec>10</waitBeforeScreenshotInMilliSec>
 	</config>
 
-<ul>
-	<li>'browser/mode' is **require** node where put the test approach. **Take a look below for supported browsers**</li>
-	<li>'browser/name' is a **require** node where put the browser that you want to run tests on. **Take a look below for supported browsers**</li>
-	<li>'browser/arguments' is an **optional** node where put the webdriver arguments, just Chrome and Firefox supported (http://peter.sh/experiments/chromium-command-line-switches/)</li>
-	<li>'browser/browserCapability' is an **optional** list where put DesiredCapabilities of your selected browser, just Chrome and Firefox supported</li>
-	<li>'localWebDriverPath' is a **required** node where put the webdriver path</li>
-	<li>'seleniumRcURL' is an **optional** node where put the SeleniumRC URL connection. **Remove this node for LOCAL approach**</li>
-	<li>'browserActionExecutor' is an **optional** node where put the default browser action executor configurations, such as 'waitBeforeFirstActionInMs' and 'waitBeforeRetryActionInMs'. **Take a look below for the documentation**</li>
-	<li>'maxTimeOutPerElementExtratorInSec' is an **optional** node where put the timeout (in second) user for element extractors. The default value is 5sec. You can override it for each run, take a look at [Extractor](extractor.md)</li>
-	<li>'pollingPerElementExtractorInMillisec' is an **optional** node where put the polling (in millisecond) used during element extractor. The default value is 250msec.</li>
-	<li>'customPlanLoaders' is an **optional** node where put your customPlanLoaders implementations. **Take a look below for supported customPlanLoaders**</li>
-	<li>'reportBaseDir' is a **require** node where put your preferred location where Selenium save reports</li>
-	<li>'cleanReportBaseDirOnStart' is an **optional** node used to clean the location where Selenium save reports before run. The default value is true</li>
-	<li>'errorConditions' is a **require** node where put your generic error conditions</li>
-	<li>'closeBrowserOnFinish' is an **optional** node used to close browser at the end of your test, boolean value. The default value is true</li>
-	<li>'waitBeforeScreenshotInMilliSec' is an **optional** node used to apply a sleep time after SuccessCondition evaluator before take the screenshot. You can override it for each condition. The dafault value is 0ms</li>
-	<li>'inViewScreenshot' is an **optional** node (boolean value) that it allows you to save the whole page, not only in view one. The default value is true</li>
-	<li>'concurrentPlans' is an **optional** node for allowing concurrent tests with default value false. For more details see [Concurrent plan](docs/concurrent-plan.md)</li>
-</ul>
+* 'browser/mode' is **require** node where put the test approach. **Take a look below for supported browsers**
+* 'browser/name' is a **require** node where put the browser that you want to run tests on. **Take a look below for supported browsers**
+* 'browser/arguments' is an **optional** node where put the webdriver arguments, just Chrome and Firefox supported (http://peter.sh/experiments/chromium-command-line-switches/)
+* 'browser/browserCapability' is an **optional** list where put DesiredCapabilities of your selected browser, just Chrome and Firefox supported
+* 'localWebDriverPath' is a **required** node where put the whole webdriver path, even filename
+* 'seleniumRcURL' is an **optional** node where put the SeleniumRC URL connection. **Remove this node for LOCAL approach**
+* 'browserActionExecutor' is an **optional** node where put the default browser action executor configurations, such as 'waitBeforeFirstActionInMs' and 'waitBeforeRetryActionInMs'. **Take a look below for the documentation**
+* 'maxTimeOutPerElementExtratorInSec' is an **optional** node where put the timeout (in second) user for element extractors. The default value is 5sec. You can override it for each run, take a look at [Extractor](extractor.md)
+* 'pollingPerElementExtractorInMillisec' is an **optional** node where put the polling (in millisecond) used during element extractor. The default value is 250msec.
+* 'customPlanLoaders' is an **optional** node where put your customPlanLoaders implementations. **Take a look below for supported customPlanLoaders**
+* 'reportBaseDir' is a **require** node where put your preferred location where Selenium save reports
+* 'cleanReportBaseDirOnStart' is an **optional** node used to clean the location where Selenium save reports before run. The default value is true
+* 'errorConditions' is a **require** node where put your generic error conditions
+* 'closeBrowserOnFinish' is an **optional** node used to close browser at the end of your test, boolean value. The default value is true
+* 'waitBeforeScreenshotInMilliSec' is an **optional** node used to apply a sleep time after SuccessCondition evaluator before take the screenshot. You can override it for each condition. The dafault value is 0ms
+* 'inViewScreenshot' is an **optional** node (boolean value) that it allows you to save the whole page, not only in view one. The default value is true
+* 'concurrentPlans' is an **optional** node for allowing concurrent tests with default value false. For more details see [Concurrent plan](docs/concurrent-plan.md)
 
 ### browser
 #### browserMode
