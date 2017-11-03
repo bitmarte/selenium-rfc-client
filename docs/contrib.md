@@ -17,6 +17,21 @@ Take a look below for our contrib flow:
 * Please open a pull request from feature to the right release branch
 * After merge the feature branch will be deleted
 
+### Checking dependencies version
+Displays all dependencies that have newer versions available.
+It will also display dependencies which are used by a plugin or defined in the plugin within a pluginManagement.
+
+<code>
+    mvn versions:display-dependency-updates
+</code>
+
+### Create site with javadoc
+With Maven, you can use a command to generate a documentation site for your project information.
+
+<code>
+    mvn site:site
+</code>
+
 ### Assumptions
 * Master branch will be alligned with the last release one
 * Versions:
