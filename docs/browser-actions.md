@@ -4,6 +4,7 @@ Here you can find the lists of allowed actions:
 
 * [BackAction](#backaction)
 * [ClickAction](#clickaction)
+* [DoubleClickAction](#doubleclickaction)
 * [ComboFillAction](#combofillaction)
 * [ForwardAction](#forwardaction)
 * [GoToUrlAction](#gotourlaction)
@@ -31,6 +32,15 @@ It simulates the click:
 	<click>
 		<element>//input[@value="Go"]</element>
 	</click>
+
+For advanced element usage see below here [Extractor](docs/extractor.md).
+
+## DoubleClickAction
+It simulates the double click:
+
+	<doubleClick>
+		<element>//input[@value="Go"]</element>
+	</doubleClick>
 
 For advanced element usage see below here [Extractor](docs/extractor.md).
 

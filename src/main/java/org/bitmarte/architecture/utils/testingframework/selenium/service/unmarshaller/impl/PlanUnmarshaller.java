@@ -11,6 +11,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Succe
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.BackAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.ClickAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.ComboFillAction;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.DoubleClickAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.ForwardAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.GoToUrlAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.IFrameSwitchAction;
@@ -43,6 +44,7 @@ public class PlanUnmarshaller extends A_Unmarshaller {
 			// BrowserActions
 			xStream.processAnnotations(BackAction.class);
 			xStream.processAnnotations(ClickAction.class);
+			xStream.processAnnotations(DoubleClickAction.class);
 			xStream.processAnnotations(ComboFillAction.class);
 			xStream.processAnnotations(ForwardAction.class);
 			xStream.processAnnotations(GoToUrlAction.class);

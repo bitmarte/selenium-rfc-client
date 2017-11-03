@@ -4,6 +4,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.actio
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.BackAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.ClickAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.ComboFillAction;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.DoubleClickAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.ForwardAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.GoToUrlAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.IFrameSwitchAction;
@@ -18,6 +19,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.executo
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.impl.BackActionExecutor;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.impl.ClickActionExecutor;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.impl.ComboFillActionExecutor;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.impl.DoubleClickActionExecutor;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.impl.ForwardActionExecutor;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.impl.GoToUrlActionExecutor;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.impl.IFrameSwitchActionExecutor;
@@ -64,6 +66,8 @@ public class BrowserActionExecutorFactory {
 				return new GoToUrlActionExecutor(driver, (GoToUrlAction) browserAction);
 			} else if (browserAction instanceof ClickAction) {
 				return new ClickActionExecutor(driver, (ClickAction) browserAction);
+			} else if (browserAction instanceof DoubleClickAction) {
+				return new DoubleClickActionExecutor(driver, (DoubleClickAction) browserAction);
 			} else if (browserAction instanceof ComboFillAction) {
 				return new ComboFillActionExecutor(driver, (ComboFillAction) browserAction);
 			} else if (browserAction instanceof ForwardAction) {
