@@ -1,0 +1,8 @@
+<config>
+	<browser>
+		<mode>LOCAL</mode>
+		<name>CHROME</name>
+	</browser>
+	<localWebDriverPath>/var/selenium/webdrivers/browser-web-driver</localWebDriverPath>
+	<reportBaseDir>/var/tmp/selenium/reports/</reportBaseDir>
+</config>

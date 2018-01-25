@@ -1,0 +1,13 @@
+<config>
+	<browser>
+		<mode>REMOTE</mode>
+		<name>CHROME</name>
+	</browser>
+	<reportBaseDir>/var/tmp/selenium/reports/</reportBaseDir>
+	<errorConditions>
+		<errorCondition elementExtractor="BY_CLASSNAME" contentEvaluator="CONTAINS">
+			<element>error-msg-container</element>
+			<elementContent>error-msg-content</elementContent>
+		</errorCondition>
+	</errorConditions>
+</config>

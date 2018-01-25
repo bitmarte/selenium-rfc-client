@@ -1,0 +1,13 @@
+<config>
+	<browser>
+		<mode>LOCAL</mode>
+		<name>CHROME</name>
+	</browser>
+	<localWebDriverPath>/var/selenium/webdrivers/browser-web-driver</localWebDriverPath>
+	<errorConditions>
+		<errorCondition elementExtractor="BY_CLASSNAME" contentEvaluator="CONTAINS">
+			<element>error-msg-container</element>
+			<elementContent>error-msg-content</elementContent>
+		</errorCondition>
+	</errorConditions>
+</config>

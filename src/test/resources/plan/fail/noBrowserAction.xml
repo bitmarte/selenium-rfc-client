@@ -1,0 +1,9 @@
+<plan>
+	<run>
+		<runName>001_gotoSeleniumHQ</runName>
+		<successCondition contentEvaluator="CONTAINS">
+			<element>//h2</element>
+			<elementContent>What is Selenium</elementContent>
+		</successCondition>
+	</run>
+</plan>
