@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.config.BrowserActionExecutorConfig;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.config.BrowserCapabilityConfig;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.config.Config;
+import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.ErrorCondition;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserCapabilityType;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserMode;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserName;
@@ -49,7 +50,7 @@ public class ConfigValidator extends A_Validator {
             }
         }
 
-        if (toValidate.getLocalWebDriverPath() == null) {
+        if (toValidate.getBrowser().getMode().equals(E_BrowserMode.LOCAL) && toValidate.getLocalWebDriverPath() == null) {
             throw new ValidatorException("Property 'localWebDriverPath' is missing!");
         }
 
@@ -98,6 +99,13 @@ public class ConfigValidator extends A_Validator {
             throw new ValidatorException("ErrorConditions must not be empty!");
         } else if (toValidate.getErrorConditions().isEmpty()) {
             throw new ValidatorException("ErrorConditions must not be empty!");
+        } else {
+            for (ErrorCondition errorCondition : toValidate.getErrorConditions()) {
+                if (errorCondition.getElementExtractor() == null || errorCondition.getContentEvaluator() == null ||
+                        errorCondition.getElement() == null || errorCondition.getElementContent() == null) {
+                    throw new ValidatorException("ErrorCondition is incomplete!");
+                }
+            }
         }
 
         // checking for webTimingsAPI
