@@ -1,0 +1,52 @@
+<plan>
+	<run>
+		<runName>001_gotoSeleniumHQ</runName>
+		<browserActions>
+			<windowResize>
+				<widthPx>1440</widthPx>
+				<heightPx>900</heightPx>
+			</windowResize>
+			<goTo>
+				<url>http://www.seleniumhq.org/</url>
+			</goTo>
+		</browserActions>
+		<successCondition contentEvaluator="CONTAINS">
+			<element>//h2</element>
+			<elementContent>What is Selenium</elementContent>
+		</successCondition>
+	</run>
+	<run>
+		<runName>002_gotoDownload</runName>
+		<browserActions>
+			<goTo>
+				<url>http://www.seleniumhq.org/download/</url>
+			</goTo>
+		</browserActions>
+		<successCondition>
+			<element>//h2</element>
+			<elementContent>Downloads</elementContent>
+		</successCondition>
+	</run>
+	<run>
+		<runName>003_search</runName>
+		<browserActions>
+			<inputFill>
+				<element>//input[@name="q"]</element>
+				<value>webdriver</value>
+			</inputFill>
+			<click>
+				<element>//input[@value="Go"]</element>
+			</click>
+		</browserActions>
+		<successCondition elementExtractor="BY_ID" contentEvaluator="CONTAINS">
+			<element>cse-footer</element>
+			<elementContent>Google</elementContent>
+		</successCondition>
+		<errorConditions>
+			<errorCondition elementExtractor="BY_CLASSNAME" contentEvaluator="CONTAINS">
+				<element>error-msg-container</element>
+				<elementContent>error-msg-content</elementContent>
+			</errorCondition>
+		</errorConditions>
+	</run>
+</plan>

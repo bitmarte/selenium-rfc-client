@@ -1,0 +1,17 @@
+<plan>
+	<run>
+		<browserActions>
+			<windowResize>
+				<widthPx>1440</widthPx>
+				<heightPx>900</heightPx>
+			</windowResize>
+			<goTo>
+				<url>http://www.seleniumhq.org/</url>
+			</goTo>
+		</browserActions>
+		<successCondition contentEvaluator="CONTAINS">
+			<element>//h2</element>
+			<elementContent>What is Selenium</elementContent>
+		</successCondition>
+	</run>
+</plan>

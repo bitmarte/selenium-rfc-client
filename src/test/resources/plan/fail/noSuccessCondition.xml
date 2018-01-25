@@ -1,0 +1,14 @@
+<plan>
+	<run>
+		<runName>001_gotoSeleniumHQ</runName>
+		<browserActions>
+			<windowResize>
+				<widthPx>1440</widthPx>
+				<heightPx>900</heightPx>
+			</windowResize>
+			<goTo>
+				<url>http://www.seleniumhq.org/</url>
+			</goTo>
+		</browserActions>
+	</run>
+</plan>
