@@ -101,8 +101,7 @@ public class ConfigValidator extends A_Validator {
             throw new ValidatorException("ErrorConditions must not be empty!");
         } else {
             for (ErrorCondition errorCondition : toValidate.getErrorConditions()) {
-                if (errorCondition.getElementExtractor() == null || errorCondition.getContentEvaluator() == null ||
-                        errorCondition.getElement() == null || errorCondition.getElementContent() == null) {
+                if (errorCondition.getElementExtractor() == null || errorCondition.getElement() == null) {
                     throw new ValidatorException("ErrorCondition is incomplete!");
                 }
             }
