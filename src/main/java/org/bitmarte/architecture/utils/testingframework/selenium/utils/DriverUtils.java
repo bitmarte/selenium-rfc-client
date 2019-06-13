@@ -79,20 +79,16 @@ public class DriverUtils {
 					LOG.info("waiting before take screenshot [" + waitBeforeScreenshotInMilliSec + "ms] ...");
 					Thread.sleep(waitBeforeScreenshotInMilliSec);
 				}
-				File scrFile = ((TakesScreenshot) this.driver).getScreenshotAs(OutputType.FILE);
-				FileUtils.copyFile(scrFile, new File(archivePath + screenshotFileName + ".png"));
+				Shutterbug.shootPage(this.driver, ScrollStrategy.VIEWPORT_ONLY).withName(screenshotFileName)
+						.save(archivePath);
 			} else {
 				// whole page screenshot
-				Shutterbug.shootPage(this.driver, ScrollStrategy.BOTH_DIRECTIONS);
 				if (waitBeforeScreenshotInMilliSec > 0) {
 					LOG.info("waiting before take screenshot [" + waitBeforeScreenshotInMilliSec + "ms] ...");
 					Thread.sleep(waitBeforeScreenshotInMilliSec);
 				}
-				Shutterbug.shootPage(this.driver, ScrollStrategy.BOTH_DIRECTIONS).withName(screenshotFileName)
+				Shutterbug.shootPage(this.driver, ScrollStrategy.WHOLE_PAGE).withName(screenshotFileName)
 						.save(archivePath);
-				// scroll to top page
-				JavascriptExecutor js = (JavascriptExecutor) this.driver;
-				js.executeScript("window.scrollTo(0, 0);");
 			}
 
 		} catch (Exception e) {

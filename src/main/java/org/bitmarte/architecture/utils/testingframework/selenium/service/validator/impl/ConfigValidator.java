@@ -78,6 +78,10 @@ public class ConfigValidator extends A_Validator {
             throw new ValidatorException("BrowserName 'IEXPLORER' for mode 'LOCAL' is not allowed!");
         }
         if (E_BrowserMode.valueOf(toValidate.getBrowser().getMode()).equals(E_BrowserMode.REMOTE)
+                && E_BrowserName.valueOf(toValidate.getBrowser().getName()).equals(E_BrowserName.CHROME_HEADLESS)) {
+            throw new ValidatorException("BrowserName 'CHROME_HEADLESS' for mode 'REMOTE' is not allowed!");
+        }
+        if (E_BrowserMode.valueOf(toValidate.getBrowser().getMode()).equals(E_BrowserMode.REMOTE)
                 && toValidate.getSeleniumRcURL() == null) {
             throw new ValidatorException("Property 'seleniumRcURL' for mode 'REMOTE' is required!");
         }

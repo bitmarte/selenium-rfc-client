@@ -65,6 +65,7 @@ and put the right URL for property <seleniumRcURL> in your config.xml file for r
 | ----------------------------- | --------------------------------------------------------------------- |
 | FIREFOX						| Using firefox browser instance, only 48.x and later supported			|
 | CHROME						| Using chrome browser instance											|
+| CHROME_HEADLESS				| Using chrome in headless mode, only local mode is allowed 			|
 | IEXPLORER						| Using iexplorer browser instance, only remote mode is allowed (b)		|
 
 (b) You need to download Internet Explorer Driver Server (http://www.seleniumhq.org/download/) and passing the '-Dwebdriver.ie.driver' jar argument point to iexplorer driver on your remote machine.
