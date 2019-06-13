@@ -13,6 +13,7 @@ You need to be sure that the browser used for testing is installed on you machin
 		Mozilla Firefox: https://github.com/mozilla/geckodriver/releases
 	</li>
 </ul>
+**Chrome headless mode is allowed only for LOCAL mode**
 
 ### Remote approach
 In this case the client execute tests on remote machine.<br/>

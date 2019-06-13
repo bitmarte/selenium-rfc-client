@@ -95,6 +95,7 @@ public class WebDriverFactory {
                         throw new WebDriverException("Unknown case on E_BrowserName enum!");
                 }
             case LOCAL:
+                ChromeOptions chromeOptions = null;
                 // Using local mode as default browserMode
                 switch (e_BrowserName) {
                     case CHROME:
@@ -103,7 +104,17 @@ public class WebDriverFactory {
                                 SeleniumConfigProvider.getConfig().getLocalWebDriverPath());
                         // settings arguments
                         browserArgumentsConfig(E_BrowserName.CHROME, capabilities);
-                        ChromeOptions chromeOptions = new ChromeOptions();
+                        chromeOptions = new ChromeOptions();
+                        chromeOptions.merge(capabilities);
+                        return new ChromeDriver(chromeOptions);
+                    case CHROME_HEADLESS:
+                        LOG.info("using local chrome browser");
+                        System.setProperty("webdriver.chrome.driver",
+                                SeleniumConfigProvider.getConfig().getLocalWebDriverPath());
+                        // settings arguments
+                        browserArgumentsConfig(E_BrowserName.CHROME, capabilities);
+                        chromeOptions = new ChromeOptions();
+                        chromeOptions.addArguments("headless");
                         chromeOptions.merge(capabilities);
                         return new ChromeDriver(chromeOptions);
                     case IEXPLORER:
