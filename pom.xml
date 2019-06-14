@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.bitmarte.architecture.utils.testingframework</groupId>
     <artifactId>selenium-rfc-client</artifactId>
-    <version>4.25</version>
+    <version>4.25.1</version>
     <url>https://github.com/bitmarte/selenium-rfc-client</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -96,8 +96,8 @@
         </dependency>
         <dependency>
             <groupId>net.lightbody.bmp</groupId>
-            <artifactId>browsermob-core-littleproxy</artifactId>
-            <version>2.1.0-beta-6</version>
+            <artifactId>browsermob-core</artifactId>
+            <version>2.1.5</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

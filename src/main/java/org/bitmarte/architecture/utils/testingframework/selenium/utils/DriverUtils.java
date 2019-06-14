@@ -1,7 +1,11 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.utils;
 
 import java.io.File;
+import java.net.InetSocketAddress;
+import java.util.StringTokenizer;
+import java.util.concurrent.TimeUnit;
 
+import net.lightbody.bmp.BrowserMobProxy;
 import org.apache.commons.io.FileUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
@@ -100,6 +104,54 @@ public class DriverUtils {
 			} else {
 				return testResult;
 			}
+		}
+	}
+
+	/**
+	 * Configure BrowserMobProxy
+	 *
+	 * @param proxy
+	 */
+	public static void browserMobConfigure(BrowserMobProxy proxy) {
+		// Trust all certificates
+		proxy.setMitmDisabled(true);
+
+		// ChainedProxy
+		if (SeleniumConfigProvider.getConfig().getMobProxy().getChainedProxy() != null) {
+			String host = null;
+			int port = -1;
+			StringTokenizer stringTokenizer = new StringTokenizer(
+					SeleniumConfigProvider.getConfig().getMobProxy().getChainedProxy(), ":");
+			while (stringTokenizer.hasMoreTokens()) {
+				host = stringTokenizer.nextToken();
+				port = Integer.parseInt(stringTokenizer.nextToken());
+			}
+			proxy.setChainedProxy(new InetSocketAddress(host, port));
+		}
+
+		// port
+		proxy.start(SeleniumConfigProvider.getConfig().getMobProxy().getPort());
+
+		// DownloadBytePerSec
+		if (SeleniumConfigProvider.getConfig().getMobProxy().getDownloadBytePerSec() > 0) {
+			LOG.info("setting DownloadBytePerSec: "
+					+ SeleniumConfigProvider.getConfig().getMobProxy().getDownloadBytePerSec() + " bps");
+			proxy.setReadBandwidthLimit(SeleniumConfigProvider.getConfig().getMobProxy().getDownloadBytePerSec());
+		}
+
+		// UploadBytePerSec
+		if (SeleniumConfigProvider.getConfig().getMobProxy().getUploadBytePerSec() > 0) {
+			LOG.info("setting UploadBytePerSec: "
+					+ SeleniumConfigProvider.getConfig().getMobProxy().getUploadBytePerSec() + " bps");
+			proxy.setWriteBandwidthLimit(SeleniumConfigProvider.getConfig().getMobProxy().getUploadBytePerSec());
+		}
+
+		// Latency
+		if (SeleniumConfigProvider.getConfig().getMobProxy().getLatencyInMillisec() > 0) {
+			LOG.info("setting LatencyInMillisec: "
+					+ SeleniumConfigProvider.getConfig().getMobProxy().getLatencyInMillisec() + " msec");
+			proxy.setLatency(SeleniumConfigProvider.getConfig().getMobProxy().getLatencyInMillisec(),
+					TimeUnit.MILLISECONDS);
 		}
 	}
 
