@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.bitmarte.architecture.utils.testingframework</groupId>
     <artifactId>selenium-rfc-client</artifactId>
-    <version>4.25.1</version>
+    <version>4.26</version>
     <url>https://github.com/bitmarte/selenium-rfc-client</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -31,7 +31,7 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>23.0</version>
+                <version>28.0-jre</version>
             </dependency>
             <dependency>
                 <groupId>commons-codec</groupId>
@@ -46,7 +46,7 @@
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-all</artifactId>
-                <version>4.1.29.Final</version>
+                <version>4.1.36.Final</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -56,7 +56,7 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>1.7.25</version>
+                <version>1.7.26</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
