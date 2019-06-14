@@ -1,5 +1,7 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.service.evaluator;
 
+import org.bitmarte.architecture.utils.testingframework.selenium.service.evaluator.exceptions.ContentEvaluatorException;
+
 /**
  * This is the content evaluator interface
  * 
@@ -7,5 +9,5 @@ package org.bitmarte.architecture.utils.testingframework.selenium.service.evalua
  */
 public interface I_ContentEvaluator {
 
-	public boolean evaluate(String str1, String str2);
+	public boolean evaluate(String str1, String str2) throws ContentEvaluatorException;
 }

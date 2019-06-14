@@ -90,7 +90,7 @@ public class RunTestSuite {
     /**
      * Clean report folder
      */
-    private static void cleanReportFolder() {
+    private static void cleanReportFolder() throws Exception {
         File reportFolder = new File(SeleniumConfigProvider.getConfig().getReportBaseDir());
         try {
             for (File file : reportFolder.listFiles()) {
@@ -99,6 +99,7 @@ public class RunTestSuite {
             }
         } catch (Exception e) {
             LOG.error("error", e);
+            throw e;
         }
     }
 }
