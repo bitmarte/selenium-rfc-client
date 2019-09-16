@@ -5,6 +5,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.A_BrowserAction;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.E_AuthType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.impl.NTLMAuthentication;
+import org.bitmarte.architecture.utils.testingframework.selenium.service.extractor.E_ElementExtractor;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.A_Validator;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.I_Validator;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.ValidatorHandler;
@@ -105,6 +106,9 @@ public class PlanValidator extends A_Validator {
                         run.getAuthentication().setWaitPromptInSec(NTLMAuthentication.DEFAULT_WAIT_PROMPT_IN_SEC);
                     }
                 }
+            }
+            if (run.getSuccessCondition().getElementExtractor() == null) {
+                run.getSuccessCondition().setElementExtractor(E_ElementExtractor.BY_XPATH.name());
             }
         }
     }

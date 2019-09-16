@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
+import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_ReportType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.report.exceptions.ReportProducerException;
 import org.slf4j.Logger;

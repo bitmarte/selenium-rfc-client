@@ -8,6 +8,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Error
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserCapabilityType;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserMode;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_BrowserName;
+import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_ReportType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.E_PlanLoader;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.A_Validator;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.I_Validator;
@@ -54,8 +55,31 @@ public class ConfigValidator extends A_Validator {
             throw new ValidatorException("Property 'localWebDriverPath' is missing!");
         }
 
-        if (toValidate.getReportBaseDir() == null) {
-            throw new ValidatorException("Property 'reportBaseDir' is missing!");
+        // reportConfig validation
+        if (toValidate.getReportConfig() == null) {
+            throw new ValidatorException("Property 'reportConfig' is missing!");
+        } else {
+            if (toValidate.getReportConfig().getType() != null) {
+                try {
+                    switch (E_ReportType.valueOf(toValidate.getReportConfig().getType())) {
+                        case CSV_WEBTIMINGS:
+                        case HTML_INDEX:
+                            throw new ValidatorException("Report type '" +
+                                    toValidate.getReportConfig().getType() +
+                                    "' is not allowed! " +
+                                    " Choose " + E_ReportType.HTML_PLAN + " or " + E_ReportType.EXTENT_REPORT);
+                    }
+                } catch (Exception e) {
+                    throw new ValidatorException("Report type '" +
+                            toValidate.getReportConfig().getType() +
+                            "' is not allowed! " +
+                            " Choose " + E_ReportType.HTML_PLAN + " or " + E_ReportType.EXTENT_REPORT);
+                }
+            }
+            // highlightOnError
+            if (!StringUtils.equalsAny(toValidate.getReportConfig().isHighlightOnError(), null, "true", "false")) {
+                throw new ValidatorException("Property 'highlightOnError' must be a BOOLEAN value (true/false)!");
+            }
         }
 
         // checking for allowed values
@@ -180,10 +204,21 @@ public class ConfigValidator extends A_Validator {
     public void setDefaultValue() throws Exception {
         Config toValidate = (Config) this.inValidation;
 
-        if (!(StringUtils.endsWith(toValidate.getReportBaseDir(), "/")
-                || StringUtils.endsWith(toValidate.getReportBaseDir(), "\\"))) {
-            toValidate.setReportBaseDir(toValidate.getReportBaseDir().concat("/"));
-            LOG.warn("Property 'reportBaseDir' must have a slash '\\' or '/' at the end! - I fix it for you from now");
+        // report type default
+        if (toValidate.getReportConfig().getType() == null) {
+            toValidate.getReportConfig().setType(E_ReportType.HTML_PLAN.name());
+        }
+        // highlightOnError default
+        if (toValidate.getReportConfig().isHighlightOnError() == null) {
+            toValidate.getReportConfig().setHighlightOnError("true");
+            LOG.info("highlightOnError = true");
+        }
+
+        // fix reportConfig/baseDir
+        if (!(StringUtils.endsWith(toValidate.getReportConfig().getBaseDir(), "/")
+                || StringUtils.endsWith(toValidate.getReportConfig().getBaseDir(), "\\"))) {
+            toValidate.getReportConfig().setBaseDir(toValidate.getReportConfig().getBaseDir().concat("/"));
+            LOG.warn("Property 'reportConfig/baseDir' must have a slash '\\' or '/' at the end! - I fix it for you from now");
         }
 
         if (toValidate.getWebTimings() != null) {

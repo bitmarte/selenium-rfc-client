@@ -6,6 +6,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.ErrorCondition;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.action.A_BrowserAction;
+import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_ReportType;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.E_AuthType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.authentication.impl.NTLMAuthentication;
@@ -14,7 +15,6 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.evaluat
 import org.bitmarte.architecture.utils.testingframework.selenium.service.evaluator.exceptions.ContentEvaluatorException;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.action.BrowserActionExecutorFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.extractor.ElementExtractorFactory;
-import org.bitmarte.architecture.utils.testingframework.selenium.service.report.E_ReportType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.report.ReportProducerFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.utils.DriverUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.utils.WebTimingUtils;
@@ -61,6 +61,7 @@ public class PlanLoaderRunnable implements Runnable {
         Run currentRun = null;
         DriverUtils driverUtils = null;
         WebTimingUtils timingUtils = null;
+        WebElement el = null;
 
         try {
             driverUtils = new DriverUtils(driver, plan.getPlanName());
@@ -109,7 +110,7 @@ public class PlanLoaderRunnable implements Runnable {
                 LOG.info("Test result checking on success conditions...");
                 final Run finalRun = currentRun;
                 try {
-                    WebElement el = ElementExtractorFactory
+                    el = ElementExtractorFactory
                             .getInstance(finalRun.getSuccessCondition().getElementExtractor()).getElement(driver,
                                     finalRun.getSuccessCondition().getElement(), finalRun.getSuccessCondition());
                     ContentEvaluatorFactory.getInstance(finalRun.getSuccessCondition().getContentEvaluator())
@@ -126,9 +127,14 @@ public class PlanLoaderRunnable implements Runnable {
                         LOG.info("Using ErrorConditions specified in current run...");
                     }
 
+                    // element highlighting
+                    if (Boolean.valueOf(SeleniumConfigProvider.getConfig().getReportConfig().isHighlightOnError())) {
+                        driverUtils.elementHighlighting(finalRun, null);
+                    }
+
                     for (final ErrorCondition errorCondition : errorConditions) {
                         try {
-                            WebElement el = ElementExtractorFactory.getInstance(errorCondition.getElementExtractor())
+                            el = ElementExtractorFactory.getInstance(errorCondition.getElementExtractor())
                                     .getElement(driver, errorCondition.getElement(), errorCondition);
                             ContentEvaluatorFactory.getInstance(errorCondition.getContentEvaluator())
                                     .evaluate(errorCondition.getElementContent(), el.getText());
@@ -152,7 +158,7 @@ public class PlanLoaderRunnable implements Runnable {
                     // HAR capture
                     if (SeleniumConfigProvider.getConfig().getMobProxy() != null
                             && Boolean.valueOf(SeleniumConfigProvider.getConfig().getMobProxy().isEnableHarCapture())) {
-                        String harFilePath = SeleniumConfigProvider.getConfig().getReportBaseDir() + plan.getPlanName()
+                        String harFilePath = SeleniumConfigProvider.getConfig().getReportConfig().getBaseDir() + plan.getPlanName()
                                 + "/HarFiles/" + currentRun.getRunName() + ".har";
                         LOG.info("writing HAR file '" + harFilePath + "' ...");
                         File harFile = new File(harFilePath);

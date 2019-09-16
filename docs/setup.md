@@ -20,7 +20,9 @@
 		</browser>
 		<localWebDriverPath>/path/to/browser-web-driver</localWebDriverPath>
 		<seleniumRcURL>http://10.217.xx.xx:4444/wd/hub</seleniumRcURL>
-		<reportBaseDir>/var/tmp/selenium/reports/</reportBaseDir>
+		<reportConfig>
+            <baseDir>/var/tmp/selenium/reports/</baseDir>
+        </reportConfig>
 		<errorConditions>
 			<errorCondition elementExtractor="BY_CLASSNAME" contentEvaluator="CONTAINS">
 				<element>error-msg-container</element>
@@ -40,7 +42,10 @@
 * 'maxTimeOutPerElementExtratorInSec' is an **optional** node where put the timeout (in second) user for element extractors. The default value is 5sec. You can override it for each run, take a look at [Extractor](extractor.md)
 * 'pollingPerElementExtractorInMillisec' is an **optional** node where put the polling (in millisecond) used during element extractor. The default value is 250msec.
 * 'customPlanLoaders' is an **optional** node where put your customPlanLoaders implementations. **Take a look below for supported customPlanLoaders**
-* 'reportBaseDir' is a **require** node where put your preferred location where Selenium save reports
+* 'reportConfig/baseDir' is a **require** node where put your preferred location where Selenium save reports
+* 'reportConfig/type' is an **optional** node used to specify a report type (default HTML_PLAN)
+* 'reportConfig/extentConfig' is an **optional** node used to specify the ExtentReporter XML configuration file
+* 'reportConfig/highlightOnError' is an **optional** node (boolean value) which enable the highlight element on success condition evaluation error (screenshot)
 * 'cleanReportBaseDirOnStart' is an **optional** node used to clean the location where Selenium save reports before run. The default value is true
 * 'errorConditions' is a **require** node where put your generic error conditions
 * 'closeBrowserOnFinish' is an **optional** node used to close browser at the end of your test, boolean value. The default value is true
@@ -108,3 +113,21 @@ Eg.
 		<waitBeforeFirstActionInMs>500</waitBeforeFirstActionInMs>
 		<waitBeforeRetryActionInMs>800</waitBeforeRetryActionInMs>
 	</browserActionExecutor>
+
+### reportConfig
+Report configuration:
+
+| Attribute value        		| Description																|
+| ----------------------------- | ------------------------------------------------------------------------- |
+| HTML_PLAN             		| Plain HTML report                                                     	|
+| EXTENT_REPORT		            | Extent report framwork support                                        	|
+
+
+Eg.
+
+	<reportConfig>
+        <baseDir>/var/tmp/selenium/reports/</baseDir>
+        <type>EXTENT_REPORT</type>
+        <extentConfig>/var/tmp/selenium/config/extent.xml</extentConfig>
+        <highlightOnError>true</highlightOnError>
+    </reportConfig>

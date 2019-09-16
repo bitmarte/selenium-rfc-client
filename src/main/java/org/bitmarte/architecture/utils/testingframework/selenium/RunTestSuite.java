@@ -4,12 +4,12 @@ import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
 import org.apache.commons.io.FileUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.plan.Plan;
+import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_ReportType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.driver.WebDriverFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.plan.PlanLoaderRunnable;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.executor.plan.WorkingPlans;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.loader.WorkingPlansProvider;
-import org.bitmarte.architecture.utils.testingframework.selenium.service.report.E_ReportType;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.report.ReportProducerFactory;
 import org.bitmarte.architecture.utils.testingframework.selenium.utils.DriverUtils;
 import org.slf4j.Logger;
@@ -65,6 +65,10 @@ public class RunTestSuite {
                 if (workingPlans.isFinish()) {
                     ReportProducerFactory.getInstance(E_ReportType.HTML_INDEX, workingPlans.getPlans()).produce();
 
+                    if (E_ReportType.EXTENT_REPORT.name().equals(SeleniumConfigProvider.getConfig().getReportConfig().getType())) {
+                        ReportProducerFactory.getInstance(E_ReportType.EXTENT_REPORT, workingPlans.getPlans()).produce();
+                    }
+
                     // WebTimings report CSV
                     if (SeleniumConfigProvider.getConfig().getWebTimings() != null) {
                         ReportProducerFactory.getInstance(E_ReportType.CSV_WEBTIMINGS, workingPlans.getPlans())
@@ -91,7 +95,7 @@ public class RunTestSuite {
      * Clean report folder
      */
     private static void cleanReportFolder() throws Exception {
-        File reportFolder = new File(SeleniumConfigProvider.getConfig().getReportBaseDir());
+        File reportFolder = new File(SeleniumConfigProvider.getConfig().getReportConfig().getBaseDir());
         try {
             for (File file : reportFolder.listFiles()) {
                 LOG.debug("removing file: " + file.getAbsolutePath());
