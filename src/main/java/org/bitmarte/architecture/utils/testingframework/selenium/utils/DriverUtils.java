@@ -1,24 +1,20 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.utils;
 
-import java.io.File;
 import java.net.InetSocketAddress;
 import java.util.StringTokenizer;
 import java.util.concurrent.TimeUnit;
 
-import net.lightbody.bmp.BrowserMobProxy;
-import org.apache.commons.io.FileUtils;
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.Run;
 import org.bitmarte.architecture.utils.testingframework.selenium.constants.E_TestResult;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.assertthat.selenium_shutterbug.core.Capture;
 import com.assertthat.selenium_shutterbug.core.Shutterbug;
-import com.assertthat.selenium_shutterbug.utils.web.ScrollStrategy;
+
+import net.lightbody.bmp.BrowserMobProxy;
 
 /**
  * This is the web driver utility class
@@ -83,16 +79,14 @@ public class DriverUtils {
 					LOG.info("waiting before take screenshot [" + waitBeforeScreenshotInMilliSec + "ms] ...");
 					Thread.sleep(waitBeforeScreenshotInMilliSec);
 				}
-				Shutterbug.shootPage(this.driver, ScrollStrategy.VIEWPORT_ONLY).withName(screenshotFileName)
-						.save(archivePath);
+				Shutterbug.shootPage(this.driver, Capture.VIEWPORT).withName(screenshotFileName).save(archivePath);
 			} else {
 				// whole page screenshot
 				if (waitBeforeScreenshotInMilliSec > 0) {
 					LOG.info("waiting before take screenshot [" + waitBeforeScreenshotInMilliSec + "ms] ...");
 					Thread.sleep(waitBeforeScreenshotInMilliSec);
 				}
-				Shutterbug.shootPage(this.driver, ScrollStrategy.WHOLE_PAGE).withName(screenshotFileName)
-						.save(archivePath);
+				Shutterbug.shootPage(this.driver, Capture.FULL_SCROLL).withName(screenshotFileName).save(archivePath);
 			}
 
 		} catch (Exception e) {
