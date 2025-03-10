@@ -13,6 +13,7 @@ import org.bitmarte.architecture.utils.testingframework.selenium.service.unmarsh
 import org.bitmarte.architecture.utils.testingframework.selenium.service.validator.ValidatorHandler;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.security.AnyTypePermission;
 
 /**
  * @author bitmarte
@@ -23,6 +24,8 @@ public class ConfigUnmarshaller extends A_Unmarshaller {
 	public Config unmarshall(File xmlFileInput) throws Exception {
 		try {
 			XStream xStream = new XStream();
+
+			xStream.addPermission(AnyTypePermission.ANY);
 
 			xStream.processAnnotations(Config.class);
 			xStream.processAnnotations(ErrorCondition.class);

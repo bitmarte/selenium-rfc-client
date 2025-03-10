@@ -1,6 +1,6 @@
 package org.bitmarte.architecture.utils.testingframework.selenium.service.extractor;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 import org.bitmarte.architecture.utils.testingframework.selenium.beans.run.A_TestCondition;
 import org.bitmarte.architecture.utils.testingframework.selenium.service.configuration.SeleniumConfigProvider;
@@ -22,13 +22,10 @@ public abstract class A_ElementExtractor implements I_ElementExtractor {
 	/**
 	 * Retrieves the fluent wait for element extractor
 	 * 
-	 * @param driver
-	 *            the {@link WebDriver}
-	 * @param str
-	 *            the element identifier
-	 * @param condition
-	 *            the generic test condition for override configurations
-	 *            {@link A_TestCondition}
+	 * @param driver    the {@link WebDriver}
+	 * @param str       the element identifier
+	 * @param condition the generic test condition for override configurations
+	 *                  {@link A_TestCondition}
 	 * @return
 	 */
 	protected FluentWait<WebDriver> getWait(WebDriver driver, String str, A_TestCondition condition) {
@@ -36,8 +33,8 @@ public abstract class A_ElementExtractor implements I_ElementExtractor {
 		long pollingPerElementExtrator = this.getPollingPerElementExtractor();
 
 		FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver);
-		wait.pollingEvery(pollingPerElementExtrator, TimeUnit.MILLISECONDS);
-		wait.withTimeout(timeoutPerElementExtrator, TimeUnit.SECONDS);
+		wait.pollingEvery(Duration.ofMillis(timeoutPerElementExtrator));
+		wait.withTimeout(Duration.ofSeconds(timeoutPerElementExtrator));
 		wait.ignoring(NoSuchElementException.class);
 
 		LOG.debug("Serching element '" + str + "' until " + timeoutPerElementExtrator + " sec every "
@@ -47,11 +44,10 @@ public abstract class A_ElementExtractor implements I_ElementExtractor {
 	}
 
 	/**
-	 * Retrieves the waiting time before hits the element extractor, expressed
-	 * in milliseconds
+	 * Retrieves the waiting time before hits the element extractor, expressed in
+	 * milliseconds
 	 * 
-	 * @param condition
-	 *            {@link A_TestCondition}
+	 * @param condition {@link A_TestCondition}
 	 * @return the waiting time before hits the element extractor, expressed in
 	 *         milliseconds
 	 */
