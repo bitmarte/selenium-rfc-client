@@ -116,7 +116,7 @@
         <dependency>
             <groupId>com.assertthat</groupId>
             <artifactId>selenium-shutterbug</artifactId>
-            <version>0.9.5</version>
+            <version>1.6</version>
         </dependency>
 
         <!-- junit -->
